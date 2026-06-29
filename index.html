@@ -6,6 +6,7 @@
     <title>Sistem Informasi Pengadaan Barang</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         :root {
             --google-blue: #1a73e8;
@@ -1174,6 +1175,663 @@
                 <canvas id="chartTren" style="max-height: 300px;"></canvas>
             </div>
         </div>
+
+        <!-- --- PANEL: DOKUMENTASI SISTEM (Semua Role) --- -->
+        <div class="panel" id="panel-dokumentasi">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    Dokumentasi Dasar Sistem (UML, Use Case, User Flow, & RBAC)
+                </div>
+                
+                <!-- Sub Navigation Tabs for Documentation -->
+                <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                    <button class="btn btn-primary" id="btn-doc-rbac" onclick="switchDocTab('rbac')" style="font-size: 11px; padding: 6px 12px;">Matriks RBAC</button>
+                    <button class="btn btn-secondary" id="btn-doc-flow" onclick="switchDocTab('flow')" style="font-size: 11px; padding: 6px 12px;">Activity Flow</button>
+                    <button class="btn btn-secondary" id="btn-doc-usecase" onclick="switchDocTab('usecase')" style="font-size: 11px; padding: 6px 12px;">Use Case Diagram</button>
+                    <button class="btn btn-secondary" id="btn-doc-erd" onclick="switchDocTab('erd')" style="font-size: 11px; padding: 6px 12px;">ERD Diagram</button>
+                    <button class="btn btn-secondary" id="btn-doc-umlclass" onclick="switchDocTab('umlclass')" style="font-size: 11px; padding: 6px 12px;">UML Class Diagram</button>
+                    <button class="btn btn-secondary" id="btn-doc-umlseq" onclick="switchDocTab('umlseq')" style="font-size: 11px; padding: 6px 12px;">UML Sequence Diagram</button>
+                </div>
+
+                <!-- Documentation Panels -->
+                
+                <!-- 1. Matriks RBAC -->
+                <div class="doc-subpanel" id="doc-panel-rbac">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah Matriks Kontrol Akses Berbasis Peran (Role-Based Access Control) yang diterapkan pada sistem:
+                    </p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Menu / Fitur</th>
+                                    <th>Unit Pemohon<br/>(Ahmad)</th>
+                                    <th>Procurement<br/>(Budi)</th>
+                                    <th>Budgeting<br/>(Citra)</th>
+                                    <th>Keuangan<br/>(Dina)</th>
+                                    <th>Kasir<br/>(Eko)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Dashboard & Notifikasi</strong></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Form Permintaan Barang</strong></td>
+                                    <td><span class="badge badge-completed">Ya (Full CRUD)</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Validasi Permintaan</strong></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-completed">Ya (Approve/Reject)</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Verifikasi Anggaran</strong></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-completed">Ya (Approve/Reject)</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pembuatan PKS & PO</strong></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-completed">Ya (Buat Kontrak & PO)</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Input Tagihan (Invoice)</strong></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-completed">Ya (Input Invoice)</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pencairan Dana (Pembayaran)</strong></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-rejected">Tidak</span></td>
+                                    <td><span class="badge badge-completed">Ya (Pencairan Dana)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Laporan Realisasi & Tren</strong></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                    <td><span class="badge badge-completed">Ya (Read-Only)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 2. Activity Flow -->
+                <div class="doc-subpanel" id="doc-panel-flow" style="display: none;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah alur aktivitas bisnis (Activity Diagram) proses pengadaan barang dari hulu ke hilir:
+                    </p>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+flowchart TD
+    A([🟢 Mulai]) --> B["📝 Unit Pemohon&lt;br/&gt;Input Permintaan Barang&lt;br/&gt;&lt;i&gt;tanggal, nama barang,&lt;br/&gt;jumlah, satuan&lt;/i&gt;"]
+    B --> C{"🔍 Petugas Procurement&lt;br/&gt;Validasi Kebutuhan&lt;br/&gt;Barang"}
+    C -->|Ditolak| D["📩 Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan penolakan&lt;/i&gt;"]
+    D --> E([🔴 Selesai&lt;br/&gt;Permintaan Ditolak])
+    C -->|Diterima| F["📋 Diteruskan ke&lt;br/&gt;Petugas Budgeting"]
+    F --> G{"💰 Petugas Budgeting&lt;br/&gt;Verifikasi Ketersediaan&lt;br/&gt;Anggaran"}
+    G -->|Ditolak| H["📩 Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan dari Budgeting&lt;/i&gt;"]
+    H --> I([🔴 Selesai&lt;br/&gt;Anggaran Tidak Tersedia])
+    G -->|Diterima| J["✅ Informasi Anggaran&lt;br/&gt;Tersedia Diteruskan"]
+    J --> K["📤 Petugas Procurement&lt;br/&gt;Kirim Draft PO ke Vendor&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
+    K --> L["📥 Supplier Memberikan PO&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
+    L --> M["📄 Petugas Procurement&lt;br/&gt;Buat Perjanjian Kerja Sama&lt;br/&gt;&lt;i&gt;nomor kontrak, nomor PO,&lt;br/&gt;detail barang, harga&lt;/i&gt;"]
+    M --> N["💳 Input Metode&lt;br/&gt;Pembayaran Termin&lt;br/&gt;&lt;i&gt;tanggal, persentase,&lt;br/&gt;nominal&lt;/i&gt;"]
+    N --> O["📎 Upload Bukti PO&lt;br/&gt;dari Supplier"]
+    O --> P["📦 Penerimaan Barang&lt;br/&gt;oleh Procurement"]
+    P --> Q["📨 Vendor Kirim Tagihan&lt;br/&gt;ke Procurement"]
+    Q --> R["➡️ Procurement Meneruskan&lt;br/&gt;Tagihan ke Keuangan"]
+    R --> S["📝 Petugas Keuangan&lt;br/&gt;Input Tagihan&lt;br/&gt;&lt;i&gt;tanggal, nomor PO,&lt;br/&gt;nomor tagihan, detail barang&lt;/i&gt;"]
+    S --> T["📎 Upload Berkas&lt;br/&gt;Tagihan"]
+    T --> U["➡️ Sistem Meneruskan&lt;br/&gt;ke Kasir"]
+    U --> V["💵 Kasir&lt;br/&gt;Pencairan Dana&lt;br/&gt;&lt;i&gt;tanggal pembayaran,&lt;br/&gt;nominal, potongan harga&lt;/i&gt;"]
+    V --> W([🟢 Selesai&lt;br/&gt;Pembayaran Tercatat])
+
+    style A fill:#c6f6d5,stroke:#38a169
+    style E fill:#fed7d7,stroke:#e53e3e
+    style I fill:#fed7d7,stroke:#e53e3e
+    style W fill:#c6f6d5,stroke:#38a169
+    style C fill:#fefcbf,stroke:#d69e2e
+    style G fill:#fefcbf,stroke:#d69e2e
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- 3. Use Case Diagram -->
+                <div class="doc-subpanel" id="doc-panel-usecase" style="display: none;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah Use Case Diagram yang mendefinisikan interaksi setiap aktor terhadap fungsionalitas sistem:
+                    </p>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+graph LR
+    subgraph Aktor_Kiri["&nbsp;"]
+        UP(("👤 Unit&lt;br/&gt;Pemohon"))
+        PP(("👤 Petugas&lt;br/&gt;Procurement"))
+        PB(("👤 Petugas&lt;br/&gt;Budgeting"))
+    end
+
+    subgraph SI["🏢 Sistem Informasi Pengadaan Barang"]
+        UC01["UC-01&lt;br/&gt;Login"]
+        UC02["UC-02&lt;br/&gt;Input Permintaan&lt;br/&gt;Barang"]
+        UC03["UC-03&lt;br/&gt;Melihat Status&lt;br/&gt;Permintaan"]
+        UC04["UC-04&lt;br/&gt;Menerima&lt;br/&gt;Notifikasi"]
+        UC05["UC-05&lt;br/&gt;Validasi Permintaan&lt;br/&gt;Barang"]
+        UC06["UC-06&lt;br/&gt;Membuat PKS"]
+        UC07["UC-07&lt;br/&gt;Input Metode&lt;br/&gt;Pembayaran Termin"]
+        UC08["UC-08&lt;br/&gt;Upload Bukti PO"]
+        UC09["UC-09&lt;br/&gt;Meneruskan Tagihan&lt;br/&gt;ke Keuangan"]
+        UC10["UC-10&lt;br/&gt;Verifikasi&lt;br/&gt;Ketersediaan Anggaran"]
+        UC11["UC-11&lt;br/&gt;Input Tagihan"]
+        UC12["UC-12&lt;br/&gt;Upload Berkas&lt;br/&gt;Tagihan"]
+        UC13["UC-13&lt;br/&gt;Pencairan Dana"]
+        UC14["UC-14&lt;br/&gt;Generate Laporan"]
+    end
+
+    subgraph Aktor_Kanan["&nbsp;"]
+        PK(("👤 Petugas&lt;br/&gt;Keuangan"))
+        KS(("👤 Kasir"))
+        SY(("⚙️ Sistem"))
+    end
+
+    UP --- UC01
+    UP --- UC02
+    UP --- UC03
+    UP --- UC04
+
+    PP --- UC01
+    PP --- UC05
+    PP --- UC06
+    PP --- UC07
+    PP --- UC08
+    PP --- UC09
+
+    PB --- UC01
+    PB --- UC10
+
+    UC01 --- PK
+    UC11 --- PK
+    UC12 --- PK
+
+    UC01 --- KS
+    UC13 --- KS
+
+    UC14 --- SY
+    UC04 --- SY
+
+    UC14 --- UP
+    UC14 --- PP
+    UC14 --- PB
+    UC14 --- PK
+    UC14 --- KS
+
+    style SI fill:#e8f0fe,stroke:#1a73e8,stroke-width:2px
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- 4. ERD Diagram -->
+                <div class="doc-subpanel" id="doc-panel-erd" style="display: none;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah Entity Relationship Diagram (ERD) struktur database transaksional sistem:
+                    </p>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+erDiagram
+    UNIT {
+        int id PK
+        string kode_unit
+        string nama_unit
+        decimal anggaran_total
+        decimal anggaran_terpakai
+    }
+
+    USERS {
+        int id PK
+        string username
+        string password
+        string nama_lengkap
+        string role
+        int unit_id FK
+        datetime created_at
+    }
+
+    PERMINTAAN_BARANG {
+        int id PK
+        string nomor_permintaan
+        date tanggal_pengajuan
+        int unit_id FK
+        int user_id FK
+        string status
+        text alasan_penolakan
+        datetime created_at
+        datetime updated_at
+    }
+
+    DETAIL_PERMINTAAN {
+        int id PK
+        int permintaan_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+    }
+
+    SUPPLIER {
+        int id PK
+        string nama_supplier
+        string alamat
+        string telepon
+        string email
+        string npwp
+    }
+
+    PERJANJIAN_KERJA_SAMA {
+        int id PK
+        int permintaan_id FK
+        int supplier_id FK
+        string nomor_kontrak
+        string nomor_draft_po
+        string nomor_po
+        date tanggal
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+
+    DETAIL_PKS {
+        int id PK
+        int pks_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+        decimal harga_satuan
+        decimal potongan_harga
+        decimal harga_total
+    }
+
+    TERMIN_PEMBAYARAN {
+        int id PK
+        int pks_id FK
+        date tanggal_pembayaran
+        decimal persentase_pembayaran
+        decimal nominal_pembayaran
+        string status
+    }
+
+    TAGIHAN {
+        int id PK
+        int pks_id FK
+        date tanggal_tagihan
+        string nomor_po
+        string nomor_tagihan
+        string status
+        datetime created_at
+    }
+
+    DETAIL_TAGIHAN {
+        int id PK
+        int tagihan_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+        decimal harga_satuan
+        decimal potongan_harga
+        decimal harga_total
+    }
+
+    PEMBAYARAN {
+        int id PK
+        int tagihan_id FK
+        date tanggal_pembayaran
+        string nomor_tagihan
+        decimal nominal_pembayaran
+        decimal potongan_harga
+        decimal nominal_total
+        string status
+        datetime created_at
+    }
+
+    FILE_UPLOAD {
+        int id PK
+        string entity_type
+        int entity_id
+        string nama_file
+        string path_file
+        int uploaded_by FK
+        datetime uploaded_at
+    }
+
+    NOTIFIKASI {
+        int id PK
+        int user_id FK
+        string judul
+        text pesan
+        string tipe
+        int reference_id
+        boolean is_read
+        datetime created_at
+    }
+
+    UNIT ||--o{ USERS : "memiliki"
+    UNIT ||--o{ PERMINTAAN_BARANG : "mengajukan"
+    USERS ||--o{ PERMINTAAN_BARANG : "membuat"
+    PERMINTAAN_BARANG ||--|{ DETAIL_PERMINTAAN : "berisi"
+    PERMINTAAN_BARANG ||--o| PERJANJIAN_KERJA_SAMA : "menghasilkan"
+    SUPPLIER ||--o{ PERJANJIAN_KERJA_SAMA : "terlibat dalam"
+    PERJANJIAN_KERJA_SAMA ||--|{ DETAIL_PKS : "berisi"
+    PERJANJIAN_KERJA_SAMA ||--|{ TERMIN_PEMBAYARAN : "memiliki"
+    PERJANJIAN_KERJA_SAMA ||--o{ TAGIHAN : "menghasilkan"
+    TAGIHAN ||--|{ DETAIL_TAGIHAN : "berisi"
+    TAGIHAN ||--o| PEMBAYARAN : "dibayar melalui"
+    USERS ||--o{ NOTIFIKASI : "menerima"
+    USERS ||--o{ FILE_UPLOAD : "mengunggah"
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- 5. UML Class Diagram -->
+                <div class="doc-subpanel" id="doc-panel-umlclass" style="display: none;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah UML Class Diagram arsitektur berorientasi objek untuk sistem:
+                    </p>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+classDiagram
+    class Unit {
+        -int id
+        -String kode_unit
+        -String nama_unit
+        -BigDecimal anggaran_total
+        -BigDecimal anggaran_terpakai
+        +getSisaAnggaran() BigDecimal
+        +updateAnggaran(nominal) void
+    }
+
+    class User {
+        -int id
+        -String username
+        -String password
+        -String nama_lengkap
+        -Role role
+        -int unit_id
+        +login(username, password) boolean
+        +logout() void
+        +getNotifikasi() List~Notifikasi~
+    }
+
+    class PermintaanBarang {
+        -int id
+        -String nomor_permintaan
+        -Date tanggal_pengajuan
+        -Status status
+        -String alasan_penolakan
+        +buatPermintaan() void
+        +tambahItem(detail) void
+        +approve() void
+        +reject(alasan) void
+        +getDetails() List~DetailPermintaan~
+    }
+
+    class DetailPermintaan {
+        -int id
+        -int permintaan_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+    }
+
+    class Supplier {
+        -int id
+        -String nama_supplier
+        -String alamat
+        -String telepon
+        -String email
+        -String npwp
+    }
+
+    class PerjanjianKerjaSama {
+        -int id
+        -String nomor_kontrak
+        -String nomor_draft_po
+        -String nomor_po
+        -Date tanggal
+        -String status
+        +buatPKS() void
+        +tambahDetailBarang(detail) void
+        +tambahTermin(termin) void
+        +uploadBuktiPO(file) void
+        +hitungTotal() BigDecimal
+    }
+
+    class DetailPKS {
+        -int id
+        -int pks_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+        -BigDecimal harga_satuan
+        -BigDecimal potongan_harga
+        -BigDecimal harga_total
+        +hitungHargaTotal() BigDecimal
+    }
+
+    class TerminPembayaran {
+        -int id
+        -int pks_id
+        -Date tanggal_pembayaran
+        -BigDecimal persentase
+        -BigDecimal nominal
+        -String status
+    }
+
+    class Tagihan {
+        -int id
+        -Date tanggal_tagihan
+        -String nomor_po
+        -String nomor_tagihan
+        -String status
+        +inputTagihan() void
+        +tambahDetail(detail) void
+        +uploadBerkas(file) void
+        +teruskanKeKasir() void
+        +hitungTotal() BigDecimal
+    }
+
+    class DetailTagihan {
+        -int id
+        -int tagihan_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+        -BigDecimal harga_satuan
+        -BigDecimal potongan_harga
+        -BigDecimal harga_total
+        +hitungHargaTotal() BigDecimal
+    }
+
+    class Pembayaran {
+        -int id
+        -Date tanggal_pembayaran
+        -String nomor_tagihan
+        -BigDecimal nominal_pembayaran
+        -BigDecimal potongan_harga
+        -BigDecimal nominal_total
+        -String status
+        +cairkanDana() void
+        +hitungNominalTotal() BigDecimal
+    }
+
+    class FileUpload {
+        -int id
+        -String entity_type
+        -int entity_id
+        -String nama_file
+        -String path_file
+        +upload(file) void
+        +download() File
+    }
+
+    class Notifikasi {
+        -int id
+        -String judul
+        -String pesan
+        -String tipe
+        -boolean is_read
+        +kirimNotifikasi() void
+        +tandaiDibaca() void
+    }
+
+    class Laporan {
+        +generateHarian(tanggal) Report
+        +generateMingguan(minggu) Report
+        +generateBulanan(bulan) Report
+        +generateTahunan(tahun) Report
+        +exportPDF() File
+        +exportExcel() File
+    }
+
+    Unit "1" --&gt; "*" User
+    Unit "1" --&gt; "*" PermintaanBarang
+    User "1" --&gt; "*" PermintaanBarang
+    PermintaanBarang "1" --&gt; "1..*" DetailPermintaan
+    PermintaanBarang "1" --&gt; "0..1" PerjanjianKerjaSama
+    Supplier "1" --&gt; "*" PerjanjianKerjaSama
+    PerjanjianKerjaSama "1" --&gt; "1..*" DetailPKS
+    PerjanjianKerjaSama "1" --&gt; "1..*" TerminPembayaran
+    PerjanjianKerjaSama "1" --&gt; "*" Tagihan
+    Tagihan "1" --&gt; "1..*" DetailTagihan
+    Tagihan "1" --&gt; "0..1" Pembayaran
+    User "1" --&gt; "*" Notifikasi
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- 6. UML Sequence Diagram -->
+                <div class="doc-subpanel" id="doc-panel-umlseq" style="display: none;">
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
+                        Berikut adalah UML Sequence Diagram interaksi antar objek sistem:
+                    </p>
+                    
+                    <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Alur Permintaan hingga Persetujuan Anggaran</h4>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; margin-bottom: 20px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+sequenceDiagram
+    actor UP as Unit Pemohon
+    participant SIS as Sistem
+    actor PC as Petugas Procurement
+    actor PB as Petugas Budgeting
+
+    UP-&gt;&gt;SIS: Login
+    SIS--&gt;&gt;UP: Dashboard Unit Pemohon
+
+    UP-&gt;&gt;SIS: Input Permintaan Barang(tanggal, nama barang, jumlah, satuan)
+    SIS-&gt;&gt;SIS: Validasi Data
+    SIS--&gt;&gt;UP: Konfirmasi Permintaan Tersimpan
+    SIS-&gt;&gt;PC: Notifikasi Permintaan Baru
+
+    PC-&gt;&gt;SIS: Login
+    SIS--&gt;&gt;PC: Dashboard Procurement
+    PC-&gt;&gt;SIS: Buka Detail Permintaan
+    SIS--&gt;&gt;PC: Tampilkan Detail Permintaan
+
+    alt Permintaan Diterima
+        PC-&gt;&gt;SIS: Klik "Terima"
+        SIS-&gt;&gt;SIS: Update Status = Disetujui Procurement
+        SIS-&gt;&gt;PB: Notifikasi Verifikasi Anggaran
+        
+        PB-&gt;&gt;SIS: Login
+        SIS--&gt;&gt;PB: Dashboard Budgeting
+        PB-&gt;&gt;SIS: Buka Detail Permintaan
+        SIS--&gt;&gt;PB: Tampilkan Detail + Info Anggaran Unit
+
+        alt Anggaran Tersedia
+            PB-&gt;&gt;SIS: Klik "Anggaran Tersedia"
+            SIS-&gt;&gt;SIS: Update Status = Anggaran Disetujui
+            SIS-&gt;&gt;PC: Notifikasi Siap Kirim Draft PO
+        else Anggaran Tidak Tersedia
+            PB-&gt;&gt;SIS: Klik "Tolak" + Input Alasan
+            SIS-&gt;&gt;SIS: Update Status = Ditolak Budgeting
+            SIS-&gt;&gt;UP: Notifikasi Penolakan + Alasan
+        end
+    else Permintaan Ditolak
+        PC-&gt;&gt;SIS: Klik "Tolak" + Input Alasan
+        SIS-&gt;&gt;SIS: Update Status = Ditolak Procurement
+        SIS-&gt;&gt;UP: Notifikasi Penolakan + Alasan
+    end
+                        </pre>
+                    </div>
+
+                    <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Alur PKS hingga Pencairan Dana</h4>
+                    <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
+                        <pre class="mermaid" style="margin: 0; background: none; border: none;">
+sequenceDiagram
+    actor PC as Petugas Procurement
+    participant SIS as Sistem
+    actor PK as Petugas Keuangan
+    actor KS as Kasir
+
+    Note over PC,SIS: Setelah Draft PO dikirim & PO diterima dari Supplier (di luar aplikasi)
+
+    PC-&gt;&gt;SIS: Input Data PKS(no kontrak, no draft PO, no PO, detail barang)
+    PC-&gt;&gt;SIS: Input Termin Pembayaran(tanggal, persentase, nominal)
+    PC-&gt;&gt;SIS: Upload Bukti PO
+    SIS-&gt;&gt;SIS: Simpan Data PKS
+    SIS--&gt;&gt;PC: Konfirmasi PKS Tersimpan
+
+    Note over PC,SIS: Barang diterima, Vendor kirim Tagihan (di luar aplikasi)
+
+    PC-&gt;&gt;SIS: Teruskan Tagihan ke Keuangan
+    SIS-&gt;&gt;PK: Notifikasi Tagihan Baru
+
+    PK-&gt;&gt;SIS: Login
+    SIS--&gt;&gt;PK: Dashboard Keuangan
+    PK-&gt;&gt;SIS: Input Tagihan(tanggal, no PO, no tagihan, detail barang, harga)
+    PK-&gt;&gt;SIS: Upload Berkas Tagihan
+    SIS-&gt;&gt;SIS: Simpan Data Tagihan
+    SIS-&gt;&gt;KS: Notifikasi Pencairan Dana
+
+    KS-&gt;&gt;SIS: Login
+    SIS--&gt;&gt;KS: Dashboard Kasir
+    KS-&gt;&gt;SIS: Buka Detail Tagihan
+    SIS--&gt;&gt;KS: Tampilkan Detail Tagihan
+    KS-&gt;&gt;SIS: Input Pencairan Dana(tanggal, no tagihan, nominal, potongan harga)
+    SIS-&gt;&gt;SIS: Hitung Nominal Total
+    SIS-&gt;&gt;SIS: Simpan Pembayaran
+    SIS--&gt;&gt;KS: Konfirmasi Pencairan Berhasil
+    SIS-&gt;&gt;SIS: Update Status = Lunas
+                        </pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </main>
 
     <!-- --- MODALS --- -->
@@ -1460,28 +2118,33 @@
                 { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
                 { id: "form-permintaan", label: "Form Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>` },
                 { id: "riwayat-permintaan", label: "Riwayat Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>` },
-                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "dokumentasi", label: "Dokumentasi Sistem", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` }
             ],
             procurement: [
                 { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
                 { id: "validasi-permintaan", label: "Validasi Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>` },
                 { id: "kelola-pks", label: "Kelola PKS & PO", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>` },
-                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "dokumentasi", label: "Dokumentasi Sistem", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` }
             ],
             budgeting: [
                 { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
                 { id: "verifikasi-anggaran", label: "Verifikasi Anggaran", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>` },
-                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "dokumentasi", label: "Dokumentasi Sistem", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` }
             ],
             keuangan: [
                 { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
                 { id: "input-tagihan", label: "Input Tagihan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg>` },
-                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "dokumentasi", label: "Dokumentasi Sistem", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` }
             ],
             kasir: [
                 { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
                 { id: "pencairan-dana", label: "Pencairan Dana", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>` },
-                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "dokumentasi", label: "Dokumentasi Sistem", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` }
             ]
         };
 
@@ -1613,7 +2276,8 @@
                 "verifikasi-anggaran": { title: "Verifikasi Anggaran", subtitle: "Verifikasi alokasi pagu anggaran unit pengaju" },
                 "input-tagihan": { title: "Input Tagihan Keuangan", subtitle: "Pencatatan invoice tagihan dari supplier" },
                 "pencairan-dana": { title: "Pencairan Kasir", subtitle: "Pencairan dana pembayaran termin supplier" },
-                "laporan-realisasi": { title: "Laporan Realisasi", subtitle: "Laporan grafik realisasi anggaran berkala" }
+                "laporan-realisasi": { title: "Laporan Realisasi", subtitle: "Laporan grafik realisasi anggaran berkala" },
+                dokumentasi: { title: "Dokumentasi Dasar Sistem", subtitle: "Matriks RBAC, User Flow, Use Case, dan UML Diagram" }
             };
 
             if (titles[tabId]) {
@@ -1623,6 +2287,8 @@
 
             if (tabId === "laporan-realisasi") {
                 updateCharts();
+            } else if (tabId === "dokumentasi") {
+                switchDocTab("rbac");
             }
         }
 
@@ -2145,6 +2811,47 @@
             });
         }
 
+        // Switch Documentation Sub-Tabs
+        function switchDocTab(docTabId) {
+            // Hide all subpanels
+            document.querySelectorAll(".doc-subpanel").forEach(panel => panel.style.display = "none");
+            
+            // Show active subpanel
+            document.getElementById(`doc-panel-${docTabId}`).style.display = "block";
+            
+            // Update button styles
+            const buttons = [
+                { id: "rbac", btn: "btn-doc-rbac" },
+                { id: "flow", btn: "btn-doc-flow" },
+                { id: "usecase", btn: "btn-doc-usecase" },
+                { id: "erd", btn: "btn-doc-erd" },
+                { id: "umlclass", btn: "btn-doc-umlclass" },
+                { id: "umlseq", btn: "btn-doc-umlseq" }
+            ];
+            
+            buttons.forEach(b => {
+                const btnEl = document.getElementById(b.btn);
+                if (btnEl) {
+                    if (b.id === docTabId) {
+                        btnEl.classList.remove("btn-secondary");
+                        btnEl.classList.add("btn-primary");
+                    } else {
+                        btnEl.classList.remove("btn-primary");
+                        btnEl.classList.add("btn-secondary");
+                    }
+                }
+            });
+
+            // Re-render Mermaid if needed
+            if (window.mermaid) {
+                try {
+                    mermaid.run({ querySelector: '.mermaid' });
+                } catch (e) {
+                    console.error("Mermaid run error: ", e);
+                }
+            }
+        }
+
         // Update Charts
         function updateCharts() {
             if (!chartStatusObj) return;
@@ -2166,6 +2873,14 @@
         // Initialize App
         document.addEventListener("DOMContentLoaded", () => {
             initCharts();
+            // Initialize Mermaid
+            if (window.mermaid) {
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'neutral',
+                    securityLevel: 'loose'
+                });
+            }
             // Default: show login screen
             document.getElementById("loginScreen").style.display = "flex";
         });
