@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen 1 — Analisa Kebutuhan Awal Pengembangan Sistem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2b6cb0;
+            --accent: #3182ce;
+            --bg: #ffffff;
+            --text: #1a202c;
+            --text-light: #4a5568;
+            --border: #e2e8f0;
+            --bg-light: #f7fafc;
+            --bg-blue: #ebf8ff;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #d69e2e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--bg);
+            font-size: 11pt;
+        }
+
+        .page {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm 25mm;
+        }
+
+        /* Cover Page */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 40mm 25mm;
+        }
+
+        .cover-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 10pt;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .cover h1 {
+            font-size: 28pt;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .cover h2 {
+            font-size: 14pt;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 48px;
+        }
+
+        .cover-meta {
+            border-top: 2px solid var(--border);
+            padding-top: 32px;
+            font-size: 10pt;
+            color: var(--text-light);
+        }
+
+        .cover-meta p { margin: 6px 0; }
+
+        /* Headings */
+        h1 {
+            font-size: 20pt;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        h2 {
+            font-size: 15pt;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 28px 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin: 20px 0 10px 0;
+        }
+
+        h4 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--text);
+            margin: 16px 0 8px 0;
+        }
+
+        p { margin: 8px 0; text-align: justify; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 10pt;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 9.5pt;
+        }
+
+        td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) { background: var(--bg-light); }
+        tr:hover { background: var(--bg-blue); }
+
+        /* Lists */
+        ul, ol {
+            margin: 8px 0 8px 24px;
+        }
+
+        li { margin: 4px 0; }
+
+        /* Info box */
+        .info-box {
+            background: var(--bg-blue);
+            border-left: 4px solid var(--accent);
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .info-box strong { color: var(--primary); }
+
+        /* Diagram container */
+        .diagram-container {
+            margin: 20px 0;
+            padding: 16px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .diagram-container .caption {
+            text-align: center;
+            font-size: 9.5pt;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mockup wireframes */
+        .mockup-container {
+            margin: 20px 0;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .mockup-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            font-size: 10pt;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mockup-sidebar {
+            width: 180px;
+            background: #2d3748;
+            color: white;
+            padding: 12px 0;
+            font-size: 9pt;
+        }
+
+        .mockup-sidebar .menu-item {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .mockup-sidebar .menu-item:hover,
+        .mockup-sidebar .menu-item.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid var(--accent);
+        }
+
+        .mockup-body {
+            display: flex;
+            min-height: 300px;
+        }
+
+        .mockup-content {
+            flex: 1;
+            padding: 16px;
+            font-size: 9pt;
+        }
+
+        .mock-form-group {
+            margin-bottom: 12px;
+        }
+
+        .mock-form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 8.5pt;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mock-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            font-size: 9pt;
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        .mock-input.short { width: 200px; }
+
+        .mock-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .mock-btn-primary { background: var(--accent); color: white; }
+        .mock-btn-success { background: var(--success); color: white; }
+        .mock-btn-danger { background: var(--danger); color: white; }
+        .mock-btn-secondary { background: var(--border); color: var(--text); }
+
+        .mock-table {
+            width: 100%;
+            font-size: 8.5pt;
+            border-collapse: collapse;
+            margin: 8px 0;
+        }
+
+        .mock-table th {
+            background: var(--bg-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            font-size: 8pt;
+        }
+
+        .mock-table td {
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            font-size: 8.5pt;
+        }
+
+        .mock-form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .mock-form-row .mock-form-group { flex: 1; }
+
+        .mock-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 7.5pt;
+            font-weight: 600;
+        }
+
+        .mock-badge.pending { background: #fefcbf; color: #975a16; }
+        .mock-badge.approved { background: #c6f6d5; color: #276749; }
+        .mock-badge.rejected { background: #fed7d7; color: #9b2c2c; }
+
+        .section-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 10pt;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        /* Use Case Narrative Box */
+        .uc-narrative {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .uc-narrative-header {
+            background: var(--primary);
+            color: white;
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .uc-narrative-body {
+            padding: 0;
+        }
+
+        .uc-narrative-body table {
+            margin: 0;
+        }
+
+        .uc-narrative-body td:first-child {
+            width: 160px;
+            font-weight: 600;
+            background: var(--bg-light);
+            white-space: nowrap;
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px 32px;
+            margin: 24px 0;
+        }
+
+        .toc h2 {
+            border-bottom: none;
+            margin-top: 0;
+        }
+
+        .toc ul { list-style: none; margin-left: 0; }
+        .toc > ul > li { margin: 8px 0; }
+        .toc > ul > li > a { font-weight: 600; color: var(--primary); text-decoration: none; font-size: 11pt; }
+        .toc ul ul { margin-left: 20px; margin-top: 4px; }
+        .toc ul ul li { margin: 4px 0; }
+        .toc ul ul li a { color: var(--text-light); text-decoration: none; font-weight: 400; font-size: 10pt; }
+        .toc a:hover { color: var(--accent); text-decoration: underline; }
+
+        /* Page break */
+        .page-break { page-break-before: always; }
+
+        /* Print styles */
+        @media print {
+            body { font-size: 10pt; }
+            .page { padding: 15mm 20mm; max-width: none; }
+            .cover { min-height: auto; padding: 60mm 20mm; }
+            .page-break { page-break-before: always; }
+            .diagram-container { border: 1px solid #ccc; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+            .mockup-container { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== COVER PAGE ===================== -->
+<div class="cover">
+    <div class="cover-badge">Dokumen 1 dari 5</div>
+    <h1>Analisa Kebutuhan Awal<br>Pengembangan Sistem</h1>
+    <h2>Sistem Informasi Pengadaan Barang</h2>
+    <div style="width: 80px; height: 4px; background: var(--accent); margin: 0 auto 40px;"></div>
+    <div class="cover-meta">
+        <p><strong>Mata Kuliah:</strong> Analisis dan Perancangan Sistem Informasi</p>
+        <p><strong>Bobot Nilai:</strong> 50 Poin</p>
+        <p><strong>Cakupan:</strong> Spesifikasi Kebutuhan Pengguna (Use Case), Kebutuhan Fungsional (Flow Diagram), ERD, UML, Desain Interface</p>
+    </div>
+</div>
+
+<!-- ===================== TABLE OF CONTENTS ===================== -->
+<div class="page page-break">
+    <div class="toc">
+        <h2>📋 Daftar Isi</h2>
+        <ul>
+            <li><a href="#section-a">A. Spesifikasi Kebutuhan Pengguna / User</a>
+                <ul>
+                    <li><a href="#a1">A.1 Identifikasi Aktor</a></li>
+                    <li><a href="#a2">A.2 Daftar Use Case</a></li>
+                    <li><a href="#a3">A.3 Use Case Diagram</a></li>
+                    <li><a href="#a4">A.4 Use Case Narrative</a></li>
+                </ul>
+            </li>
+            <li><a href="#section-b">B. Spesifikasi Kebutuhan Fungsional</a>
+                <ul>
+                    <li><a href="#b1">B.1 Alur Proses Bisnis</a></li>
+                    <li><a href="#b2">B.2 Activity Diagram / Flow Diagram</a></li>
+                </ul>
+            </li>
+            <li><a href="#section-c">C. Kebutuhan Sistem</a>
+                <ul>
+                    <li><a href="#c1">C.1 Entity Relationship Diagram (ERD)</a></li>
+                    <li><a href="#c2">C.2 UML Class Diagram</a></li>
+                    <li><a href="#c3">C.3 UML Sequence Diagram</a></li>
+                    <li><a href="#c4">C.4 Desain Interface / Sketch Mockup</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- ===================== SECTION A ===================== -->
+<div class="page page-break">
+    <h1 id="section-a"><span class="section-number">A</span> Spesifikasi Kebutuhan Pengguna / User</h1>
+
+    <p>Berdasarkan analisis kebutuhan pada Sistem Informasi Pengadaan Barang, berikut adalah spesifikasi kebutuhan pengguna yang meliputi identifikasi aktor, daftar use case, use case diagram, dan use case narrative.</p>
+
+    <!-- A.1 Identifikasi Aktor -->
+    <h2 id="a1">A.1 Identifikasi Aktor</h2>
+    <p>Sistem Informasi Pengadaan Barang melibatkan <strong>5 (lima) aktor utama</strong> dan <strong>1 (satu) aktor sistem</strong> yang memiliki peran dan tanggung jawab berbeda dalam proses pengadaan barang.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Aktor</th>
+                <th>Deskripsi</th>
+                <th>Tanggung Jawab Utama</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><strong>Unit Pemohon</strong></td>
+                <td>Pegawai/unit kerja yang membutuhkan barang untuk kegiatan operasional unit</td>
+                <td>Mengajukan permintaan barang, menerima notifikasi status permintaan</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><strong>Petugas Procurement</strong></td>
+                <td>Petugas yang bertanggung jawab atas proses pengadaan barang dari awal hingga penerimaan</td>
+                <td>Memvalidasi permintaan, membuat PKS, menginput metode pembayaran, mengupload bukti PO, meneruskan tagihan</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>Petugas Budgeting</strong></td>
+                <td>Petugas yang bertanggung jawab memverifikasi ketersediaan anggaran unit</td>
+                <td>Memverifikasi anggaran, menyetujui/menolak permintaan dari sisi anggaran</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><strong>Petugas Keuangan</strong></td>
+                <td>Petugas yang mencatat dan mengelola tagihan dari supplier</td>
+                <td>Menginput tagihan, mengupload berkas tagihan, meneruskan ke kasir</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>Kasir</strong></td>
+                <td>Petugas yang bertanggung jawab mencairkan dana pembayaran</td>
+                <td>Mencairkan dana sesuai nominal tagihan, mencatat pembayaran</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><strong>Sistem</strong></td>
+                <td>Sistem aplikasi yang berjalan secara otomatis</td>
+                <td>Mengirim notifikasi, menggenerate laporan pengadaan barang</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- A.2 Daftar Use Case -->
+    <h2 id="a2">A.2 Daftar Use Case</h2>
+    <p>Berikut adalah daftar lengkap use case yang teridentifikasi berdasarkan kebutuhan sistem:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Use Case</th>
+                <th>Aktor</th>
+                <th>Deskripsi Singkat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>UC-01</td>
+                <td>Login</td>
+                <td>Semua Aktor</td>
+                <td>Autentikasi pengguna untuk masuk ke sistem back office</td>
+            </tr>
+            <tr>
+                <td>UC-02</td>
+                <td>Input Permintaan Barang</td>
+                <td>Unit Pemohon</td>
+                <td>Mengajukan permintaan barang dengan detail nama, jumlah, dan satuan (bisa lebih dari satu barang)</td>
+            </tr>
+            <tr>
+                <td>UC-03</td>
+                <td>Melihat Status Permintaan</td>
+                <td>Unit Pemohon</td>
+                <td>Memantau status permintaan barang yang telah diajukan</td>
+            </tr>
+            <tr>
+                <td>UC-04</td>
+                <td>Menerima Notifikasi</td>
+                <td>Unit Pemohon</td>
+                <td>Menerima pemberitahuan jika permintaan ditolak beserta alasan penolakan</td>
+            </tr>
+            <tr>
+                <td>UC-05</td>
+                <td>Validasi Permintaan Barang</td>
+                <td>Petugas Procurement</td>
+                <td>Memeriksa dan memvalidasi kebutuhan barang; menerima atau menolak dengan alasan</td>
+            </tr>
+            <tr>
+                <td>UC-06</td>
+                <td>Membuat Perjanjian Kerja Sama (PKS)</td>
+                <td>Petugas Procurement</td>
+                <td>Menginput data PKS berdasarkan PO yang diterima dari supplier</td>
+            </tr>
+            <tr>
+                <td>UC-07</td>
+                <td>Input Metode Pembayaran (Termin)</td>
+                <td>Petugas Procurement</td>
+                <td>Menentukan jadwal dan persentase pembayaran melalui termin</td>
+            </tr>
+            <tr>
+                <td>UC-08</td>
+                <td>Upload Bukti PO</td>
+                <td>Petugas Procurement</td>
+                <td>Mengunggah dokumen bukti PO yang dikirimkan oleh supplier</td>
+            </tr>
+            <tr>
+                <td>UC-09</td>
+                <td>Meneruskan Tagihan ke Keuangan</td>
+                <td>Petugas Procurement</td>
+                <td>Memforward tagihan dari vendor ke petugas keuangan</td>
+            </tr>
+            <tr>
+                <td>UC-10</td>
+                <td>Verifikasi Ketersediaan Anggaran</td>
+                <td>Petugas Budgeting</td>
+                <td>Memeriksa apakah unit pemohon memiliki anggaran cukup untuk pengadaan</td>
+            </tr>
+            <tr>
+                <td>UC-11</td>
+                <td>Input Tagihan</td>
+                <td>Petugas Keuangan</td>
+                <td>Mencatat tagihan dari vendor ke dalam sistem</td>
+            </tr>
+            <tr>
+                <td>UC-12</td>
+                <td>Upload Berkas Tagihan</td>
+                <td>Petugas Keuangan</td>
+                <td>Mengunggah dokumen berkas tagihan dari supplier</td>
+            </tr>
+            <tr>
+                <td>UC-13</td>
+                <td>Pencairan Dana</td>
+                <td>Kasir</td>
+                <td>Mencairkan dana pembayaran sesuai nominal tagihan</td>
+            </tr>
+            <tr>
+                <td>UC-14</td>
+                <td>Generate Laporan</td>
+                <td>Semua Aktor / Sistem</td>
+                <td>Membuat laporan pengadaan barang (harian, mingguan, bulanan, tahunan)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- A.3 Use Case Diagram -->
+    <h2 id="a3">A.3 Use Case Diagram</h2>
+    <p>Berikut adalah Use Case Diagram yang menggambarkan hubungan antara aktor dan use case dalam Sistem Informasi Pengadaan Barang:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph LR
+    subgraph Aktor_Kiri["&nbsp;"]
+        UP(("👤 Unit<br/>Pemohon"))
+        PP(("👤 Petugas<br/>Procurement"))
+        PB(("👤 Petugas<br/>Budgeting"))
+    end
+
+    subgraph SI["🏢 Sistem Informasi Pengadaan Barang"]
+        UC01["UC-01<br/>Login"]
+        UC02["UC-02<br/>Input Permintaan<br/>Barang"]
+        UC03["UC-03<br/>Melihat Status<br/>Permintaan"]
+        UC04["UC-04<br/>Menerima<br/>Notifikasi"]
+        UC05["UC-05<br/>Validasi Permintaan<br/>Barang"]
+        UC06["UC-06<br/>Membuat PKS"]
+        UC07["UC-07<br/>Input Metode<br/>Pembayaran Termin"]
+        UC08["UC-08<br/>Upload Bukti PO"]
+        UC09["UC-09<br/>Meneruskan Tagihan<br/>ke Keuangan"]
+        UC10["UC-10<br/>Verifikasi<br/>Ketersediaan Anggaran"]
+        UC11["UC-11<br/>Input Tagihan"]
+        UC12["UC-12<br/>Upload Berkas<br/>Tagihan"]
+        UC13["UC-13<br/>Pencairan Dana"]
+        UC14["UC-14<br/>Generate Laporan"]
+    end
+
+    subgraph Aktor_Kanan["&nbsp;"]
+        PK(("👤 Petugas<br/>Keuangan"))
+        KS(("👤 Kasir"))
+        SY(("⚙️ Sistem"))
+    end
+
+    UP --- UC01
+    UP --- UC02
+    UP --- UC03
+    UP --- UC04
+
+    PP --- UC01
+    PP --- UC05
+    PP --- UC06
+    PP --- UC07
+    PP --- UC08
+    PP --- UC09
+
+    PB --- UC01
+    PB --- UC10
+
+    UC01 --- PK
+    UC11 --- PK
+    UC12 --- PK
+
+    UC01 --- KS
+    UC13 --- KS
+
+    UC14 --- SY
+    UC04 --- SY
+
+    UC14 --- UP
+    UC14 --- PP
+    UC14 --- PB
+    UC14 --- PK
+    UC14 --- KS
+
+    style SI fill:#ebf8ff,stroke:#3182ce,stroke-width:2px
+    style Aktor_Kiri fill:none,stroke:none
+    style Aktor_Kanan fill:none,stroke:none
+        </div>
+        <div class="caption">Gambar A.1 — Use Case Diagram Sistem Informasi Pengadaan Barang</div>
+    </div>
+
+    <div class="info-box">
+        <strong>📌 Keterangan:</strong> Setiap aktor harus melakukan login (UC-01) terlebih dahulu sebelum dapat mengakses fitur-fitur lainnya. Use case Generate Laporan (UC-14) dapat diakses oleh semua aktor yang telah login sesuai dengan hak akses masing-masing.
+    </div>
+</div>
+
+<!-- ===================== A.4 USE CASE NARRATIVE ===================== -->
+<div class="page page-break">
+    <h2 id="a4">A.4 Use Case Narrative</h2>
+    <p>Berikut adalah deskripsi naratif untuk setiap use case utama dalam sistem:</p>
+
+    <!-- UC-02 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-02: Input Permintaan Barang</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-02</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Input Permintaan Barang</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Unit Pemohon</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Unit Pemohon telah login ke dalam sistem back office</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Data permintaan barang tersimpan ke dalam sistem dengan status "Menunggu Validasi Procurement"</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Unit pemohon mengajukan permintaan barang sesuai kebutuhan unit. Dalam satu transaksi, dapat menginputkan lebih dari satu barang.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Unit Pemohon memilih menu "Permintaan Barang"</li>
+                        <li>Sistem menampilkan form permintaan barang</li>
+                        <li>Unit Pemohon mengisi tanggal pengajuan</li>
+                        <li>Unit Pemohon menginputkan detail barang: nama barang, jumlah, dan satuan</li>
+                        <li>Unit Pemohon dapat menambahkan baris barang tambahan (multi-item)</li>
+                        <li>Unit Pemohon menekan tombol "Ajukan Permintaan"</li>
+                        <li>Sistem memvalidasi kelengkapan data</li>
+                        <li>Sistem menyimpan data dan menampilkan konfirmasi</li>
+                        <li>Sistem mengirim notifikasi ke Petugas Procurement</li>
+                    </ol>
+                </td></tr>
+                <tr><td><strong>Alur Alternatif</strong></td><td>
+                    <strong>7a.</strong> Data tidak lengkap: Sistem menampilkan pesan error dan meminta Unit Pemohon melengkapi data yang kurang
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-05 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-05: Validasi Permintaan Barang</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-05</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Validasi Permintaan Barang</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Petugas Procurement</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Petugas Procurement telah login; terdapat permintaan barang dengan status "Menunggu Validasi"</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Permintaan barang berubah status menjadi "Disetujui Procurement" atau "Ditolak Procurement"</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Petugas Procurement memeriksa kebutuhan barang yang diajukan oleh Unit Pemohon dan memutuskan untuk menerima atau menolak permintaan.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Petugas Procurement membuka daftar permintaan barang yang menunggu validasi</li>
+                        <li>Petugas Procurement memilih permintaan untuk divalidasi</li>
+                        <li>Sistem menampilkan detail permintaan barang</li>
+                        <li>Petugas Procurement memeriksa kewajaran kebutuhan</li>
+                        <li>Petugas Procurement menekan tombol "Terima"</li>
+                        <li>Sistem mengubah status menjadi "Disetujui Procurement"</li>
+                        <li>Sistem meneruskan permintaan ke Petugas Budgeting</li>
+                    </ol>
+                </td></tr>
+                <tr><td><strong>Alur Alternatif</strong></td><td>
+                    <strong>5a.</strong> Petugas Procurement menolak permintaan:<br>
+                    &nbsp;&nbsp;5a.1. Petugas menekan tombol "Tolak"<br>
+                    &nbsp;&nbsp;5a.2. Sistem menampilkan form alasan penolakan<br>
+                    &nbsp;&nbsp;5a.3. Petugas mengisi alasan penolakan<br>
+                    &nbsp;&nbsp;5a.4. Sistem mengubah status menjadi "Ditolak Procurement"<br>
+                    &nbsp;&nbsp;5a.5. Sistem mengirim notifikasi penolakan ke Unit Pemohon
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-10 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-10: Verifikasi Ketersediaan Anggaran</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-10</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Verifikasi Ketersediaan Anggaran</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Petugas Budgeting</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Petugas Budgeting telah login; permintaan barang telah disetujui oleh Procurement</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Permintaan barang berubah status menjadi "Anggaran Tersedia" atau "Anggaran Tidak Tersedia"</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Petugas Budgeting memeriksa apakah unit pemohon memiliki anggaran yang cukup untuk pengadaan barang yang diminta.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Petugas Budgeting membuka daftar permintaan yang menunggu verifikasi anggaran</li>
+                        <li>Petugas Budgeting memilih permintaan untuk diverifikasi</li>
+                        <li>Sistem menampilkan detail permintaan dan informasi anggaran unit</li>
+                        <li>Petugas Budgeting memeriksa kecukupan anggaran</li>
+                        <li>Petugas Budgeting menekan tombol "Anggaran Tersedia"</li>
+                        <li>Sistem mengubah status menjadi "Anggaran Tersedia"</li>
+                        <li>Sistem mengirim notifikasi ke Petugas Procurement untuk mengirim Draft PO ke vendor</li>
+                    </ol>
+                </td></tr>
+                <tr><td><strong>Alur Alternatif</strong></td><td>
+                    <strong>5a.</strong> Anggaran tidak mencukupi:<br>
+                    &nbsp;&nbsp;5a.1. Petugas menekan tombol "Anggaran Tidak Tersedia"<br>
+                    &nbsp;&nbsp;5a.2. Petugas mengisi alasan penolakan<br>
+                    &nbsp;&nbsp;5a.3. Sistem mengirim notifikasi ke Unit Pemohon dengan alasan penolakan
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-06 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-06: Membuat Perjanjian Kerja Sama (PKS)</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-06</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Membuat Perjanjian Kerja Sama (PKS)</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Petugas Procurement</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Anggaran telah diverifikasi tersedia; Supplier telah mengirimkan PO (di luar aplikasi)</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Data PKS, detail barang, dan termin pembayaran tersimpan dalam sistem</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Petugas Procurement menindaklanjuti PO dari supplier dengan membuat Perjanjian Kerja Sama yang mencakup detail barang dan metode pembayaran termin.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Petugas Procurement memilih menu "Buat PKS"</li>
+                        <li>Sistem menampilkan form PKS</li>
+                        <li>Petugas mengisi: nomor kontrak, nomor draft PO, nomor PO, tanggal</li>
+                        <li>Petugas menginput detail barang: nama barang, jumlah, satuan, harga satuan, potongan harga (bisa multi-item)</li>
+                        <li>Sistem menghitung harga total otomatis</li>
+                        <li>Petugas menginput metode pembayaran termin: tanggal, persentase, nominal</li>
+                        <li>Petugas mengupload bukti PO dari supplier</li>
+                        <li>Petugas menekan tombol "Simpan PKS"</li>
+                        <li>Sistem memvalidasi dan menyimpan data</li>
+                    </ol>
+                </td></tr>
+                <tr><td><strong>Alur Alternatif</strong></td><td>
+                    <strong>9a.</strong> Data tidak lengkap: Sistem menampilkan pesan error dan meminta melengkapi data
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-11 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-11: Input Tagihan</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-11</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Input Tagihan</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Petugas Keuangan</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Barang telah diterima oleh Procurement; Procurement telah meneruskan tagihan ke Keuangan</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Data tagihan tersimpan dalam sistem dan diteruskan ke Kasir</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Petugas Keuangan mencatat tagihan dari vendor ke dalam sistem, termasuk mengupload berkas tagihan.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Petugas Keuangan membuka daftar tagihan yang perlu dicatat</li>
+                        <li>Petugas memilih tagihan untuk diinput</li>
+                        <li>Sistem menampilkan form tagihan</li>
+                        <li>Petugas mengisi: tanggal tagihan, nomor PO, nomor tagihan</li>
+                        <li>Petugas menginput detail barang: nama, jumlah, satuan, harga satuan, potongan harga</li>
+                        <li>Sistem menghitung harga total otomatis</li>
+                        <li>Petugas mengupload berkas tagihan dari supplier</li>
+                        <li>Petugas menekan tombol "Simpan Tagihan"</li>
+                        <li>Sistem menyimpan data dan meneruskan ke Kasir untuk pencairan</li>
+                    </ol>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-13 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-13: Pencairan Dana</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-13</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Pencairan Dana</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Kasir</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Tagihan telah diinput oleh Petugas Keuangan</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Dana telah dicairkan dan tercatat dalam sistem</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Kasir mencairkan dana sesuai nominal tagihan yang telah diverifikasi oleh bagian Keuangan.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Kasir membuka daftar tagihan yang menunggu pencairan</li>
+                        <li>Kasir memilih tagihan untuk dicairkan</li>
+                        <li>Sistem menampilkan detail tagihan</li>
+                        <li>Kasir mengisi: tanggal pembayaran, nomor tagihan, nominal pembayaran, potongan harga</li>
+                        <li>Sistem menghitung nominal pembayaran total</li>
+                        <li>Kasir menekan tombol "Cairkan Dana"</li>
+                        <li>Sistem menyimpan data pembayaran</li>
+                        <li>Sistem mengubah status tagihan menjadi "Lunas"</li>
+                    </ol>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- UC-14 -->
+    <div class="uc-narrative">
+        <div class="uc-narrative-header">UC-14: Generate Laporan Pengadaan Barang</div>
+        <div class="uc-narrative-body">
+            <table>
+                <tr><td><strong>Use Case ID</strong></td><td>UC-14</td></tr>
+                <tr><td><strong>Nama Use Case</strong></td><td>Generate Laporan Pengadaan Barang</td></tr>
+                <tr><td><strong>Aktor</strong></td><td>Semua Aktor yang berwenang / Sistem</td></tr>
+                <tr><td><strong>Pre-condition</strong></td><td>Pengguna telah login; terdapat data pengadaan dalam sistem</td></tr>
+                <tr><td><strong>Post-condition</strong></td><td>Laporan pengadaan barang berhasil di-generate sesuai periode yang dipilih</td></tr>
+                <tr><td><strong>Deskripsi</strong></td><td>Sistem menyediakan fitur untuk membuat laporan pengadaan barang berdasarkan periode harian, mingguan, bulanan, dan tahunan.</td></tr>
+                <tr><td><strong>Alur Utama (Main Flow)</strong></td><td>
+                    <ol>
+                        <li>Pengguna memilih menu "Laporan"</li>
+                        <li>Sistem menampilkan halaman laporan dengan filter</li>
+                        <li>Pengguna memilih periode: harian / mingguan / bulanan / tahunan</li>
+                        <li>Pengguna mengisi rentang tanggal (opsional)</li>
+                        <li>Pengguna menekan tombol "Generate Laporan"</li>
+                        <li>Sistem mengambil data sesuai filter</li>
+                        <li>Sistem menampilkan laporan dalam bentuk tabel</li>
+                        <li>Pengguna dapat mengunduh laporan dalam format PDF/Excel</li>
+                    </ol>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== SECTION B ===================== -->
+<div class="page page-break">
+    <h1 id="section-b"><span class="section-number">B</span> Spesifikasi Kebutuhan Fungsional</h1>
+
+    <h2 id="b1">B.1 Alur Proses Bisnis</h2>
+    <p>Proses bisnis pengadaan barang mengalir secara <strong>sekuensial</strong> dari tahap permintaan hingga pencairan dana, dengan beberapa titik keputusan (decision point) yang menentukan kelanjutan proses. Berikut adalah penjelasan alur proses secara keseluruhan:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tahap</th>
+                <th>Proses</th>
+                <th>Pelaku</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Input Permintaan Barang</td>
+                <td>Unit Pemohon</td>
+                <td>Data permintaan barang tersimpan</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Validasi Kebutuhan Barang</td>
+                <td>Petugas Procurement</td>
+                <td>Permintaan diterima/ditolak</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Verifikasi Ketersediaan Anggaran</td>
+                <td>Petugas Budgeting</td>
+                <td>Anggaran diverifikasi tersedia/tidak</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Pengiriman Draft PO ke Vendor</td>
+                <td>Petugas Procurement</td>
+                <td>Draft PO terkirim (di luar aplikasi)</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Supplier Memberikan PO</td>
+                <td>Supplier</td>
+                <td>PO diterima (di luar aplikasi)</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Pembuatan PKS + Termin + Upload PO</td>
+                <td>Petugas Procurement</td>
+                <td>PKS tersimpan dalam sistem</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Penerimaan Barang & Tagihan</td>
+                <td>Procurement → Keuangan</td>
+                <td>Tagihan diteruskan ke Keuangan</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Input Tagihan + Upload Berkas</td>
+                <td>Petugas Keuangan</td>
+                <td>Tagihan tercatat dalam sistem</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Pencairan Dana</td>
+                <td>Kasir</td>
+                <td>Dana dicairkan, pembayaran tercatat</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="b2">B.2 Activity Diagram / Flow Diagram</h2>
+    <p>Berikut adalah Activity Diagram yang menggambarkan alur proses bisnis pengadaan barang secara lengkap:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+flowchart TD
+    A([🟢 Mulai]) --> B["📝 Unit Pemohon<br/>Input Permintaan Barang<br/><i>tanggal, nama barang,<br/>jumlah, satuan</i>"]
+    B --> C{"🔍 Petugas Procurement<br/>Validasi Kebutuhan<br/>Barang"}
+    C -->|Ditolak| D["📩 Notifikasi Penolakan<br/>ke Unit Pemohon<br/><i>+ alasan penolakan</i>"]
+    D --> E([🔴 Selesai<br/>Permintaan Ditolak])
+    C -->|Diterima| F["📋 Diteruskan ke<br/>Petugas Budgeting"]
+    F --> G{"💰 Petugas Budgeting<br/>Verifikasi Ketersediaan<br/>Anggaran"}
+    G -->|Ditolak| H["📩 Notifikasi Penolakan<br/>ke Unit Pemohon<br/><i>+ alasan dari Budgeting</i>"]
+    H --> I([🔴 Selesai<br/>Anggaran Tidak Tersedia])
+    G -->|Diterima| J["✅ Informasi Anggaran<br/>Tersedia Diteruskan"]
+    J --> K["📤 Petugas Procurement<br/>Kirim Draft PO ke Vendor<br/><i>di luar aplikasi</i>"]
+    K --> L["📥 Supplier Memberikan PO<br/><i>di luar aplikasi</i>"]
+    L --> M["📄 Petugas Procurement<br/>Buat Perjanjian Kerja Sama<br/><i>nomor kontrak, nomor PO,<br/>detail barang, harga</i>"]
+    M --> N["💳 Input Metode<br/>Pembayaran Termin<br/><i>tanggal, persentase,<br/>nominal</i>"]
+    N --> O["📎 Upload Bukti PO<br/>dari Supplier"]
+    O --> P["📦 Penerimaan Barang<br/>oleh Procurement"]
+    P --> Q["📨 Vendor Kirim Tagihan<br/>ke Procurement"]
+    Q --> R["➡️ Procurement Meneruskan<br/>Tagihan ke Keuangan"]
+    R --> S["📝 Petugas Keuangan<br/>Input Tagihan<br/><i>tanggal, nomor PO,<br/>nomor tagihan, detail barang</i>"]
+    S --> T["📎 Upload Berkas<br/>Tagihan"]
+    T --> U["➡️ Sistem Meneruskan<br/>ke Kasir"]
+    U --> V["💵 Kasir<br/>Pencairan Dana<br/><i>tanggal pembayaran,<br/>nominal, potongan harga</i>"]
+    V --> W([🟢 Selesai<br/>Pembayaran Tercatat])
+
+    style A fill:#c6f6d5,stroke:#38a169
+    style E fill:#fed7d7,stroke:#e53e3e
+    style I fill:#fed7d7,stroke:#e53e3e
+    style W fill:#c6f6d5,stroke:#38a169
+    style C fill:#fefcbf,stroke:#d69e2e
+    style G fill:#fefcbf,stroke:#d69e2e
+        </div>
+        <div class="caption">Gambar B.1 — Activity Diagram / Flow Diagram Proses Pengadaan Barang</div>
+    </div>
+
+    <div class="info-box">
+        <strong>📌 Keterangan Diagram:</strong><br>
+        • <strong>Kotak hijau bulat</strong>: Titik awal dan akhir proses<br>
+        • <strong>Kotak kuning belah ketupat</strong>: Decision point (titik keputusan)<br>
+        • <strong>Kotak merah bulat</strong>: Titik akhir proses jika ditolak<br>
+        • <strong>Teks miring (italic)</strong>: Field input yang dibutuhkan pada tahap tersebut
+    </div>
+
+    <h3>B.2.1 Kebutuhan Fungsional Terperinci</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Kebutuhan Fungsional</th>
+                <th>Deskripsi</th>
+                <th>Prioritas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FR-01</td>
+                <td>Autentikasi Pengguna</td>
+                <td>Sistem harus menyediakan fitur login berbasis role (RBAC) untuk setiap aktor</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-02</td>
+                <td>Multi-item Input</td>
+                <td>Sistem harus mendukung input lebih dari satu barang dalam satu transaksi permintaan</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-03</td>
+                <td>Workflow Approval</td>
+                <td>Sistem harus mendukung alur persetujuan bertingkat (Procurement → Budgeting)</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-04</td>
+                <td>Notifikasi Penolakan</td>
+                <td>Sistem harus mengirim notifikasi ke Unit Pemohon saat permintaan ditolak, disertai alasan</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-05</td>
+                <td>Manajemen PKS</td>
+                <td>Sistem harus mendukung input PKS dengan detail barang, termin pembayaran, dan upload bukti PO</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-06</td>
+                <td>File Upload</td>
+                <td>Sistem harus mendukung upload file (bukti PO, berkas tagihan)</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>FR-07</td>
+                <td>Pencatatan Tagihan</td>
+                <td>Sistem harus mendukung input tagihan dengan kalkulasi otomatis harga total</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-08</td>
+                <td>Pencairan Dana</td>
+                <td>Sistem harus meneruskan tagihan yang sudah diinput ke Kasir untuk pencairan</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td>FR-09</td>
+                <td>Generate Laporan</td>
+                <td>Sistem harus mampu menggenerate laporan pengadaan (harian, mingguan, bulanan, tahunan)</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>FR-10</td>
+                <td>Kalkulasi Otomatis</td>
+                <td>Sistem harus menghitung harga total secara otomatis (jumlah × harga satuan − potongan harga)</td>
+                <td>High</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================== SECTION C ===================== -->
+<div class="page page-break">
+    <h1 id="section-c"><span class="section-number">C</span> Kebutuhan Sistem</h1>
+
+    <!-- C.1 ERD -->
+    <h2 id="c1">C.1 Entity Relationship Diagram (ERD)</h2>
+    <p>Berikut adalah Entity Relationship Diagram yang menggambarkan struktur data dan hubungan antar entitas dalam Sistem Informasi Pengadaan Barang:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+erDiagram
+    UNIT {
+        int id PK
+        string kode_unit
+        string nama_unit
+        decimal anggaran_total
+        decimal anggaran_terpakai
+    }
+
+    USERS {
+        int id PK
+        string username
+        string password
+        string nama_lengkap
+        string role
+        int unit_id FK
+        datetime created_at
+    }
+
+    PERMINTAAN_BARANG {
+        int id PK
+        string nomor_permintaan
+        date tanggal_pengajuan
+        int unit_id FK
+        int user_id FK
+        string status
+        text alasan_penolakan
+        datetime created_at
+        datetime updated_at
+    }
+
+    DETAIL_PERMINTAAN {
+        int id PK
+        int permintaan_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+    }
+
+    SUPPLIER {
+        int id PK
+        string nama_supplier
+        string alamat
+        string telepon
+        string email
+        string npwp
+    }
+
+    PERJANJIAN_KERJA_SAMA {
+        int id PK
+        int permintaan_id FK
+        int supplier_id FK
+        string nomor_kontrak
+        string nomor_draft_po
+        string nomor_po
+        date tanggal
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+
+    DETAIL_PKS {
+        int id PK
+        int pks_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+        decimal harga_satuan
+        decimal potongan_harga
+        decimal harga_total
+    }
+
+    TERMIN_PEMBAYARAN {
+        int id PK
+        int pks_id FK
+        date tanggal_pembayaran
+        decimal persentase_pembayaran
+        decimal nominal_pembayaran
+        string status
+    }
+
+    TAGIHAN {
+        int id PK
+        int pks_id FK
+        date tanggal_tagihan
+        string nomor_po
+        string nomor_tagihan
+        string status
+        datetime created_at
+    }
+
+    DETAIL_TAGIHAN {
+        int id PK
+        int tagihan_id FK
+        string nama_barang
+        int jumlah
+        string satuan
+        decimal harga_satuan
+        decimal potongan_harga
+        decimal harga_total
+    }
+
+    PEMBAYARAN {
+        int id PK
+        int tagihan_id FK
+        date tanggal_pembayaran
+        string nomor_tagihan
+        decimal nominal_pembayaran
+        decimal potongan_harga
+        decimal nominal_total
+        string status
+        datetime created_at
+    }
+
+    FILE_UPLOAD {
+        int id PK
+        string entity_type
+        int entity_id
+        string nama_file
+        string path_file
+        int uploaded_by FK
+        datetime uploaded_at
+    }
+
+    NOTIFIKASI {
+        int id PK
+        int user_id FK
+        string judul
+        text pesan
+        string tipe
+        int reference_id
+        boolean is_read
+        datetime created_at
+    }
+
+    UNIT ||--o{ USERS : "memiliki"
+    UNIT ||--o{ PERMINTAAN_BARANG : "mengajukan"
+    USERS ||--o{ PERMINTAAN_BARANG : "membuat"
+    PERMINTAAN_BARANG ||--|{ DETAIL_PERMINTAAN : "berisi"
+    PERMINTAAN_BARANG ||--o| PERJANJIAN_KERJA_SAMA : "menghasilkan"
+    SUPPLIER ||--o{ PERJANJIAN_KERJA_SAMA : "terlibat dalam"
+    PERJANJIAN_KERJA_SAMA ||--|{ DETAIL_PKS : "berisi"
+    PERJANJIAN_KERJA_SAMA ||--|{ TERMIN_PEMBAYARAN : "memiliki"
+    PERJANJIAN_KERJA_SAMA ||--o{ TAGIHAN : "menghasilkan"
+    TAGIHAN ||--|{ DETAIL_TAGIHAN : "berisi"
+    TAGIHAN ||--o| PEMBAYARAN : "dibayar melalui"
+    USERS ||--o{ NOTIFIKASI : "menerima"
+    USERS ||--o{ FILE_UPLOAD : "mengunggah"
+        </div>
+        <div class="caption">Gambar C.1 — Entity Relationship Diagram (ERD) Sistem Informasi Pengadaan Barang</div>
+    </div>
+
+    <h3>C.1.1 Penjelasan Entitas dan Relasi</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Relasi</th>
+                <th>Kardinalitas</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>UNIT → USERS</td>
+                <td>One-to-Many</td>
+                <td>Satu unit memiliki banyak pengguna</td>
+            </tr>
+            <tr>
+                <td>UNIT → PERMINTAAN_BARANG</td>
+                <td>One-to-Many</td>
+                <td>Satu unit dapat mengajukan banyak permintaan</td>
+            </tr>
+            <tr>
+                <td>PERMINTAAN → DETAIL_PERMINTAAN</td>
+                <td>One-to-Many</td>
+                <td>Satu permintaan berisi satu atau lebih barang (multi-item)</td>
+            </tr>
+            <tr>
+                <td>PERMINTAAN → PKS</td>
+                <td>One-to-One</td>
+                <td>Satu permintaan yang disetujui menghasilkan satu PKS</td>
+            </tr>
+            <tr>
+                <td>SUPPLIER → PKS</td>
+                <td>One-to-Many</td>
+                <td>Satu supplier dapat terlibat dalam banyak PKS</td>
+            </tr>
+            <tr>
+                <td>PKS → DETAIL_PKS</td>
+                <td>One-to-Many</td>
+                <td>Satu PKS berisi satu atau lebih detail barang</td>
+            </tr>
+            <tr>
+                <td>PKS → TERMIN_PEMBAYARAN</td>
+                <td>One-to-Many</td>
+                <td>Satu PKS memiliki satu atau lebih termin pembayaran</td>
+            </tr>
+            <tr>
+                <td>PKS → TAGIHAN</td>
+                <td>One-to-Many</td>
+                <td>Satu PKS dapat menghasilkan banyak tagihan</td>
+            </tr>
+            <tr>
+                <td>TAGIHAN → DETAIL_TAGIHAN</td>
+                <td>One-to-Many</td>
+                <td>Satu tagihan berisi satu atau lebih detail barang</td>
+            </tr>
+            <tr>
+                <td>TAGIHAN → PEMBAYARAN</td>
+                <td>One-to-One</td>
+                <td>Satu tagihan dibayar melalui satu pembayaran</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================== C.2 UML CLASS DIAGRAM ===================== -->
+<div class="page page-break">
+    <h2 id="c2">C.2 UML — Class Diagram</h2>
+    <p>Berikut adalah Class Diagram yang merepresentasikan struktur class, atribut, dan method dalam Sistem Informasi Pengadaan Barang:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+classDiagram
+    class Unit {
+        -int id
+        -String kode_unit
+        -String nama_unit
+        -BigDecimal anggaran_total
+        -BigDecimal anggaran_terpakai
+        +getSisaAnggaran() BigDecimal
+        +updateAnggaran(nominal) void
+    }
+
+    class User {
+        -int id
+        -String username
+        -String password
+        -String nama_lengkap
+        -Role role
+        -int unit_id
+        +login(username, password) boolean
+        +logout() void
+        +getNotifikasi() List~Notifikasi~
+    }
+
+    class PermintaanBarang {
+        -int id
+        -String nomor_permintaan
+        -Date tanggal_pengajuan
+        -Status status
+        -String alasan_penolakan
+        +buatPermintaan() void
+        +tambahItem(detail) void
+        +approve() void
+        +reject(alasan) void
+        +getDetails() List~DetailPermintaan~
+    }
+
+    class DetailPermintaan {
+        -int id
+        -int permintaan_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+    }
+
+    class Supplier {
+        -int id
+        -String nama_supplier
+        -String alamat
+        -String telepon
+        -String email
+        -String npwp
+    }
+
+    class PerjanjianKerjaSama {
+        -int id
+        -String nomor_kontrak
+        -String nomor_draft_po
+        -String nomor_po
+        -Date tanggal
+        -String status
+        +buatPKS() void
+        +tambahDetailBarang(detail) void
+        +tambahTermin(termin) void
+        +uploadBuktiPO(file) void
+        +hitungTotal() BigDecimal
+    }
+
+    class DetailPKS {
+        -int id
+        -int pks_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+        -BigDecimal harga_satuan
+        -BigDecimal potongan_harga
+        -BigDecimal harga_total
+        +hitungHargaTotal() BigDecimal
+    }
+
+    class TerminPembayaran {
+        -int id
+        -int pks_id
+        -Date tanggal_pembayaran
+        -BigDecimal persentase
+        -BigDecimal nominal
+        -String status
+    }
+
+    class Tagihan {
+        -int id
+        -Date tanggal_tagihan
+        -String nomor_po
+        -String nomor_tagihan
+        -String status
+        +inputTagihan() void
+        +tambahDetail(detail) void
+        +uploadBerkas(file) void
+        +teruskanKeKasir() void
+        +hitungTotal() BigDecimal
+    }
+
+    class DetailTagihan {
+        -int id
+        -int tagihan_id
+        -String nama_barang
+        -int jumlah
+        -String satuan
+        -BigDecimal harga_satuan
+        -BigDecimal potongan_harga
+        -BigDecimal harga_total
+        +hitungHargaTotal() BigDecimal
+    }
+
+    class Pembayaran {
+        -int id
+        -Date tanggal_pembayaran
+        -String nomor_tagihan
+        -BigDecimal nominal_pembayaran
+        -BigDecimal potongan_harga
+        -BigDecimal nominal_total
+        -String status
+        +cairkanDana() void
+        +hitungNominalTotal() BigDecimal
+    }
+
+    class FileUpload {
+        -int id
+        -String entity_type
+        -int entity_id
+        -String nama_file
+        -String path_file
+        +upload(file) void
+        +download() File
+    }
+
+    class Notifikasi {
+        -int id
+        -String judul
+        -String pesan
+        -String tipe
+        -boolean is_read
+        +kirimNotifikasi() void
+        +tandaiDibaca() void
+    }
+
+    class Laporan {
+        +generateHarian(tanggal) Report
+        +generateMingguan(minggu) Report
+        +generateBulanan(bulan) Report
+        +generateTahunan(tahun) Report
+        +exportPDF() File
+        +exportExcel() File
+    }
+
+    Unit "1" --> "*" User
+    Unit "1" --> "*" PermintaanBarang
+    User "1" --> "*" PermintaanBarang
+    PermintaanBarang "1" --> "1..*" DetailPermintaan
+    PermintaanBarang "1" --> "0..1" PerjanjianKerjaSama
+    Supplier "1" --> "*" PerjanjianKerjaSama
+    PerjanjianKerjaSama "1" --> "1..*" DetailPKS
+    PerjanjianKerjaSama "1" --> "1..*" TerminPembayaran
+    PerjanjianKerjaSama "1" --> "*" Tagihan
+    Tagihan "1" --> "1..*" DetailTagihan
+    Tagihan "1" --> "0..1" Pembayaran
+    User "1" --> "*" Notifikasi
+        </div>
+        <div class="caption">Gambar C.2 — UML Class Diagram Sistem Informasi Pengadaan Barang</div>
+    </div>
+
+    <!-- C.3 Sequence Diagram -->
+    <h2 id="c3">C.3 UML — Sequence Diagram</h2>
+    <p>Berikut adalah Sequence Diagram yang menggambarkan interaksi antar objek untuk alur utama proses pengadaan barang:</p>
+
+    <h3>C.3.1 Sequence Diagram: Alur Permintaan hingga Persetujuan Anggaran</h3>
+    <div class="diagram-container">
+        <div class="mermaid">
+sequenceDiagram
+    actor UP as Unit Pemohon
+    participant SIS as Sistem
+    actor PC as Petugas Procurement
+    actor PB as Petugas Budgeting
+
+    UP->>SIS: Login
+    SIS-->>UP: Dashboard Unit Pemohon
+
+    UP->>SIS: Input Permintaan Barang<br/>(tanggal, nama barang, jumlah, satuan)
+    SIS->>SIS: Validasi Data
+    SIS-->>UP: Konfirmasi Permintaan Tersimpan
+    SIS->>PC: Notifikasi Permintaan Baru
+
+    PC->>SIS: Login
+    SIS-->>PC: Dashboard Procurement
+    PC->>SIS: Buka Detail Permintaan
+    SIS-->>PC: Tampilkan Detail Permintaan
+
+    alt Permintaan Diterima
+        PC->>SIS: Klik "Terima"
+        SIS->>SIS: Update Status = Disetujui Procurement
+        SIS->>PB: Notifikasi Verifikasi Anggaran
+        
+        PB->>SIS: Login
+        SIS-->>PB: Dashboard Budgeting
+        PB->>SIS: Buka Detail Permintaan
+        SIS-->>PB: Tampilkan Detail + Info Anggaran Unit
+
+        alt Anggaran Tersedia
+            PB->>SIS: Klik "Anggaran Tersedia"
+            SIS->>SIS: Update Status = Anggaran Disetujui
+            SIS->>PC: Notifikasi Siap Kirim Draft PO
+        else Anggaran Tidak Tersedia
+            PB->>SIS: Klik "Tolak" + Input Alasan
+            SIS->>SIS: Update Status = Ditolak Budgeting
+            SIS->>UP: Notifikasi Penolakan + Alasan
+        end
+    else Permintaan Ditolak
+        PC->>SIS: Klik "Tolak" + Input Alasan
+        SIS->>SIS: Update Status = Ditolak Procurement
+        SIS->>UP: Notifikasi Penolakan + Alasan
+    end
+        </div>
+        <div class="caption">Gambar C.3a — Sequence Diagram: Alur Permintaan hingga Persetujuan Anggaran</div>
+    </div>
+
+    <h3>C.3.2 Sequence Diagram: Alur PKS hingga Pencairan Dana</h3>
+    <div class="diagram-container">
+        <div class="mermaid">
+sequenceDiagram
+    actor PC as Petugas Procurement
+    participant SIS as Sistem
+    actor PK as Petugas Keuangan
+    actor KS as Kasir
+
+    Note over PC,SIS: Setelah Draft PO dikirim & PO diterima dari Supplier (di luar aplikasi)
+
+    PC->>SIS: Input Data PKS<br/>(no kontrak, no draft PO,<br/>no PO, tanggal, detail barang)
+    PC->>SIS: Input Termin Pembayaran<br/>(tanggal, persentase, nominal)
+    PC->>SIS: Upload Bukti PO
+    SIS->>SIS: Simpan Data PKS
+    SIS-->>PC: Konfirmasi PKS Tersimpan
+
+    Note over PC,SIS: Barang diterima, Vendor kirim Tagihan (di luar aplikasi)
+
+    PC->>SIS: Teruskan Tagihan ke Keuangan
+    SIS->>PK: Notifikasi Tagihan Baru
+
+    PK->>SIS: Login
+    SIS-->>PK: Dashboard Keuangan
+    PK->>SIS: Input Tagihan<br/>(tanggal, no PO, no tagihan,<br/>detail barang, harga)
+    PK->>SIS: Upload Berkas Tagihan
+    SIS->>SIS: Simpan Data Tagihan
+    SIS->>KS: Notifikasi Pencairan Dana
+
+    KS->>SIS: Login
+    SIS-->>KS: Dashboard Kasir
+    KS->>SIS: Buka Detail Tagihan
+    SIS-->>KS: Tampilkan Detail Tagihan
+    KS->>SIS: Input Pencairan Dana<br/>(tanggal, no tagihan,<br/>nominal, potongan harga)
+    SIS->>SIS: Hitung Nominal Total
+    SIS->>SIS: Simpan Pembayaran
+    SIS-->>KS: Konfirmasi Pencairan Berhasil
+    SIS->>SIS: Update Status = Lunas
+        </div>
+        <div class="caption">Gambar C.3b — Sequence Diagram: Alur PKS hingga Pencairan Dana</div>
+    </div>
+</div>
+
+<!-- ===================== C.4 DESAIN INTERFACE ===================== -->
+<div class="page page-break">
+    <h2 id="c4">C.4 Desain Interface / Sketch Mockup</h2>
+    <p>Berikut adalah desain interface sederhana (wireframe/mockup) untuk halaman-halaman utama dalam Sistem Informasi Pengadaan Barang:</p>
+
+    <!-- Mockup 1: Login -->
+    <h3>C.4.1 Halaman Login</h3>
+    <div class="mockup-container">
+        <div style="display:flex;justify-content:center;align-items:center;min-height:280px;background:linear-gradient(135deg,#1a365d,#2b6cb0);padding:32px;">
+            <div style="background:white;border-radius:8px;padding:32px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+                <div style="text-align:center;margin-bottom:20px;">
+                    <div style="font-size:14pt;font-weight:800;color:#1a365d;">📦 SI Pengadaan Barang</div>
+                    <div style="font-size:8pt;color:#718096;margin-top:4px;">Silakan login untuk melanjutkan</div>
+                </div>
+                <div class="mock-form-group">
+                    <label>Username</label>
+                    <div class="mock-input">procurement_user</div>
+                </div>
+                <div class="mock-form-group">
+                    <label>Password</label>
+                    <div class="mock-input">••••••••</div>
+                </div>
+                <div style="margin-top:16px;">
+                    <div class="mock-btn mock-btn-primary" style="width:100%;text-align:center;display:block;">🔐 Login</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.1 — Halaman Login</div></div>
+
+    <!-- Mockup 2: Form Permintaan Barang -->
+    <h3>C.4.2 Form Permintaan Barang (Unit Pemohon)</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang
+            <span style="margin-left:auto;font-size:8pt;font-weight:400;">👤 Ahmad Fauzi — Unit IT | 🔔 2</span>
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item active">📝 Permintaan Barang</div>
+                <div class="menu-item">📋 Riwayat Permintaan</div>
+                <div class="menu-item">🔔 Notifikasi</div>
+                <div class="menu-item">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">📝 Form Permintaan Barang Baru</h4>
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Nomor Permintaan</label>
+                        <div class="mock-input">PRM-2026-0045 (auto-generate)</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Tanggal Pengajuan</label>
+                        <div class="mock-input">📅 29/06/2026</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Unit Pemohon</label>
+                        <div class="mock-input">Unit IT (auto-fill)</div>
+                    </div>
+                </div>
+
+                <h4 style="font-size:10pt;">📦 Detail Barang</h4>
+                <table class="mock-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Laptop ASUS VivoBook 15</td>
+                            <td>5</td>
+                            <td>Unit</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 8px;font-size:7pt;">🗑️ Hapus</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Mouse Wireless Logitech M331</td>
+                            <td>10</td>
+                            <td>Pcs</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 8px;font-size:7pt;">🗑️ Hapus</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Keyboard Mechanical</td>
+                            <td>5</td>
+                            <td>Pcs</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 8px;font-size:7pt;">🗑️ Hapus</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin:8px 0;">
+                    <span class="mock-btn mock-btn-secondary" style="font-size:8pt;">➕ Tambah Barang</span>
+                </div>
+                <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e2e8f0;">
+                    <span class="mock-btn mock-btn-primary">📤 Ajukan Permintaan</span>
+                    <span class="mock-btn mock-btn-secondary">💾 Simpan Draft</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.2 — Form Permintaan Barang (Multi-item)</div></div>
+
+    <!-- Mockup 3: Validasi Procurement -->
+    <h3>C.4.3 Dashboard Validasi Permintaan (Petugas Procurement)</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang
+            <span style="margin-left:auto;font-size:8pt;font-weight:400;">👤 Budi Santoso — Procurement | 🔔 5</span>
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item active">✅ Validasi Permintaan</div>
+                <div class="menu-item">📄 Perjanjian Kerja Sama</div>
+                <div class="menu-item">📎 Upload PO</div>
+                <div class="menu-item">📨 Tagihan Masuk</div>
+                <div class="menu-item">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">✅ Daftar Permintaan Menunggu Validasi</h4>
+                <table class="mock-table">
+                    <thead>
+                        <tr>
+                            <th>No Permintaan</th>
+                            <th>Tanggal</th>
+                            <th>Unit Pemohon</th>
+                            <th>Jumlah Item</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PRM-2026-0045</strong></td>
+                            <td>29/06/2026</td>
+                            <td>Unit IT</td>
+                            <td>3 item</td>
+                            <td><span class="mock-badge pending">⏳ Menunggu</span></td>
+                            <td>
+                                <span class="mock-btn mock-btn-primary" style="padding:2px 8px;font-size:7pt;">👁️ Detail</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>PRM-2026-0044</strong></td>
+                            <td>28/06/2026</td>
+                            <td>Unit HR</td>
+                            <td>2 item</td>
+                            <td><span class="mock-badge pending">⏳ Menunggu</span></td>
+                            <td>
+                                <span class="mock-btn mock-btn-primary" style="padding:2px 8px;font-size:7pt;">👁️ Detail</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>PRM-2026-0043</strong></td>
+                            <td>27/06/2026</td>
+                            <td>Unit Marketing</td>
+                            <td>5 item</td>
+                            <td><span class="mock-badge approved">✅ Disetujui</span></td>
+                            <td>
+                                <span class="mock-btn mock-btn-secondary" style="padding:2px 8px;font-size:7pt;">👁️ Detail</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top:20px;padding:16px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;">
+                    <h4 style="margin-top:0;font-size:10pt;">📋 Detail Permintaan: PRM-2026-0045</h4>
+                    <div style="font-size:9pt;margin-bottom:8px;"><strong>Pemohon:</strong> Ahmad Fauzi | <strong>Unit:</strong> Unit IT | <strong>Tanggal:</strong> 29/06/2026</div>
+                    <table class="mock-table">
+                        <thead><tr><th>No</th><th>Nama Barang</th><th>Jumlah</th><th>Satuan</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>Laptop ASUS VivoBook 15</td><td>5</td><td>Unit</td></tr>
+                            <tr><td>2</td><td>Mouse Wireless Logitech M331</td><td>10</td><td>Pcs</td></tr>
+                            <tr><td>3</td><td>Keyboard Mechanical</td><td>5</td><td>Pcs</td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:12px;">
+                        <span class="mock-btn mock-btn-success">✅ Terima Permintaan</span>
+                        <span class="mock-btn mock-btn-danger">❌ Tolak Permintaan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.3 — Dashboard Validasi Permintaan (Procurement)</div></div>
+</div>
+
+<div class="page page-break">
+    <!-- Mockup 4: Form PKS -->
+    <h3>C.4.4 Form Perjanjian Kerja Sama / PKS (Petugas Procurement)</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang — Form Perjanjian Kerja Sama
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item">✅ Validasi Permintaan</div>
+                <div class="menu-item active">📄 Perjanjian Kerja Sama</div>
+                <div class="menu-item">📎 Upload PO</div>
+                <div class="menu-item">📨 Tagihan Masuk</div>
+                <div class="menu-item">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">📄 Form Perjanjian Kerja Sama (PKS)</h4>
+
+                <div style="background:#ebf8ff;padding:10px 14px;border-radius:4px;font-size:8.5pt;margin-bottom:12px;">
+                    ℹ️ Berdasarkan Permintaan: <strong>PRM-2026-0045</strong> — Unit IT
+                </div>
+
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Nomor Kontrak</label>
+                        <div class="mock-input">KTR-2026-0032</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Nomor Draft PO</label>
+                        <div class="mock-input">DPO-2026-0045</div>
+                    </div>
+                </div>
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Nomor PO (dari Supplier)</label>
+                        <div class="mock-input">PO/SUP/2026/1234</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Tanggal PKS</label>
+                        <div class="mock-input">📅 29/06/2026</div>
+                    </div>
+                </div>
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Supplier</label>
+                        <div class="mock-input">PT. Teknologi Nusantara</div>
+                    </div>
+                </div>
+
+                <h4 style="font-size:10pt;">📦 Detail Barang</h4>
+                <table class="mock-table">
+                    <thead>
+                        <tr><th>No</th><th>Nama Barang</th><th>Jml</th><th>Satuan</th><th>Harga Satuan</th><th>Potongan</th><th>Harga Total</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td><td>Laptop ASUS VivoBook 15</td><td>5</td><td>Unit</td>
+                            <td>Rp 8.500.000</td><td>Rp 500.000</td><td>Rp 42.000.000</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 6px;font-size:7pt;">🗑️</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td><td>Mouse Wireless Logitech</td><td>10</td><td>Pcs</td>
+                            <td>Rp 250.000</td><td>Rp 0</td><td>Rp 2.500.000</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 6px;font-size:7pt;">🗑️</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td><td>Keyboard Mechanical</td><td>5</td><td>Pcs</td>
+                            <td>Rp 750.000</td><td>Rp 50.000</td><td>Rp 3.500.000</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 6px;font-size:7pt;">🗑️</span></td>
+                        </tr>
+                        <tr style="background:#ebf8ff;font-weight:600;">
+                            <td colspan="6" style="text-align:right;">Grand Total:</td>
+                            <td colspan="2">Rp 48.000.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="mock-btn mock-btn-secondary" style="font-size:8pt;">➕ Tambah Barang</span>
+
+                <h4 style="font-size:10pt;">💳 Metode Pembayaran (Termin)</h4>
+                <table class="mock-table">
+                    <thead>
+                        <tr><th>Termin</th><th>Tanggal Pembayaran</th><th>Persentase</th><th>Nominal</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>15/07/2026</td><td>50%</td><td>Rp 24.000.000</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 6px;font-size:7pt;">🗑️</span></td></tr>
+                        <tr><td>2</td><td>15/08/2026</td><td>50%</td><td>Rp 24.000.000</td>
+                            <td><span class="mock-btn mock-btn-danger" style="padding:2px 6px;font-size:7pt;">🗑️</span></td></tr>
+                    </tbody>
+                </table>
+                <span class="mock-btn mock-btn-secondary" style="font-size:8pt;">➕ Tambah Termin</span>
+
+                <h4 style="font-size:10pt;">📎 Upload Bukti PO</h4>
+                <div style="border:2px dashed #cbd5e0;padding:20px;text-align:center;border-radius:6px;color:#718096;font-size:9pt;">
+                    📁 Drag & drop file atau <span style="color:#3182ce;text-decoration:underline;">klik untuk memilih file</span><br>
+                    <span style="font-size:7.5pt;">Format: PDF, JPG, PNG (Maks. 5MB)</span>
+                </div>
+
+                <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e2e8f0;">
+                    <span class="mock-btn mock-btn-primary">💾 Simpan PKS</span>
+                    <span class="mock-btn mock-btn-secondary">↩️ Batal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.4 — Form Perjanjian Kerja Sama (PKS) dengan Detail Barang dan Termin</div></div>
+</div>
+
+<div class="page page-break">
+    <!-- Mockup 5: Form Tagihan Keuangan -->
+    <h3>C.4.5 Form Input Tagihan (Petugas Keuangan)</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang — Input Tagihan
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item active">📝 Input Tagihan</div>
+                <div class="menu-item">📋 Riwayat Tagihan</div>
+                <div class="menu-item">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">📝 Form Input Tagihan</h4>
+
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Tanggal Tagihan</label>
+                        <div class="mock-input">📅 29/06/2026</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Nomor PO</label>
+                        <div class="mock-input">PO/SUP/2026/1234</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Nomor Tagihan (dari Vendor)</label>
+                        <div class="mock-input">INV/TN/2026/5678</div>
+                    </div>
+                </div>
+
+                <h4 style="font-size:10pt;">📦 Detail Barang Tagihan</h4>
+                <table class="mock-table">
+                    <thead>
+                        <tr><th>No</th><th>Nama Barang</th><th>Jml</th><th>Satuan</th><th>Harga Satuan</th><th>Potongan</th><th>Harga Total</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Laptop ASUS VivoBook 15</td><td>5</td><td>Unit</td><td>Rp 8.500.000</td><td>Rp 500.000</td><td>Rp 42.000.000</td></tr>
+                        <tr><td>2</td><td>Mouse Wireless Logitech</td><td>10</td><td>Pcs</td><td>Rp 250.000</td><td>Rp 0</td><td>Rp 2.500.000</td></tr>
+                        <tr><td>3</td><td>Keyboard Mechanical</td><td>5</td><td>Pcs</td><td>Rp 750.000</td><td>Rp 50.000</td><td>Rp 3.500.000</td></tr>
+                        <tr style="background:#ebf8ff;font-weight:600;">
+                            <td colspan="6" style="text-align:right;">Total Tagihan:</td>
+                            <td>Rp 48.000.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="font-size:10pt;">📎 Upload Berkas Tagihan</h4>
+                <div style="border:2px dashed #cbd5e0;padding:16px;text-align:center;border-radius:6px;color:#718096;font-size:9pt;">
+                    📁 Drag & drop file atau <span style="color:#3182ce;text-decoration:underline;">klik untuk memilih file</span>
+                </div>
+
+                <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e2e8f0;">
+                    <span class="mock-btn mock-btn-primary">💾 Simpan Tagihan</span>
+                    <span class="mock-btn mock-btn-secondary">↩️ Batal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.5 — Form Input Tagihan (Petugas Keuangan)</div></div>
+
+    <!-- Mockup 6: Form Pencairan Dana Kasir -->
+    <h3>C.4.6 Form Pencairan Dana (Kasir)</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang — Pencairan Dana
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item active">💵 Pencairan Dana</div>
+                <div class="menu-item">📋 Riwayat Pembayaran</div>
+                <div class="menu-item">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">💵 Form Pencairan Dana</h4>
+
+                <div style="background:#f0fff4;padding:10px 14px;border-radius:4px;font-size:8.5pt;margin-bottom:12px;border:1px solid #c6f6d5;">
+                    ✅ Tagihan <strong>INV/TN/2026/5678</strong> telah diverifikasi oleh Bagian Keuangan dan siap untuk dicairkan.
+                </div>
+
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Tanggal Pembayaran</label>
+                        <div class="mock-input">📅 29/06/2026</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Nomor Tagihan</label>
+                        <div class="mock-input">INV/TN/2026/5678</div>
+                    </div>
+                </div>
+                <div class="mock-form-row">
+                    <div class="mock-form-group">
+                        <label>Nominal Pembayaran</label>
+                        <div class="mock-input">Rp 48.000.000</div>
+                    </div>
+                    <div class="mock-form-group">
+                        <label>Potongan Harga</label>
+                        <div class="mock-input">Rp 0</div>
+                    </div>
+                </div>
+                <div class="mock-form-row">
+                    <div class="mock-form-group" style="max-width:50%;">
+                        <label>Nominal Pembayaran Total</label>
+                        <div class="mock-input" style="background:#ebf8ff;font-weight:600;color:#1a365d;font-size:11pt;">Rp 48.000.000</div>
+                    </div>
+                </div>
+
+                <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e2e8f0;">
+                    <span class="mock-btn mock-btn-success">💵 Cairkan Dana</span>
+                    <span class="mock-btn mock-btn-secondary">↩️ Batal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.6 — Form Pencairan Dana (Kasir)</div></div>
+</div>
+
+<div class="page page-break">
+    <!-- Mockup 7: Halaman Laporan -->
+    <h3>C.4.7 Halaman Generate Laporan</h3>
+    <div class="mockup-container">
+        <div class="mockup-header">
+            <span>📦</span> SI Pengadaan Barang — Laporan Pengadaan
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="menu-item">📊 Dashboard</div>
+                <div class="menu-item">📝 Permintaan</div>
+                <div class="menu-item active">📈 Laporan</div>
+            </div>
+            <div class="mockup-content">
+                <h4 style="margin-top:0;font-size:12pt;color:#1a365d;">📈 Generate Laporan Pengadaan Barang</h4>
+
+                <div style="background:#f7fafc;padding:12px;border-radius:6px;border:1px solid #e2e8f0;margin-bottom:16px;">
+                    <div class="mock-form-row">
+                        <div class="mock-form-group">
+                            <label>Periode Laporan</label>
+                            <div class="mock-input">▾ Bulanan</div>
+                        </div>
+                        <div class="mock-form-group">
+                            <label>Bulan</label>
+                            <div class="mock-input">📅 Juni 2026</div>
+                        </div>
+                        <div class="mock-form-group" style="display:flex;align-items:flex-end;">
+                            <span class="mock-btn mock-btn-primary">🔍 Generate</span>
+                        </div>
+                    </div>
+                    <div style="font-size:8pt;color:#718096;margin-top:8px;">
+                        Pilihan periode: <span style="color:#3182ce;">Harian</span> | <span style="color:#3182ce;font-weight:600;">Bulanan</span> | <span style="color:#3182ce;">Mingguan</span> | <span style="color:#3182ce;">Tahunan</span>
+                    </div>
+                </div>
+
+                <h4 style="font-size:10pt;">📊 Hasil Laporan — Juni 2026</h4>
+                <div style="display:flex;gap:12px;margin-bottom:12px;">
+                    <div style="flex:1;background:#ebf8ff;padding:12px;border-radius:6px;text-align:center;">
+                        <div style="font-size:8pt;color:#4a5568;">Total Permintaan</div>
+                        <div style="font-size:16pt;font-weight:800;color:#1a365d;">45</div>
+                    </div>
+                    <div style="flex:1;background:#f0fff4;padding:12px;border-radius:6px;text-align:center;">
+                        <div style="font-size:8pt;color:#4a5568;">Disetujui</div>
+                        <div style="font-size:16pt;font-weight:800;color:#38a169;">38</div>
+                    </div>
+                    <div style="flex:1;background:#fed7d7;padding:12px;border-radius:6px;text-align:center;">
+                        <div style="font-size:8pt;color:#4a5568;">Ditolak</div>
+                        <div style="font-size:16pt;font-weight:800;color:#e53e3e;">7</div>
+                    </div>
+                    <div style="flex:1;background:#fefcbf;padding:12px;border-radius:6px;text-align:center;">
+                        <div style="font-size:8pt;color:#4a5568;">Total Nilai</div>
+                        <div style="font-size:14pt;font-weight:800;color:#975a16;">Rp 1.2M</div>
+                    </div>
+                </div>
+
+                <table class="mock-table">
+                    <thead>
+                        <tr><th>No</th><th>No Permintaan</th><th>Unit</th><th>Status</th><th>Nilai</th><th>Tanggal</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>PRM-2026-0045</td><td>Unit IT</td><td><span class="mock-badge approved">Lunas</span></td><td>Rp 48.000.000</td><td>29/06/2026</td></tr>
+                        <tr><td>2</td><td>PRM-2026-0044</td><td>Unit HR</td><td><span class="mock-badge pending">Proses</span></td><td>Rp 12.500.000</td><td>28/06/2026</td></tr>
+                        <tr><td>3</td><td>PRM-2026-0043</td><td>Unit Marketing</td><td><span class="mock-badge rejected">Ditolak</span></td><td>-</td><td>27/06/2026</td></tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top:12px;">
+                    <span class="mock-btn mock-btn-primary">📥 Download PDF</span>
+                    <span class="mock-btn mock-btn-success">📥 Download Excel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="diagram-container"><div class="caption">Mockup C.4.7 — Halaman Generate Laporan Pengadaan Barang</div></div>
+
+    <div class="info-box">
+        <strong>📌 Catatan Mockup:</strong> Desain di atas merupakan wireframe/sketch sederhana yang menggambarkan tata letak (layout) dan elemen-elemen utama pada setiap halaman. Desain final akan disesuaikan dengan branding dan style guide organisasi pada tahap development.
+    </div>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#ebf8ff',
+            primaryTextColor: '#1a365d',
+            primaryBorderColor: '#3182ce',
+            lineColor: '#4a5568',
+            secondaryColor: '#f7fafc',
+            tertiaryColor: '#ffffff',
+            fontSize: '13px'
+        },
+        flowchart: {
+            useMaxWidth: true,
+            htmlLabels: true,
+            curve: 'basis'
+        },
+        sequence: {
+            useMaxWidth: true,
+            actorMargin: 50,
+            messageMargin: 40
+        }
+    });
+</script>
+</body>
+</html>

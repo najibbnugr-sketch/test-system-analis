@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen 2 — Model Proses Pengembangan Sistem (SDLC)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2b6cb0;
+            --accent: #3182ce;
+            --bg: #ffffff;
+            --text: #1a202c;
+            --text-light: #4a5568;
+            --border: #e2e8f0;
+            --bg-light: #f7fafc;
+            --bg-blue: #ebf8ff;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #d69e2e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); font-size: 11pt; }
+        .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 40mm 25mm; }
+        .cover-badge { display: inline-block; background: var(--primary); color: white; padding: 8px 24px; border-radius: 20px; font-size: 10pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+        .cover h1 { font-size: 28pt; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 16px; }
+        .cover h2 { font-size: 14pt; font-weight: 400; color: var(--text-light); margin-bottom: 48px; }
+        .cover-meta { border-top: 2px solid var(--border); padding-top: 32px; font-size: 10pt; color: var(--text-light); }
+        .cover-meta p { margin: 6px 0; }
+        h1 { font-size: 20pt; font-weight: 800; color: var(--primary); margin: 32px 0 16px 0; padding-bottom: 8px; border-bottom: 3px solid var(--accent); }
+        h2 { font-size: 15pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+        h3 { font-size: 12pt; font-weight: 600; color: var(--primary-light); margin: 20px 0 10px 0; }
+        h4 { font-size: 11pt; font-weight: 600; color: var(--text); margin: 16px 0 8px 0; }
+        p { margin: 8px 0; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+        th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 9.5pt; }
+        td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+        tr:nth-child(even) { background: var(--bg-light); }
+        ul, ol { margin: 8px 0 8px 24px; }
+        li { margin: 4px 0; }
+        .info-box { background: var(--bg-blue); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .info-box strong { color: var(--primary); }
+        .warning-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #f0fff4; border-left: 4px solid var(--success); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .diagram-container { margin: 20px 0; padding: 16px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+        .diagram-container .caption { text-align: center; font-size: 9.5pt; font-weight: 600; color: var(--text-light); margin-top: 12px; font-style: italic; }
+        .mermaid { display: flex; justify-content: center; }
+        .section-number { display: inline-block; background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 10pt; font-weight: 700; margin-right: 8px; }
+        .comparison-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 12px 0; }
+        .comparison-card h4 { margin-top: 0; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { font-size: 10pt; }
+            .page { padding: 15mm 20mm; max-width: none; }
+            .cover { min-height: auto; padding: 60mm 20mm; }
+            .page-break { page-break-before: always; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-badge">Dokumen 2 dari 5</div>
+    <h1>Model Proses<br>Pengembangan Sistem</h1>
+    <h2>Software Development Life Cycle (SDLC)<br>Sistem Informasi Pengadaan Barang</h2>
+    <div style="width: 80px; height: 4px; background: var(--accent); margin: 0 auto 40px;"></div>
+    <div class="cover-meta">
+        <p><strong>Mata Kuliah:</strong> Analisis dan Perancangan Sistem Informasi</p>
+        <p><strong>Bobot Nilai:</strong> 25 Poin</p>
+        <p><strong>Cakupan:</strong> Pemilihan Model SDLC dan Justifikasi</p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page page-break">
+    <h1><span class="section-number">1</span> Pemilihan Model SDLC</h1>
+
+    <h2>1.1 Model yang Dipilih: Agile Scrum</h2>
+
+    <p>Untuk pengembangan Sistem Informasi Pengadaan Barang dengan <strong>durasi implementasi 3 bulan (12 minggu)</strong>, model proses pengembangan yang paling efektif adalah <strong>Agile Scrum</strong>.</p>
+
+    <div class="success-box">
+        <strong>✅ Keputusan:</strong> Model pengembangan yang dipilih adalah <strong>Agile Scrum</strong> dengan sprint duration <strong>2 minggu per sprint</strong>, menghasilkan total <strong>5 sprint</strong> aktif ditambah <strong>2 minggu</strong> untuk fase awal (inception) dan fase akhir (deployment & training).
+    </div>
+
+    <h2>1.2 Diagram Model Agile Scrum</h2>
+    <p>Berikut adalah visualisasi model Agile Scrum yang akan diterapkan pada proyek ini:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph LR
+    A["📋 Product<br/>Backlog"] --> B["📝 Sprint<br/>Planning"]
+    B --> C["🔄 Sprint<br/>2 Minggu"]
+    C --> D["📦 Sprint<br/>Review"]
+    D --> E["🔍 Sprint<br/>Retrospective"]
+    E --> B
+
+    C --> F["⚡ Daily<br/>Standup"]
+    F --> C
+
+    D --> G["✅ Potentially<br/>Shippable<br/>Product"]
+
+    style A fill:#ebf8ff,stroke:#3182ce,stroke-width:2px
+    style C fill:#f0fff4,stroke:#38a169,stroke-width:2px
+    style G fill:#fefcbf,stroke:#d69e2e,stroke-width:2px
+        </div>
+        <div class="caption">Gambar 1.1 — Siklus Agile Scrum</div>
+    </div>
+
+    <h3>1.2.1 Alur Sprint dalam Proyek</h3>
+    <div class="diagram-container">
+        <div class="mermaid">
+gantt
+    title Timeline Pengembangan Agile Scrum - SI Pengadaan Barang (12 Minggu)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d %b
+
+    section Inception
+    Analisis dan Perencanaan           :a1, 2026-07-01, 14d
+
+    section Sprint 1
+    Modul Autentikasi dan Permintaan   :s1, after a1, 14d
+
+    section Sprint 2
+    Modul Procurement dan Budgeting    :s2, after s1, 14d
+
+    section Sprint 3
+    Modul PKS dan Tagihan              :s3, after s2, 14d
+
+    section Sprint 4
+    Modul Keuangan dan Kasir           :s4, after s3, 14d
+
+    section Sprint 5
+    Modul Laporan dan Integrasi        :s5, after s4, 14d
+
+    section Deployment
+    UAT Testing dan Go-Live            :d1, after s5, 14d
+        </div>
+        <div class="caption">Gambar 1.2 — Gantt Chart Sprint dalam Agile Scrum</div>
+    </div>
+</div>
+
+<div class="page page-break">
+    <h1><span class="section-number">2</span> Alasan Pemilihan Agile Scrum</h1>
+
+    <p>Pemilihan model Agile Scrum didasarkan pada analisis karakteristik proyek dan kebutuhan stakeholder. Berikut adalah alasan-alasan utama:</p>
+
+    <h2>2.1 Analisis Karakteristik Kasus</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Karakteristik Kasus</th>
+                <th>Relevansi dengan Agile Scrum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><strong>Timeline pendek (3 bulan)</strong><br>Proyek harus selesai dalam waktu yang terbatas</td>
+                <td>Agile Scrum memungkinkan <strong>delivery bertahap</strong> setiap 2 minggu melalui sprint, sehingga progress dapat terukur dan risiko keterlambatan dapat dideteksi lebih awal</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><strong>Multi-stakeholder</strong><br>Melibatkan 5 aktor berbeda dengan kebutuhan spesifik</td>
+                <td>Sprint Review di setiap akhir sprint memungkinkan setiap stakeholder memberikan <strong>feedback langsung</strong> terhadap fitur yang dikembangkan sebelum melanjutkan ke sprint berikutnya</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>Proses bisnis berlapis</strong><br>Alur approval bertingkat (Procurement → Budgeting → PKS → Tagihan → Kasir)</td>
+                <td>Pendekatan iteratif memungkinkan pembangunan <strong>modul per modul</strong> sesuai alur bisnis, sehingga integrasi antar modul dapat diuji di setiap sprint</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><strong>Kebutuhan sudah cukup terdefinisi</strong><br>Spesifikasi input/output sudah jelas dari awal</td>
+                <td>Product Backlog dapat disusun dengan baik di awal, namun Agile tetap memberikan <strong>fleksibilitas</strong> untuk penyesuaian jika ada perubahan kebutuhan</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>Risiko integrasi tinggi</strong><br>Banyak modul yang saling tergantung</td>
+                <td>Continuous Integration dalam setiap sprint memastikan <strong>integrasi awal</strong> dan mengurangi risiko konflik di akhir proyek</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><strong>Kebutuhan validasi dari user</strong><br>Setiap modul perlu divalidasi oleh pengguna akhir</td>
+                <td>Sprint Review dan demo di setiap sprint memberikan kesempatan user untuk <strong>memvalidasi</strong> fungsionalitas sebelum dilanjutkan</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2.2 Perbandingan dengan Model Lain</h2>
+    <p>Berikut perbandingan antara Agile Scrum dengan model SDLC konvensional lainnya dalam konteks kasus ini:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Aspek</th>
+                <th>Waterfall</th>
+                <th>V-Model</th>
+                <th style="background:#2b6cb0;">Agile Scrum ✅</th>
+                <th>RAD</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Timeline 3 Bulan</strong></td>
+                <td>❌ Berisiko — semua testing di akhir, tidak ada ruang untuk perbaikan</td>
+                <td>⚠️ Terlalu rigid untuk timeline pendek</td>
+                <td style="background:#f0fff4;"><strong>✅ Ideal</strong> — delivery bertahap setiap 2 minggu</td>
+                <td>⚠️ Mungkin, tapi kurang terstruktur</td>
+            </tr>
+            <tr>
+                <td><strong>Perubahan Requirement</strong></td>
+                <td>❌ Sangat sulit mengakomodasi perubahan</td>
+                <td>❌ Sulit, harus kembali ke fase sebelumnya</td>
+                <td style="background:#f0fff4;"><strong>✅ Mudah</strong> — backlog dapat di-update setiap sprint</td>
+                <td>✅ Cukup fleksibel</td>
+            </tr>
+            <tr>
+                <td><strong>Feedback Stakeholder</strong></td>
+                <td>❌ Hanya di awal dan akhir</td>
+                <td>❌ Terbatas pada tahap tertentu</td>
+                <td style="background:#f0fff4;"><strong>✅ Setiap sprint</strong> (2 minggu sekali)</td>
+                <td>✅ Ada, tapi kurang terstruktur</td>
+            </tr>
+            <tr>
+                <td><strong>Manajemen Risiko</strong></td>
+                <td>❌ Risiko terdeteksi terlambat</td>
+                <td>⚠️ Moderat</td>
+                <td style="background:#f0fff4;"><strong>✅ Baik</strong> — retrospective setiap sprint</td>
+                <td>⚠️ Moderat</td>
+            </tr>
+            <tr>
+                <td><strong>Dokumentasi</strong></td>
+                <td>✅ Sangat lengkap</td>
+                <td>✅ Sangat lengkap</td>
+                <td style="background:#f0fff4;"><strong>⚠️ Cukup</strong> — working software over docs, tapi tetap ada</td>
+                <td>❌ Minimal</td>
+            </tr>
+            <tr>
+                <td><strong>Multi-stakeholder</strong></td>
+                <td>❌ Sulit mengelola ekspektasi</td>
+                <td>❌ Komunikasi terbatas</td>
+                <td style="background:#f0fff4;"><strong>✅ Optimal</strong> — daily standup, sprint review</td>
+                <td>⚠️ Moderat</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="warning-box">
+        <strong>⚠️ Mengapa Waterfall Tidak Dipilih?</strong><br>
+        Model Waterfall tidak cocok untuk kasus ini karena:<br>
+        1. Timeline 3 bulan terlalu ketat untuk pendekatan linear (analisis → desain → implementasi → testing → deployment berurutan)<br>
+        2. Jika ditemukan kesalahan di tahap testing, tidak ada waktu cukup untuk kembali ke tahap sebelumnya<br>
+        3. Stakeholder baru bisa melihat hasil di akhir proyek, meningkatkan risiko ketidaksesuaian dengan ekspektasi
+    </div>
+</div>
+
+<div class="page page-break">
+    <h2>2.3 Pemetaan Fitur ke Sprint</h2>
+    <p>Berikut adalah pemetaan fitur/modul ke dalam setiap sprint berdasarkan prioritas dan ketergantungan:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sprint</th>
+                <th>Minggu</th>
+                <th>Modul / Fitur</th>
+                <th>User Stories</th>
+                <th>Deliverables</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align:center;"><strong>Inception</strong></td>
+                <td>1-2</td>
+                <td>Analisis & Perancangan</td>
+                <td>-</td>
+                <td>Product Backlog, Sprint Plan, Arsitektur, Database Design, UI/UX Wireframe</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;background:#ebf8ff;"><strong>Sprint 1</strong></td>
+                <td>3-4</td>
+                <td>Autentikasi & Permintaan Barang</td>
+                <td>
+                    • Sebagai user, saya dapat login sesuai role<br>
+                    • Sebagai Unit Pemohon, saya dapat input permintaan barang multi-item<br>
+                    • Sebagai Unit Pemohon, saya dapat melihat status permintaan
+                </td>
+                <td>Modul Login (RBAC), Form Permintaan Barang, Dashboard Unit Pemohon</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;background:#f0fff4;"><strong>Sprint 2</strong></td>
+                <td>5-6</td>
+                <td>Validasi & Verifikasi Anggaran</td>
+                <td>
+                    • Sebagai Procurement, saya dapat memvalidasi permintaan<br>
+                    • Sebagai Budgeting, saya dapat memverifikasi anggaran<br>
+                    • Sebagai Unit Pemohon, saya menerima notifikasi penolakan
+                </td>
+                <td>Dashboard Procurement, Dashboard Budgeting, Modul Notifikasi</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;background:#fefcbf;"><strong>Sprint 3</strong></td>
+                <td>7-8</td>
+                <td>PKS & Termin Pembayaran</td>
+                <td>
+                    • Sebagai Procurement, saya dapat membuat PKS<br>
+                    • Sebagai Procurement, saya dapat input termin pembayaran<br>
+                    • Sebagai Procurement, saya dapat upload bukti PO
+                </td>
+                <td>Form PKS, Modul Termin, Modul Upload File</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;background:#fed7e2;"><strong>Sprint 4</strong></td>
+                <td>9-10</td>
+                <td>Tagihan & Pencairan Dana</td>
+                <td>
+                    • Sebagai Keuangan, saya dapat input tagihan<br>
+                    • Sebagai Keuangan, saya dapat upload berkas tagihan<br>
+                    • Sebagai Kasir, saya dapat mencairkan dana
+                </td>
+                <td>Form Tagihan, Dashboard Keuangan, Form Pencairan Dana</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;background:#e9d8fd;"><strong>Sprint 5</strong></td>
+                <td>11-12</td>
+                <td>Laporan & Integrasi</td>
+                <td>
+                    • Sebagai user, saya dapat generate laporan<br>
+                    • Sebagai user, saya dapat download laporan PDF/Excel
+                </td>
+                <td>Modul Laporan, Integration Testing, Bug Fixing</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;"><strong>Deployment</strong></td>
+                <td>13-14</td>
+                <td>UAT & Go-Live</td>
+                <td>-</td>
+                <td>UAT, Training, Dokumentasi, Deployment, Serah Terima</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2.4 Artefak Scrum yang Dihasilkan</h2>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+graph TD
+    subgraph Artefak["📋 Artefak Scrum"]
+        PB["📋 Product Backlog<br/><i>Daftar seluruh fitur<br/>yang dibutuhkan</i>"]
+        SB["📝 Sprint Backlog<br/><i>Daftar item yang<br/>dikerjakan per sprint</i>"]
+        IN["📦 Increment<br/><i>Produk yang siap<br/>di-review setiap sprint</i>"]
+    end
+
+    subgraph Roles["👥 Peran Scrum"]
+        PO["🎯 Product Owner<br/><i>Mewakili stakeholder,<br/>prioritas backlog</i>"]
+        SM["🛡️ Scrum Master<br/><i>Fasilitator,<br/>penghilang hambatan</i>"]
+        DT["💻 Dev Team<br/><i>Tim pengembang<br/>cross-functional</i>"]
+    end
+
+    subgraph Events["📅 Event Scrum"]
+        SP["📝 Sprint Planning"]
+        DS["⚡ Daily Standup<br/><i>15 menit/hari</i>"]
+        SR["📦 Sprint Review"]
+        RT["🔍 Retrospective"]
+    end
+
+    PO --> PB
+    PB --> SP
+    SP --> SB
+    SB --> DS
+    DS --> SR
+    SR --> IN
+    SR --> RT
+    RT --> SP
+    SM --> DS
+    DT --> SB
+
+    style Artefak fill:#ebf8ff,stroke:#3182ce
+    style Roles fill:#f0fff4,stroke:#38a169
+    style Events fill:#fefcbf,stroke:#d69e2e
+        </div>
+        <div class="caption">Gambar 2.1 — Artefak, Peran, dan Event dalam Scrum</div>
+    </div>
+
+    <h2>2.5 Kesimpulan</h2>
+    <p>Model <strong>Agile Scrum</strong> merupakan pilihan yang paling tepat untuk pengembangan Sistem Informasi Pengadaan Barang karena:</p>
+
+    <ol>
+        <li><strong>Adaptabilitas tinggi</strong> — Mampu mengakomodasi perubahan kebutuhan dalam timeline yang ketat</li>
+        <li><strong>Transparansi proses</strong> — Sprint review dan daily standup memastikan semua stakeholder mengetahui progress</li>
+        <li><strong>Early delivery</strong> — Fitur dapat digunakan secara bertahap, tidak perlu menunggu semua selesai</li>
+        <li><strong>Risk mitigation</strong> — Masalah terdeteksi lebih awal melalui iterasi pendek</li>
+        <li><strong>Quality assurance</strong> — Testing dilakukan di setiap sprint, bukan hanya di akhir</li>
+        <li><strong>Stakeholder satisfaction</strong> — Feedback loop yang pendek memastikan produk sesuai ekspektasi</li>
+    </ol>
+
+    <div class="info-box">
+        <strong>📌 Catatan:</strong> Meskipun menggunakan Agile Scrum, dokumentasi tetap akan dibuat secara memadai mengingat sistem ini akan digunakan oleh organisasi/instansi. Dokumentasi meliputi: SRS, technical documentation, user manual, dan SOP penggunaan sistem.
+    </div>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#ebf8ff',
+            primaryTextColor: '#1a365d',
+            primaryBorderColor: '#3182ce',
+            lineColor: '#4a5568',
+            secondaryColor: '#f7fafc',
+            tertiaryColor: '#ffffff',
+            fontSize: '13px'
+        },
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+        gantt: { useMaxWidth: true }
+    });
+</script>
+</body>
+</html>

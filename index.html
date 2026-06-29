@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Pengadaan Barang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --google-blue: #1a73e8;
+            --google-blue-hover: #1557b0;
+            --google-blue-light: #e8f0fe;
+            
+            --bg-body: #ffffff;
+            --bg-sidebar: #f8f9fa;
+            --bg-card: #ffffff;
+            --border-color: #dadce0;
+            
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --text-muted: #70757a;
+            
+            --success-color: #137333;
+            --success-bg: #e6f4ea;
+            --warning-color: #b06000;
+            --warning-bg: #fef7e0;
+            --danger-color: #c5221f;
+            --danger-bg: #fce8e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+
+        .login-logo {
+            width: 48px;
+            height: 48px;
+            background-color: var(--google-blue-light);
+            color: var(--google-blue);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .login-card h2 {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .login-form-group {
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .login-form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .login-input:focus {
+            border-color: var(--google-blue);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--google-blue);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--google-blue-hover);
+        }
+
+        .demo-mode-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .demo-mode-divider::before,
+        .demo-mode-divider::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .demo-mode-divider span {
+            padding: 0 8px;
+        }
+
+        .demo-toggle-btn {
+            background: none;
+            border: 1px solid var(--google-blue);
+            color: var(--google-blue);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .demo-toggle-btn:hover {
+            background-color: var(--google-blue-light);
+        }
+
+        .demo-profiles-container {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+            max-height: 180px;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 4px;
+        }
+
+        .demo-profile-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .demo-profile-item:hover {
+            background-color: var(--bg-sidebar);
+            border-color: var(--google-blue);
+        }
+
+        .demo-profile-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--google-blue-light);
+            color: var(--google-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-profile-info h4 {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .demo-profile-info p {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+
+        /* --- SIDEBAR --- */
+        aside {
+            width: 240px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .brand {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            height: 64px;
+        }
+
+        .brand-icon {
+            color: var(--google-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-text h1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .brand-text p {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 16px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+        }
+
+        .menu-item button {
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            border-radius: 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.15s;
+        }
+
+        .menu-item button:hover {
+            color: var(--text-primary);
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        .menu-item.active button {
+            color: var(--google-blue);
+            background-color: var(--google-blue-light);
+            font-weight: 600;
+        }
+
+        .user-profile {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-profile-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--google-blue-light);
+            color: var(--google-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-info h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-info p {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--danger-color);
+        }
+
+
+        /* --- MAIN CONTENT --- */
+        main {
+            margin-left: 240px;
+            flex-grow: 1;
+            padding: 24px 32px;
+            max-width: 100%;
+            width: calc(100% - 240px);
+            transition: margin-left 0.2s ease-in-out;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            min-height: 64px;
+            gap: 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .header-title h2 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .budget-card {
+            background-color: var(--google-blue-light);
+            border: 1px solid rgba(26, 115, 232, 0.2);
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: var(--google-blue);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- STATS GRID --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-info p {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-info h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            background-color: #f1f3f4;
+        }
+
+
+        /* --- PANELS --- */
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* --- CARDS & FORMS --- */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title svg {
+            color: var(--text-secondary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--google-blue);
+        }
+
+        textarea.form-control {
+            resize: none;
+            height: 80px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.15s;
+        }
+
+        .btn-primary { background-color: var(--google-blue); color: #ffffff; }
+        .btn-primary:hover { background-color: var(--google-blue-hover); }
+        .btn-secondary { background-color: #ffffff; border-color: var(--border-color); color: var(--text-primary); }
+        .btn-secondary:hover { background-color: #f8f9fa; }
+        .btn-danger { background-color: var(--danger-color); color: #ffffff; }
+        .btn-danger:hover { background-color: #a51b19; }
+        .btn-success { background-color: var(--success-color); color: #ffffff; }
+        .btn-success:hover { background-color: #0f5b28; }
+
+        /* --- TABLES --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+            min-width: 750px;
+        }
+
+        th {
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #f8f9fa;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        /* --- BADGES --- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .badge-pending-procurement { background-color: var(--warning-bg); color: var(--warning-color); }
+        .badge-pending-budgeting { background-color: #f3e5f5; color: #7b1fa2; }
+        .badge-pending-pks { background-color: var(--google-blue-light); color: var(--google-blue); }
+        .badge-pending-invoice { background-color: #fce4ec; color: #c2185b; }
+        .badge-pending-payment { background-color: #fff3e0; color: #e65100; }
+        .badge-completed { background-color: var(--success-bg); color: var(--success-color); }
+        .badge-rejected { background-color: var(--danger-bg); color: var(--danger-color); }
+
+        /* --- CRUD ACTION BUTTONS (ICONS ONLY) --- */
+        .icon-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.15s, color 0.15s;
+        }
+        
+        .icon-action-btn.edit-btn {
+            color: var(--google-blue);
+        }
+        
+        .icon-action-btn.edit-btn:hover {
+            background-color: var(--google-blue-light);
+        }
+        
+        .icon-action-btn.delete-btn {
+            color: var(--danger-color);
+        }
+        
+        .icon-action-btn.delete-btn:hover {
+            background-color: var(--danger-bg);
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease-out;
+            padding: 16px;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+            transform: scale(0.95);
+            transition: transform 0.15s ease-out;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- CHARTS GRID --- */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* --- RESPONSIVE DRAWER & OVERLAY --- */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 90;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            aside {
+                transform: translateX(-100%);
+            }
+            
+            aside.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+                padding: 16px;
+            }
+
+            .menu-toggle-btn {
+                display: flex;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-title p {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- --- SIDEBAR OVERLAY --- -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+
+    <!-- --- LOGIN SCREEN --- -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <div class="login-logo">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
+            </div>
+            <h2>Masuk ke Sistem</h2>
+            <p>Masukkan akun pengadaan Anda</p>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="login-form-group">
+                    <label for="loginUsername">Nama Pengguna (Username)</label>
+                    <input type="text" id="loginUsername" class="login-input" placeholder="Contoh: ahmad" required>
+                </div>
+                <div class="login-form-group">
+                    <label for="loginPassword">Kata Sandi (Password)</label>
+                    <input type="password" id="loginPassword" class="login-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-btn">Masuk</button>
+            </form>
+
+            <div class="demo-mode-divider">
+                <span>atau gunakan</span>
+            </div>
+
+            <button class="demo-toggle-btn" onclick="toggleDemoProfiles()">Mode Demo</button>
+            
+            <div class="demo-profiles-container" id="demoProfiles">
+                <div class="demo-profile-item" onclick="loginAsDemo('unit_pemohon')">
+                    <div class="demo-profile-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="demo-profile-info">
+                        <h4>Ahmad</h4>
+                        <p>Unit Pemohon (IT & Infrastruktur)</p>
+                    </div>
+                </div>
+                <div class="demo-profile-item" onclick="loginAsDemo('procurement')">
+                    <div class="demo-profile-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="demo-profile-info">
+                        <h4>Budi</h4>
+                        <p>Petugas Procurement (Pengadaan)</p>
+                    </div>
+                </div>
+                <div class="demo-profile-item" onclick="loginAsDemo('budgeting')">
+                    <div class="demo-profile-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="demo-profile-info">
+                        <h4>Citra</h4>
+                        <p>Petugas Budgeting (Verifikator Anggaran)</p>
+                    </div>
+                </div>
+                <div class="demo-profile-item" onclick="loginAsDemo('keuangan')">
+                    <div class="demo-profile-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="demo-profile-info">
+                        <h4>Dina</h4>
+                        <p>Petugas Keuangan (Input Tagihan)</p>
+                    </div>
+                </div>
+                <div class="demo-profile-item" onclick="loginAsDemo('kasir')">
+                    <div class="demo-profile-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="demo-profile-info">
+                        <h4>Eko</h4>
+                        <p>Petugas Kasir (Pembayaran)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- --- SIDEBAR --- -->
+    <aside id="sidebar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg>
+            </div>
+            <div class="brand-text">
+                <h1>SIP BARANG</h1>
+                <p>Pengadaan & Pembayaran</p>
+            </div>
+        </div>
+
+        <ul class="menu-list" id="sidebarMenu">
+            <!-- Dynamic Sidebar Menu -->
+        </ul>
+
+        <div class="user-profile">
+            <div class="user-profile-inner">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+                <div class="user-info">
+                    <h4 id="userName">Nama</h4>
+                    <p id="userRole">Role</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()" title="Logout">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+            </button>
+        </div>
+    </aside>
+
+    <!-- --- MAIN CONTENT --- -->
+    <main>
+        <header>
+            <div class="header-left">
+                <button class="menu-toggle-btn" onclick="toggleSidebar(true)" aria-label="Open menu">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <div class="header-title">
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <p id="pageSubtitle">Ringkasan sistem pengadaan barang</p>
+                </div>
+            </div>
+            <div>
+                <span class="budget-card" id="budgetDisplay">Sisa Anggaran: Rp 0</span>
+            </div>
+        </header>
+
+        <!-- STATS GRID -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <p>Total Pengajuan</p>
+                    <h3 id="statTotal">0</h3>
+                </div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H5V5h14v8z"/></svg>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <p>Dalam Proses</p>
+                    <h3 id="statProses">0</h3>
+                </div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <p>Selesai</p>
+                    <h3 id="statSelesai">0</h3>
+                </div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <p>Ditolak</p>
+                    <h3 id="statDitolak">0</h3>
+                </div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: DASHBOARD --- -->
+        <div class="panel active" id="panel-dashboard">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                    Aktivitas Terbaru
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Waktu</th>
+                                <th>Aktivitas</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: FORM PERMINTAAN (Unit Pemohon) --- -->
+        <div class="panel" id="panel-form-permintaan">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Form Pengajuan Permintaan Barang
+                </div>
+                <form id="formPermintaan" onsubmit="submitPermintaan(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="inputNama">Nama Barang</label>
+                            <input type="text" id="inputNama" class="form-control" placeholder="Contoh: Laptop ThinkPad L14" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputJumlah">Jumlah</label>
+                            <input type="number" id="inputJumlah" class="form-control" min="1" placeholder="Jumlah" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSatuan">Satuan</label>
+                            <select id="inputSatuan" class="form-control">
+                                <option value="Unit">Unit</option>
+                                <option value="Pcs">Pcs</option>
+                                <option value="Box">Box</option>
+                                <option value="Rim">Rim</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kirim Pengajuan</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- --- PANEL: RIWAYAT PERMINTAAN (Unit Pemohon) --- -->
+        <div class="panel" id="panel-riwayat-permintaan">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+                    Daftar Permintaan Saya
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Catatan / Alasan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="riwayatPermintaanList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: VALIDASI PERMINTAAN (Procurement) --- -->
+        <div class="panel" id="panel-validasi-permintaan">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    Validasi Permintaan Kebutuhan Barang
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Pengaju</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="validasiPermintaanList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: KELOLA PKS & PO (Procurement) --- -->
+        <div class="panel" id="panel-kelola-pks">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    Pembuatan PKS & PO Supplier
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Pengaju</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kelolaPKSList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: VERIFIKASI ANGGARAN (Budgeting) --- -->
+        <div class="panel" id="panel-verifikasi-anggaran">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    Verifikasi Anggaran Unit
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Pengaju</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="verifikasiAnggaranList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: INPUT TAGIHAN (Keuangan) --- -->
+        <div class="panel" id="panel-input-tagihan">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg>
+                    Input Tagihan Invoice Berdasarkan PKS
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID PKS</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Harga Satuan</th>
+                                <th>Total Biaya</th>
+                                <th>Termin</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inputTagihanList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: PENCAIRAN DANA (Kasir) --- -->
+        <div class="panel" id="panel-pencairan-dana">
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                    Pencairan Dana Tagihan
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Transaksi</th>
+                                <th>Nomor Invoice</th>
+                                <th>Barang</th>
+                                <th>Total Biaya</th>
+                                <th>Termin</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pencairanDanaList">
+                            <!-- Rendered Dinamis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- PANEL: LAPORAN REALISASI (Semua Role - Read Only) --- -->
+        <div class="panel" id="panel-laporan-realisasi">
+            <div class="charts-grid">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                        Status Pengadaan Barang
+                    </div>
+                    <canvas id="chartStatus" style="max-height: 260px;"></canvas>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                        Realisasi Anggaran vs Sisa
+                    </div>
+                    <canvas id="chartAnggaran" style="max-height: 260px;"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                    Tren Pengeluaran Realisasi Bulanan
+                </div>
+                <canvas id="chartTren" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- --- MODALS --- -->
+
+    <!-- Modal Edit Permintaan (CRUD - Update) -->
+    <div class="modal" id="modalEditPermintaan">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ubah Pengajuan Permintaan</h3>
+                <button class="close-btn" onclick="closeModal('modalEditPermintaan')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <form onsubmit="submitEditPermintaan(event)">
+                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label for="editNama">Nama Barang</label>
+                        <input type="text" id="editNama" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editJumlah">Jumlah</label>
+                        <input type="number" id="editJumlah" class="form-control" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editSatuan">Satuan</label>
+                        <select id="editSatuan" class="form-control">
+                            <option value="Unit">Unit</option>
+                            <option value="Pcs">Pcs</option>
+                            <option value="Box">Box</option>
+                            <option value="Rim">Rim</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalEditPermintaan')">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Procurement -->
+    <div class="modal" id="modalProcurement">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Validasi Pengajuan Kebutuhan</h3>
+                <button class="close-btn" onclick="closeModal('modalProcurement')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="procurementCatatan">Alasan Penolakan (Wajib diisi jika ditolak)</label>
+                <textarea id="procurementCatatan" class="form-control" placeholder="Tulis catatan atau alasan penolakan..."></textarea>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn btn-danger" onclick="prosesProcurement(false)">Tolak</button>
+                <button class="btn btn-primary" onclick="prosesProcurement(true)">Setujui</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Budgeting -->
+    <div class="modal" id="modalBudgeting">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Verifikasi Alokasi Anggaran</h3>
+                <button class="close-btn" onclick="closeModal('modalBudgeting')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;" id="budgetingInfo">Verifikasi alokasi anggaran...</p>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn btn-danger" onclick="prosesBudgeting(false)">Tolak (Anggaran Tidak Cukup)</button>
+                <button class="btn btn-primary" onclick="prosesBudgeting(true)">Setujui (Anggaran Tersedia)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal PKS -->
+    <div class="modal" id="modalPKS">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pembuatan PKS & PO</h3>
+                <button class="close-btn" onclick="closeModal('modalPKS')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <form onsubmit="prosesPKS(event)">
+                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label for="pksHarga">Harga Satuan (Rp)</label>
+                        <input type="number" id="pksHarga" class="form-control" required min="1000" placeholder="Contoh: 12000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="pksTermin">Termin Pembayaran</label>
+                        <select id="pksTermin" class="form-control">
+                            <option value="1 Kali Bayar (Pelunasan 100%)">1 Kali Bayar (Pelunasan 100%)</option>
+                            <option value="2 Tahap (DP 50%, Pelunasan 50%)">2 Tahap (DP 50%, Pelunasan 50%)</option>
+                            <option value="3 Tahap (DP 30%, Progress 40%, Pelunasan 30%)">3 Tahap (DP 30%, Progress 40%, Pelunasan 30%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pksFile">Unggah File PO (Telah Disetujui Supplier)</label>
+                        <input type="file" id="pksFile" class="form-control" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalPKS')">Batal</button>
+                    <button type="submit" class="btn btn-primary">Terbitkan PKS</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Invoice -->
+    <div class="modal" id="modalInvoice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Input Tagihan Invoice</h3>
+                <button class="close-btn" onclick="closeModal('modalInvoice')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <form onsubmit="prosesInvoice(event)">
+                <div class="form-grid" style="grid-template-columns: 1fr; gap: 12px;">
+                    <div class="form-group">
+                        <label for="invoiceNomor">Nomor Invoice</label>
+                        <input type="text" id="invoiceNomor" class="form-control" required placeholder="Contoh: INV/2026/06/0122">
+                    </div>
+                    <div class="form-group">
+                        <label for="invoiceFile">Unggah Berkas Tagihan</label>
+                        <input type="file" id="invoiceFile" class="form-control" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modalInvoice')">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Invoice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- --- JAVASCRIPT LOGIC --- -->
+    <script>
+        // Database Mock (Banyak Data Dummy dengan Berbagai Status Proses)
+        let db = {
+            budget: 650000000,
+            realisasi: 280000000,
+            transaksi: [
+                {
+                    id: "TX-001",
+                    tanggal: "2026-06-10",
+                    barang: "Laptop ThinkPad L14",
+                    jumlah: 15,
+                    satuan: "Unit",
+                    pengaju: "IT & Infrastruktur",
+                    status: "Completed",
+                    harga: 14000000,
+                    termin: "1 Kali Bayar (Pelunasan 100%)",
+                    invoice: "INV/2026/06/0001",
+                    catatan: ""
+                },
+                {
+                    id: "TX-002",
+                    tanggal: "2026-06-12",
+                    barang: "Meja Rapat Kayu Jati",
+                    jumlah: 2,
+                    satuan: "Unit",
+                    pengaju: "Fasilitas & Umum",
+                    status: "Completed",
+                    harga: 35000000,
+                    termin: "2 Tahap (DP 50%, Pelunasan 50%)",
+                    invoice: "INV/2026/06/0004",
+                    catatan: ""
+                },
+                {
+                    id: "TX-003",
+                    tanggal: "2026-06-25",
+                    barang: "Server Rack 42U",
+                    jumlah: 2,
+                    satuan: "Unit",
+                    pengaju: "IT & Infrastruktur",
+                    status: "Pending Procurement",
+                    harga: 0,
+                    termin: "",
+                    invoice: "",
+                    catatan: ""
+                },
+                {
+                    id: "TX-004",
+                    tanggal: "2026-06-26",
+                    barang: "AC Split 2 PK",
+                    jumlah: 8,
+                    satuan: "Unit",
+                    pengaju: "Fasilitas & Umum",
+                    status: "Pending Budgeting",
+                    harga: 0,
+                    termin: "",
+                    invoice: "",
+                    catatan: ""
+                },
+                {
+                    id: "TX-005",
+                    tanggal: "2026-06-27",
+                    barang: "Kursi Kerja Ergonomis",
+                    jumlah: 30,
+                    satuan: "Unit",
+                    pengaju: "HRD & GA",
+                    status: "Pending PKS",
+                    harga: 0,
+                    termin: "",
+                    invoice: "",
+                    catatan: ""
+                },
+                {
+                    id: "TX-006",
+                    tanggal: "2026-06-28",
+                    barang: "Lisensi Microsoft 365",
+                    jumlah: 50,
+                    satuan: "Pcs",
+                    pengaju: "IT & Infrastruktur",
+                    status: "Pending Invoice",
+                    harga: 1800000,
+                    termin: "1 Kali Bayar (Pelunasan 100%)",
+                    invoice: "",
+                    catatan: ""
+                },
+                {
+                    id: "TX-007",
+                    tanggal: "2026-06-28",
+                    barang: "Kertas HVS A4 80gr",
+                    jumlah: 100,
+                    satuan: "Box",
+                    pengaju: "Administrasi & Legal",
+                    status: "Pending Payment",
+                    harga: 60000,
+                    termin: "1 Kali Bayar (Pelunasan 100%)",
+                    invoice: "INV/2026/06/0045",
+                    catatan: ""
+                },
+                {
+                    id: "TX-008",
+                    tanggal: "2026-06-24",
+                    barang: "Laptop MacBook Pro M3",
+                    jumlah: 3,
+                    satuan: "Unit",
+                    pengaju: "Desain & Kreatif",
+                    status: "Rejected",
+                    harga: 0,
+                    termin: "",
+                    invoice: "",
+                    catatan: "Spesifikasi terlalu tinggi, harap disesuaikan kembali dengan standar perusahaan."
+                }
+            ],
+            notifikasi: [
+                { waktu: "2026-06-28 17:15", aktivitas: "Keuangan telah menginput Invoice INV/2026/06/0045 untuk Kertas HVS A4.", status: "Info" },
+                { waktu: "2026-06-28 10:30", aktivitas: "PKS berhasil diterbitkan untuk Lisensi Microsoft 365.", status: "Info" },
+                { waktu: "2026-06-27 14:20", aktivitas: "Budgeting menyetujui anggaran untuk pengadaan Kursi Kerja Ergonomis.", status: "Info" },
+                { waktu: "2026-06-24 16:45", aktivitas: "Pengadaan Laptop MacBook Pro M3 ditolak oleh Procurement.", status: "Danger" },
+                { waktu: "2026-06-12 11:00", aktivitas: "Pembayaran tagihan INV/2026/06/0004 untuk Meja Rapat sukses dicairkan.", status: "Success" }
+            ]
+        };
+
+        if (localStorage.getItem('sip_barang_db_v3')) {
+            db = JSON.parse(localStorage.getItem('sip_barang_db_v3'));
+        }
+
+        function saveDB() {
+            localStorage.setItem('sip_barang_db_v3', JSON.stringify(db));
+        }
+
+        // Users & Roles Config (RBAC)
+        const users = {
+            ahmad: { role: "unit_pemohon", name: "Ahmad", title: "Unit Pemohon", dept: "IT & Infrastruktur" },
+            budi: { role: "procurement", name: "Budi", title: "Procurement", dept: "Petugas Pengadaan" },
+            citra: { role: "budgeting", name: "Citra", title: "Budgeting", dept: "Verifikator Anggaran" },
+            dina: { role: "keuangan", name: "Dina", title: "Keuangan", dept: "Input Tagihan" },
+            eko: { role: "kasir", name: "Eko", title: "Kasir", dept: "Pencairan Dana" }
+        };
+
+        // Menu items per role (RBAC Navigation control)
+        const roleMenus = {
+            unit_pemohon: [
+                { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "form-permintaan", label: "Form Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>` },
+                { id: "riwayat-permintaan", label: "Riwayat Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>` },
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+            ],
+            procurement: [
+                { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "validasi-permintaan", label: "Validasi Permintaan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>` },
+                { id: "kelola-pks", label: "Kelola PKS & PO", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>` },
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+            ],
+            budgeting: [
+                { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "verifikasi-anggaran", label: "Verifikasi Anggaran", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>` },
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+            ],
+            keuangan: [
+                { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "input-tagihan", label: "Input Tagihan", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"/></svg>` },
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+            ],
+            kasir: [
+                { id: "dashboard", label: "Dashboard", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` },
+                { id: "pencairan-dana", label: "Pencairan Dana", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>` },
+                { id: "laporan-realisasi", label: "Laporan Realisasi", icon: `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>` }
+            ]
+        };
+
+        let currentUser = null;
+        let activeTab = "dashboard";
+        let selectedTxId = null;
+
+        // Toggle Sidebar (Mobile)
+        function toggleSidebar(isOpen) {
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            if (isOpen) {
+                sidebar.classList.add("open");
+                overlay.classList.add("active");
+            } else {
+                sidebar.classList.remove("open");
+                overlay.classList.remove("active");
+            }
+        }
+
+        // Login Handler
+        function handleLogin(e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById("loginUsername").value.toLowerCase().trim();
+            const passwordInput = document.getElementById("loginPassword").value.trim();
+
+            if (users[usernameInput] && passwordInput === "demo123") {
+                loginAs(usernameInput);
+            } else {
+                alert("Nama pengguna atau kata sandi salah! (Petunjuk: Gunakan Mode Demo)");
+            }
+        }
+
+        // Toggle Demo Profiles
+        function toggleDemoProfiles() {
+            const container = document.getElementById("demoProfiles");
+            const isVisible = container.style.display === "grid";
+            container.style.display = isVisible ? "none" : "grid";
+        }
+
+        // Login via Demo
+        function loginAsDemo(roleKey) {
+            const userKey = Object.keys(users).find(key => users[key].role === roleKey);
+            if (userKey) {
+                loginAs(userKey);
+            }
+        }
+
+        // Main Login Logic
+        function loginAs(userKey) {
+            currentUser = users[userKey];
+            document.getElementById("loginScreen").style.display = "none";
+            
+            // Set profile info
+            document.getElementById("userName").innerText = currentUser.name;
+            document.getElementById("userRole").innerText = currentUser.title;
+
+            // Render RBAC Sidebar Menu
+            renderSidebar();
+            
+            // Default to Dashboard
+            switchTab("dashboard");
+            renderAll();
+        }
+
+        // Logout Logic
+        function logout() {
+            currentUser = null;
+            document.getElementById("loginUsername").value = "";
+            document.getElementById("loginPassword").value = "";
+            document.getElementById("loginScreen").style.display = "flex";
+            document.getElementById("demoProfiles").style.display = "none";
+            toggleSidebar(false);
+        }
+
+        // Render Sidebar dynamically based on Role (RBAC)
+        function renderSidebar() {
+            const sidebarMenu = document.getElementById("sidebarMenu");
+            sidebarMenu.innerHTML = "";
+            
+            const menus = roleMenus[currentUser.role];
+            menus.forEach(menu => {
+                const isActiveClass = menu.id === activeTab ? "active" : "";
+                sidebarMenu.innerHTML += `
+                    <li class="menu-item ${isActiveClass}" id="menu-${menu.id}">
+                        <button onclick="switchTab('${menu.id}')">
+                            ${menu.icon}
+                            ${menu.label}
+                        </button>
+                    </li>
+                `;
+            });
+        }
+
+        // Switch Tabs
+        function switchTab(tabId) {
+            // Guard against unauthorized tab switching
+            const allowedMenus = roleMenus[currentUser.role].map(m => m.id);
+            if (!allowedMenus.includes(tabId)) {
+                return;
+            }
+
+            activeTab = tabId;
+            
+            // Update active state in sidebar
+            document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+            const activeMenuItem = document.getElementById(`menu-${tabId}`);
+            if (activeMenuItem) {
+                activeMenuItem.classList.add("active");
+            }
+
+            // Show active panel
+            document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
+            const activePanel = document.getElementById(`panel-${tabId}`);
+            if (activePanel) {
+                activePanel.classList.add("active");
+            }
+
+            // Close drawer on mobile
+            toggleSidebar(false);
+
+            // Header titles
+            const titles = {
+                dashboard: { title: "Dashboard Ringkasan", subtitle: "Ringkasan data aktivitas dan status transaksi" },
+                "form-permintaan": { title: "Form Permintaan", subtitle: "Input pengajuan kebutuhan barang baru" },
+                "riwayat-permintaan": { title: "Riwayat Permintaan Saya", subtitle: "Daftar seluruh transaksi yang pernah Anda ajukan" },
+                "validasi-permintaan": { title: "Validasi Pengadaan", subtitle: "Validasi dan persetujuan pengajuan barang" },
+                "kelola-pks": { title: "Kelola PKS & PO", subtitle: "Pembuatan Perjanjian Kerja Sama dengan supplier" },
+                "verifikasi-anggaran": { title: "Verifikasi Anggaran", subtitle: "Verifikasi alokasi pagu anggaran unit pengaju" },
+                "input-tagihan": { title: "Input Tagihan Keuangan", subtitle: "Pencatatan invoice tagihan dari supplier" },
+                "pencairan-dana": { title: "Pencairan Kasir", subtitle: "Pencairan dana pembayaran termin supplier" },
+                "laporan-realisasi": { title: "Laporan Realisasi", subtitle: "Laporan grafik realisasi anggaran berkala" }
+            };
+
+            if (titles[tabId]) {
+                document.getElementById("pageTitle").innerText = titles[tabId].title;
+                document.getElementById("pageSubtitle").innerText = titles[tabId].subtitle;
+            }
+
+            if (tabId === "laporan-realisasi") {
+                updateCharts();
+            }
+        }
+
+        // Open & Close Modals
+        function openModal(id, txId = null) {
+            selectedTxId = txId;
+            document.getElementById(id).classList.add("active");
+            
+            if (id === "modalBudgeting" && txId) {
+                const tx = db.transaksi.find(t => t.id === txId);
+                document.getElementById("budgetingInfo").innerText = `Verifikasi alokasi dana untuk pengadaan ${tx.barang} (${tx.jumlah} ${tx.satuan}). Estimasi anggaran tersedia saat ini: ${formatRupiah(db.budget)}.`;
+            } else if (id === "modalEditPermintaan" && txId) {
+                const tx = db.transaksi.find(t => t.id === txId);
+                document.getElementById("editNama").value = tx.barang;
+                document.getElementById("editJumlah").value = tx.jumlah;
+                document.getElementById("editSatuan").value = tx.satuan;
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove("active");
+            selectedTxId = null;
+        }
+
+        // Format Currency Helper
+        function formatRupiah(value) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+        }
+
+        // --- CRUD - CREATE ---
+        function submitPermintaan(e) {
+            e.preventDefault();
+            if (currentUser.role !== "unit_pemohon") return;
+
+            const nama = document.getElementById("inputNama").value.trim();
+            const jumlah = parseInt(document.getElementById("inputJumlah").value);
+            const satuan = document.getElementById("inputSatuan").value;
+
+            const newTx = {
+                id: `TX-${String(db.transaksi.length + 1).padStart(3, '0')}`,
+                tanggal: new Date().toISOString().split('T')[0],
+                barang: nama,
+                jumlah: jumlah,
+                satuan: satuan,
+                pengaju: currentUser.dept,
+                status: "Pending Procurement",
+                harga: 0,
+                termin: "",
+                invoice: "",
+                catatan: ""
+            };
+
+            db.transaksi.unshift(newTx);
+            db.notifikasi.unshift({
+                waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                aktivitas: `Pengajuan baru: ${nama} (${jumlah} ${satuan}) diajukan oleh Unit Pemohon.`,
+                status: "Info"
+            });
+
+            saveDB();
+            renderAll();
+            document.getElementById("formPermintaan").reset();
+            switchTab("riwayat-permintaan");
+        }
+
+        // --- CRUD - UPDATE ---
+        function submitEditPermintaan(e) {
+            e.preventDefault();
+            if (currentUser.role !== "unit_pemohon") return;
+
+            const tx = db.transaksi.find(t => t.id === selectedTxId);
+            if (!tx || tx.status !== "Pending Procurement") return;
+
+            const namaBaru = document.getElementById("editNama").value.trim();
+            const jumlahBaru = parseInt(document.getElementById("editJumlah").value);
+            const satuanBaru = document.getElementById("editSatuan").value;
+
+            db.notifikasi.unshift({
+                waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                aktivitas: `Pengajuan ${tx.barang} diubah menjadi ${namaBaru} (${jumlahBaru} ${satuanBaru}) oleh Unit Pemohon.`,
+                status: "Info"
+            });
+
+            tx.barang = namaBaru;
+            tx.jumlah = jumlahBaru;
+            tx.satuan = satuanBaru;
+
+            saveDB();
+            closeModal("modalEditPermintaan");
+            renderAll();
+        }
+
+        // --- CRUD - DELETE ---
+        function deletePermintaan(txId) {
+            if (currentUser.role !== "unit_pemohon") return;
+            
+            const txIndex = db.transaksi.findIndex(t => t.id === txId);
+            if (txIndex === -1) return;
+
+            const tx = db.transaksi[txIndex];
+            if (tx.status !== "Pending Procurement") {
+                alert("Pengajuan yang sedang diproses tidak dapat dihapus!");
+                return;
+            }
+
+            if (confirm(`Apakah Anda yakin ingin membatalkan & menghapus pengajuan ${tx.barang}?`)) {
+                db.notifikasi.unshift({
+                    waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    aktivitas: `Pengajuan ${tx.barang} dibatalkan & dihapus oleh Unit Pemohon.`,
+                    status: "Danger"
+                });
+
+                db.transaksi.splice(txIndex, 1);
+                saveDB();
+                renderAll();
+            }
+        }
+
+        // Process Procurement Approval/Rejection (Procurement Only)
+        function prosesProcurement(isApproved) {
+            if (currentUser.role !== "procurement") return;
+
+            const tx = db.transaksi.find(t => t.id === selectedTxId);
+            const catatan = document.getElementById("procurementCatatan").value.trim();
+
+            if (isApproved) {
+                tx.status = "Pending Budgeting";
+                db.notifikasi.unshift({
+                    waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    aktivitas: `Procurement menyetujui pengadaan ${tx.barang}. Meneruskan ke Budgeting.`,
+                    status: "Info"
+                });
+            } else {
+                if (!catatan) {
+                    alert("Alasan penolakan wajib diisi!");
+                    return;
+                }
+                tx.status = "Rejected";
+                tx.catatan = catatan;
+                db.notifikasi.unshift({
+                    waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    aktivitas: `Procurement menolak pengadaan ${tx.barang}. Alasan: ${catatan}`,
+                    status: "Danger"
+                });
+            }
+
+            saveDB();
+            closeModal("modalProcurement");
+            document.getElementById("procurementCatatan").value = "";
+            renderAll();
+        }
+
+        // Process Budgeting Verification (Budgeting Only)
+        function prosesBudgeting(isApproved) {
+            if (currentUser.role !== "budgeting") return;
+
+            const tx = db.transaksi.find(t => t.id === selectedTxId);
+
+            if (isApproved) {
+                tx.status = "Pending PKS";
+                db.notifikasi.unshift({
+                    waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    aktivitas: `Budgeting menyetujui alokasi anggaran untuk pengadaan ${tx.barang}.`,
+                    status: "Info"
+                });
+            } else {
+                tx.status = "Rejected";
+                tx.catatan = "Anggaran unit tidak memadai.";
+                db.notifikasi.unshift({
+                    waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                    aktivitas: `Budgeting menolak pengadaan ${tx.barang}. Alasan: Anggaran unit tidak memadai.`,
+                    status: "Danger"
+                });
+            }
+
+            saveDB();
+            closeModal("modalBudgeting");
+            renderAll();
+        }
+
+        // Process PKS & PO creation (Procurement Only)
+        function prosesPKS(e) {
+            e.preventDefault();
+            if (currentUser.role !== "procurement") return;
+
+            const harga = parseInt(document.getElementById("pksHarga").value);
+            const termin = document.getElementById("pksTermin").value;
+            const tx = db.transaksi.find(t => t.id === selectedTxId);
+
+            const totalBiaya = harga * tx.jumlah;
+            if (totalBiaya > db.budget) {
+                alert("Kesalahan: Total nilai pengadaan melebihi sisa anggaran!");
+                return;
+            }
+
+            tx.harga = harga;
+            tx.termin = termin;
+            tx.status = "Pending Invoice";
+
+            db.notifikasi.unshift({
+                waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                aktivitas: `PKS dibuat untuk pengadaan ${tx.barang} dengan total nilai ${formatRupiah(totalBiaya)}.`,
+                status: "Info"
+            });
+
+            saveDB();
+            closeModal("modalPKS");
+            document.getElementById("pksHarga").value = "";
+            renderAll();
+        }
+
+        // Process Invoice Input (Keuangan Only)
+        function prosesInvoice(e) {
+            e.preventDefault();
+            if (currentUser.role !== "keuangan") return;
+
+            const nomor = document.getElementById("invoiceNomor").value.trim();
+            const tx = db.transaksi.find(t => t.id === selectedTxId);
+
+            tx.invoice = nomor;
+            tx.status = "Pending Payment";
+
+            db.notifikasi.unshift({
+                waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                aktivitas: `Invoice ${nomor} berhasil diinput untuk transaksi ${tx.barang}.`,
+                status: "Info"
+            });
+
+            saveDB();
+            closeModal("modalInvoice");
+            document.getElementById("invoiceNomor").value = "";
+            renderAll();
+        }
+
+        // Process Payment Cash Out (Kasir Only)
+        function bayarTagihan(txId) {
+            if (currentUser.role !== "kasir") return;
+
+            const tx = db.transaksi.find(t => t.id === txId);
+            const totalBiaya = tx.harga * tx.jumlah;
+
+            if (db.budget < totalBiaya) {
+                alert("Kesalahan: Saldo kas anggaran tidak mencukupi!");
+                return;
+            }
+
+            db.budget -= totalBiaya;
+            db.realisasi += totalBiaya;
+            tx.status = "Completed";
+
+            db.notifikasi.unshift({
+                waktu: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                aktivitas: `Pembayaran sebesar ${formatRupiah(totalBiaya)} sukses dicairkan untuk tagihan ${tx.invoice}.`,
+                status: "Success"
+            });
+
+            saveDB();
+            renderAll();
+        }
+
+        // Render UI tables and data
+        function renderAll() {
+            // Sisa Anggaran header display
+            document.getElementById("budgetDisplay").innerText = `Sisa Anggaran: ${formatRupiah(db.budget)}`;
+
+            // Stats cards
+            const total = db.transaksi.length;
+            const proses = db.transaksi.filter(t => !["Completed", "Rejected"].includes(t.status)).length;
+            const selesai = db.transaksi.filter(t => t.status === "Completed").length;
+            const ditolak = db.transaksi.filter(t => t.status === "Rejected").length;
+
+            document.getElementById("statTotal").innerText = total;
+            document.getElementById("statProses").innerText = proses;
+            document.getElementById("statSelesai").innerText = selesai;
+            document.getElementById("statDitolak").innerText = ditolak;
+
+            // Render Notifications (Dashboard)
+            const notificationList = document.getElementById("notificationList");
+            notificationList.innerHTML = "";
+            db.notifikasi.slice(0, 8).forEach(n => {
+                let badgeStyle = "badge-completed";
+                if (n.status === "Danger") badgeStyle = "badge-rejected";
+                if (n.status === "Info") badgeStyle = "badge-pending-pks";
+                
+                notificationList.innerHTML += `
+                    <tr>
+                        <td>${n.waktu}</td>
+                        <td>${n.aktivitas}</td>
+                        <td><span class="badge ${badgeStyle}">${n.status}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Render tables depending on active panel
+
+            // 1. Riwayat Permintaan Saya (Unit Pemohon) - CRUD (Read, Update, Delete)
+            const riwayatPermintaanList = document.getElementById("riwayatPermintaanList");
+            if (riwayatPermintaanList) {
+                riwayatPermintaanList.innerHTML = "";
+                db.transaksi.forEach(t => {
+                    let statusClass = `badge-${t.status.toLowerCase().replace(/ /g, "-")}`;
+                    
+                    // CRUD: Edit & Delete buttons only available for "Pending Procurement" status (Using icons only)
+                    let aksiCRUD = `<span style="color: var(--text-muted); font-size: 11px;">Tidak ada aksi</span>`;
+                    if (t.status === "Pending Procurement") {
+                        aksiCRUD = `
+                            <div style="display: flex; gap: 4px;">
+                                <button class="icon-action-btn edit-btn" onclick="openModal('modalEditPermintaan', '${t.id}')" title="Ubah Pengajuan">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                </button>
+                                <button class="icon-action-btn delete-btn" onclick="deletePermintaan('${t.id}')" title="Batalkan Pengajuan">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                </button>
+                            </div>
+                        `;
+                    }
+
+                    riwayatPermintaanList.innerHTML += `
+                        <tr>
+                            <td><strong>${t.id}</strong></td>
+                            <td>${t.tanggal}</td>
+                            <td>${t.barang}</td>
+                            <td>${t.jumlah} ${t.satuan}</td>
+                            <td><span class="badge ${statusClass}">${t.status}</span></td>
+                            <td>${t.catatan || "-"}</td>
+                            <td>${aksiCRUD}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // 2. Validasi Permintaan (Procurement)
+            const validasiPermintaanList = document.getElementById("validasiPermintaanList");
+            if (validasiPermintaanList) {
+                validasiPermintaanList.innerHTML = "";
+                const pendingProc = db.transaksi.filter(t => t.status === "Pending Procurement");
+                if (pendingProc.length === 0) {
+                    validasiPermintaanList.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Tidak ada pengajuan yang menunggu validasi</td></tr>`;
+                } else {
+                    pendingProc.forEach(t => {
+                        validasiPermintaanList.innerHTML += `
+                            <tr>
+                                <td><strong>${t.id}</strong></td>
+                                <td>${t.tanggal}</td>
+                                <td>${t.pengaju}</td>
+                                <td>${t.barang}</td>
+                                <td>${t.jumlah} ${t.satuan}</td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="openModal('modalProcurement', '${t.id}')">Validasi</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+
+            // 3. Verifikasi Anggaran (Budgeting)
+            const verifikasiAnggaranList = document.getElementById("verifikasiAnggaranList");
+            if (verifikasiAnggaranList) {
+                verifikasiAnggaranList.innerHTML = "";
+                const pendingBudget = db.transaksi.filter(t => t.status === "Pending Budgeting");
+                if (pendingBudget.length === 0) {
+                    verifikasiAnggaranList.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Tidak ada pengajuan yang menunggu verifikasi anggaran</td></tr>`;
+                } else {
+                    pendingBudget.forEach(t => {
+                        verifikasiAnggaranList.innerHTML += `
+                            <tr>
+                                <td><strong>${t.id}</strong></td>
+                                <td>${t.tanggal}</td>
+                                <td>${t.pengaju}</td>
+                                <td>${t.barang}</td>
+                                <td>${t.jumlah} ${t.satuan}</td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="openModal('modalBudgeting', '${t.id}')">Verifikasi</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+
+            // 4. Kelola PKS & PO (Procurement)
+            const kelolaPKSList = document.getElementById("kelolaPKSList");
+            if (kelolaPKSList) {
+                kelolaPKSList.innerHTML = "";
+                const pendingPKS = db.transaksi.filter(t => t.status === "Pending PKS");
+                if (pendingPKS.length === 0) {
+                    kelolaPKSList.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Tidak ada pengajuan yang menunggu pembuatan PKS</td></tr>`;
+                } else {
+                    pendingPKS.forEach(t => {
+                        kelolaPKSList.innerHTML += `
+                            <tr>
+                                <td><strong>${t.id}</strong></td>
+                                <td>${t.tanggal}</td>
+                                <td>${t.pengaju}</td>
+                                <td>${t.barang}</td>
+                                <td>${t.jumlah} ${t.satuan}</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 6px 12px; font-size: 11px;" onclick="openModal('modalPKS', '${t.id}')">Buat PKS</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+
+            // 5. Input Tagihan (Keuangan)
+            const inputTagihanList = document.getElementById("inputTagihanList");
+            if (inputTagihanList) {
+                inputTagihanList.innerHTML = "";
+                const pendingInvoice = db.transaksi.filter(t => t.status === "Pending Invoice");
+                if (pendingInvoice.length === 0) {
+                    inputTagihanList.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Tidak ada PKS aktif yang menunggu tagihan</td></tr>`;
+                } else {
+                    pendingInvoice.forEach(t => {
+                        inputTagihanList.innerHTML += `
+                            <tr>
+                                <td><strong>${t.id}</strong></td>
+                                <td>${t.barang}</td>
+                                <td>${t.jumlah} ${t.satuan}</td>
+                                <td>${formatRupiah(t.harga)}</td>
+                                <td><strong>${formatRupiah(t.harga * t.jumlah)}</strong></td>
+                                <td>${t.termin}</td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="openModal('modalInvoice', '${t.id}')">Input Tagihan</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+
+            // 6. Pencairan Dana (Kasir)
+            const pencairanDanaList = document.getElementById("pencairanDanaList");
+            if (pencairanDanaList) {
+                pencairanDanaList.innerHTML = "";
+                const pendingPayment = db.transaksi.filter(t => t.status === "Pending Payment");
+                if (pendingPayment.length === 0) {
+                    pencairanDanaList.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Tidak ada tagihan yang menunggu pembayaran</td></tr>`;
+                } else {
+                    pendingPayment.forEach(t => {
+                        pencairanDanaList.innerHTML += `
+                            <tr>
+                                <td><strong>${t.id}</strong></td>
+                                <td><code>${t.invoice}</code></td>
+                                <td>${t.barang}</td>
+                                <td><strong>${formatRupiah(t.harga * t.jumlah)}</strong></td>
+                                <td>${t.termin}</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 6px 12px; font-size: 11px;" onclick="bayarTagihan('${t.id}')">Cairkan Dana</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            }
+        }
+
+        // Charts Logic
+        let chartStatusObj, chartAnggaranObj, chartTrenObj;
+
+        // Initialize Charts
+        function initCharts() {
+            const ctxStatus = document.getElementById('chartStatus').getContext('2d');
+            chartStatusObj = new Chart(ctxStatus, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Selesai', 'Dalam Proses', 'Ditolak'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: ['#137333', '#1a73e8', '#c5221f'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                }
+            });
+
+            const ctxAnggaran = document.getElementById('chartAnggaran').getContext('2d');
+            chartAnggaranObj = new Chart(ctxAnggaran, {
+                type: 'pie',
+                data: {
+                    labels: ['Realisasi Pengeluaran', 'Sisa Pagu Anggaran'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#7b1fa2', '#1a73e8'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } }
+                }
+            });
+
+            const ctxTren = document.getElementById('chartTren').getContext('2d');
+            chartTrenObj = new Chart(ctxTren, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                    datasets: [{
+                        label: 'Realisasi Pengeluaran (Rp)',
+                        data: [50000000, 85000000, 130000000, 105000000, 180000000, 0],
+                        borderColor: '#1a73e8',
+                        backgroundColor: 'rgba(26, 115, 232, 0.05)',
+                        tension: 0.2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { ticks: { font: { size: 10 } } },
+                        x: { ticks: { font: { size: 10 } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Update Charts
+        function updateCharts() {
+            if (!chartStatusObj) return;
+
+            const selesai = db.transaksi.filter(t => t.status === "Completed").length;
+            const proses = db.transaksi.filter(t => !["Completed", "Rejected"].includes(t.status)).length;
+            const ditolak = db.transaksi.filter(t => t.status === "Rejected").length;
+
+            chartStatusObj.data.datasets[0].data = [selesai, proses, ditolak];
+            chartStatusObj.update();
+
+            chartAnggaranObj.data.datasets[0].data = [db.realisasi, db.budget];
+            chartAnggaranObj.update();
+
+            chartTrenObj.data.datasets[0].data[5] = db.realisasi;
+            chartTrenObj.update();
+        }
+
+        // Initialize App
+        document.addEventListener("DOMContentLoaded", () => {
+            initCharts();
+            // Default: show login screen
+            document.getElementById("loginScreen").style.display = "flex";
+        });
+    </script>
+</body>
+</html>

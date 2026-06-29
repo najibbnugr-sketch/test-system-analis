@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen 5 — Key Point Faktor Kesuksesan Proyek</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d; --primary-light: #2b6cb0; --accent: #3182ce;
+            --bg: #ffffff; --text: #1a202c; --text-light: #4a5568;
+            --border: #e2e8f0; --bg-light: #f7fafc; --bg-blue: #ebf8ff;
+            --success: #38a169; --danger: #e53e3e; --warning: #d69e2e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); font-size: 11pt; }
+        .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 40mm 25mm; }
+        .cover-badge { display: inline-block; background: var(--primary); color: white; padding: 8px 24px; border-radius: 20px; font-size: 10pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+        .cover h1 { font-size: 28pt; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 16px; }
+        .cover h2 { font-size: 14pt; font-weight: 400; color: var(--text-light); margin-bottom: 48px; }
+        .cover-meta { border-top: 2px solid var(--border); padding-top: 32px; font-size: 10pt; color: var(--text-light); }
+        .cover-meta p { margin: 6px 0; }
+        h1 { font-size: 20pt; font-weight: 800; color: var(--primary); margin: 32px 0 16px 0; padding-bottom: 8px; border-bottom: 3px solid var(--accent); }
+        h2 { font-size: 15pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+        h3 { font-size: 12pt; font-weight: 600; color: var(--primary-light); margin: 20px 0 10px 0; }
+        p { margin: 8px 0; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+        th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 9.5pt; }
+        td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+        tr:nth-child(even) { background: var(--bg-light); }
+        ul, ol { margin: 8px 0 8px 24px; }
+        li { margin: 4px 0; }
+        .info-box { background: var(--bg-blue); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .info-box strong { color: var(--primary); }
+        .warning-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #f0fff4; border-left: 4px solid var(--success); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .diagram-container { margin: 20px 0; padding: 16px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+        .diagram-container .caption { text-align: center; font-size: 9.5pt; font-weight: 600; color: var(--text-light); margin-top: 12px; font-style: italic; }
+        .mermaid { display: flex; justify-content: center; }
+        .section-number { display: inline-block; background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 10pt; font-weight: 700; margin-right: 8px; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { font-size: 10pt; }
+            .page { padding: 15mm 20mm; max-width: none; }
+            .cover { min-height: auto; padding: 60mm 20mm; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-badge">Dokumen 5 dari 5</div>
+    <h1>Key Point Faktor<br>Kesuksesan Proyek</h1>
+    <h2>Laporan kepada Project Manager (PM)</h2>
+    <div style="width: 80px; height: 4px; background: var(--accent); margin: 0 auto 40px;"></div>
+    <div class="cover-meta">
+        <p><strong>Mata Kuliah:</strong> Analisis dan Perancangan Sistem Informasi</p>
+        <p><strong>Bobot Nilai:</strong> 5 Poin</p>
+        <p><strong>Cakupan:</strong> Perspektif Teknis dan Manajerial (Key Success Factors)</p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page page-break">
+    <h1><span class="section-number">1</span> Pengantar</h1>
+    <p>Laporan ini menyajikan daftar <strong>Key Point Faktor Kesuksesan Proyek (Key Success Factors)</strong> yang ditujukan kepada Project Manager (PM) untuk pengembangan <strong>Sistem Informasi Pengadaan Barang</strong>. Faktor-faktor ini dianalisis dari dua sudut pandang utama: <strong>Perspektif Teknis</strong> dan <strong>Perspektif Manajerial</strong>, guna memastikan penyelesaian proyek tepat waktu (3 bulan) dengan kualitas yang optimal.</p>
+
+    <div class="info-box">
+        <strong>📋 Laporan Ringkas Analisis Sistem:</strong> Faktor kesuksesan merupakan pilar utama yang harus dikawal ketat sepanjang siklus proyek untuk meminimalkan deviasi waktu, biaya, maupun fungsionalitas sistem.
+    </div>
+
+    <h1><span class="section-number">2</span> Perspektif Manajerial</h1>
+    <p>Faktor manajerial berfokus pada kolaborasi, alur kerja, komunikasi, serta keterlibatan pengguna akhir yang memegang peranan krusial dalam adopsi sistem baru.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Faktor Kesuksesan (Manajerial)</th>
+                <th>Dampak Terhadap Proyek</th>
+                <th>Mitigasi & Aksi Tindak Lanjut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><strong>Keterlibatan Aktif Stakeholder (User Engagement)</strong></td>
+                <td>Memastikan keselarasan fitur yang dibangun dengan kebutuhan riil di lapangan. Menghindari penolakan saat go-live.</td>
+                <td>Melibatkan 5 aktor utama secara berkala sejak fase awal (sprint planning dan demo sprint review 2 mingguan).</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><strong>Disiplin Ceremonies Agile Scrum</strong></td>
+                <td>Meminimalkan hambatan teknis harian, mendeteksi deviasi timeline lebih dini.</td>
+                <td>Menyelenggarakan <i>Daily Standup</i> 15 menit secara konsisten, <i>Sprint Planning</i> di awal, serta <i>Sprint Retrospective</i> di akhir sprint.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>Rencana Pengendalian Perubahan (Change Management)</strong></td>
+                <td>Mencegah melebarnya scope proyek tanpa kontrol (<i>scope creep</i>) yang dapat mengancam deadline 3 bulan.</td>
+                <td>Menerapkan kebijakan <i>Product Backlog Refinement</i> ketat. Setiap tambahan fitur baru harus menggantikan fitur lama dengan bobot usaha (story points) yang setara.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><strong>Pelatihan Pengguna Akhir (User Training)</strong></td>
+                <td>Mempercepat adopsi sistem oleh Unit Pemohon, Procurement, Budgeting, Keuangan, dan Kasir.</td>
+                <td>Menyusun materi pelatihan (video pendek & User Manual) serta menyelenggarakan sesi pelatihan intensif di minggu ke-13.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>SOP & Alur Koordinasi yang Jelas</strong></td>
+                <td>Menjamin transisi proses manual ke digital berjalan lancar, terutama pada fase penyerahan fisik barang ke penginputan tagihan.</td>
+                <td>Menyusun draf SOP digital yang selaras dengan alur aplikasi sebelum fase UAT dimulai.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="page page-break">
+    <h1><span class="section-number">3</span> Perspektif Teknis</h1>
+    <p>Faktor teknis berfokus pada kualitas kode, kestabilan arsitektur database, performa aplikasi, serta kemudahan integrasi data.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Faktor Kesuksesan (Teknis)</th>
+                <th>Dampak Terhadap Proyek</th>
+                <th>Mitigasi & Aksi Tindak Lanjut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><strong>Kualitas dan Desain Database (ERD)</strong></td>
+                <td>Mencegah inkonsistensi data ketika menangani transaksi multi-item (satu permintaan/PKS berisi banyak barang).</td>
+                <td>Menerapkan prinsip normalisasi database hingga tingkat 3NF dan membuat relasi <i>foreign key</i> yang ketat.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><strong>Role-Based Access Control (RBAC) yang Ketat</strong></td>
+                <td>Menghindari kesalahan akses data (contoh: Kasir tidak boleh mengubah PKS, Budgeting hanya memverifikasi anggaran).</td>
+                <td>Membangun modul autentikasi yang kuat dengan kontrol otorisasi berbasis hak akses aktor sejak Sprint 1.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>Penanganan Unggah Berkas (Upload File)</strong></td>
+                <td>Memastikan kelengkapan dokumen pendukung (bukti PO & berkas tagihan) terunggah dengan aman dan tidak membebani server.</td>
+                <td>Menggunakan penyimpanan terstruktur (cloud storage/AWS S3/folder terproteksi) dengan kompresi file dan pembatasan tipe format (PDF/JPG, maks 5MB).</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><strong>Otomatisasi Kalkulasi Pembayaran</strong></td>
+                <td>Menghindari selisih nominal pada termin, tagihan, dan pencairan dana oleh kasir.</td>
+                <td>Melakukan validasi kalkulasi harga total di sisi server (<i>server-side validation</i>), bukan hanya pada tampilan frontend.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>Kesiapan Infrastruktur & CI/CD Pipeline</strong></td>
+                <td>Mempercepat waktu rilis fitur, meminimalkan error integrasi antar tim pengembang.</td>
+                <td>Menyiapkan pipeline build otomatis (Gitlab CI/CD / Github Actions) ke lingkungan staging sejak Minggu ke-2.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1><span class="section-number">4</span> Matriks Rekomendasi Prioritas untuk PM</h1>
+    <p>Berikut adalah visualisasi prioritas tindakan berdasarkan tingkat dampak dan kemudahan implementasi:</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+quadrantChart
+    title Matriks Prioritas Tindakan
+    x-axis Kemudahan Rendah --> Kemudahan Tinggi
+    y-axis Dampak Rendah --> Dampak Tinggi
+    quadrant-1 Tindakan Prioritas (Quick Wins)
+    quadrant-2 Rencana Jangka Panjang
+    quadrant-3 Tugas Rutin / Delegasi
+    quadrant-4 Pertimbangkan Ulang
+    "Disiplin Ceremonies Scrum": [0.8, 0.9]
+    "Normalisasi Database (ERD)": [0.75, 0.85]
+    "Role-Based Access (RBAC)": [0.7, 0.8]
+    "Change Management (Scope Creep)": [0.4, 0.9]
+    "User Training & SOP": [0.6, 0.75]
+    "Setup CI/CD": [0.5, 0.6]
+    "Infrastruktur Cloud": [0.3, 0.7]
+        </div>
+        <div class="caption">Gambar 4.1 — Matriks Prioritas Tindakan untuk Project Manager</div>
+    </div>
+
+    <div class="success-box">
+        <strong>💡 Rekomendasi Utama:</strong> Project Manager disarankan berfokus pada <strong>Quick Wins</strong> seperti menjaga disiplin <i>Scrum Ceremonies</i>, menyelesaikan <i>Database Normalization</i> lebih awal, dan mengimplementasikan <i>RBAC</i> sejak Sprint 1, untuk memastikan pondasi sistem kokoh tanpa memakan banyak waktu.
+    </div>
+
+    <h1><span class="section-number">5</span> Penutup</h1>
+    <p>Dengan mengendalikan secara ketat faktor-faktor di atas, tim analis yakin bahwa pengembangan Sistem Informasi Pengadaan Barang selama 3 bulan ini akan selesai tepat waktu, tepat kualitas, dan memberikan manfaat nyata bagi seluruh unit kerja di dalam organisasi.</p>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#ebf8ff', primaryTextColor: '#1a365d', primaryBorderColor: '#3182ce',
+            lineColor: '#4a5568', secondaryColor: '#f7fafc', tertiaryColor: '#ffffff', fontSize: '13px'
+        },
+        quadrantChart: { useMaxWidth: true }
+    });
+</script>
+</body>
+</html>

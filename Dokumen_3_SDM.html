@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen 3 — Estimasi Sumber Daya Manusia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d; --primary-light: #2b6cb0; --accent: #3182ce;
+            --bg: #ffffff; --text: #1a202c; --text-light: #4a5568;
+            --border: #e2e8f0; --bg-light: #f7fafc; --bg-blue: #ebf8ff;
+            --success: #38a169; --danger: #e53e3e; --warning: #d69e2e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); font-size: 11pt; }
+        .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 40mm 25mm; }
+        .cover-badge { display: inline-block; background: var(--primary); color: white; padding: 8px 24px; border-radius: 20px; font-size: 10pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+        .cover h1 { font-size: 28pt; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 16px; }
+        .cover h2 { font-size: 14pt; font-weight: 400; color: var(--text-light); margin-bottom: 48px; }
+        .cover-meta { border-top: 2px solid var(--border); padding-top: 32px; font-size: 10pt; color: var(--text-light); }
+        .cover-meta p { margin: 6px 0; }
+        h1 { font-size: 20pt; font-weight: 800; color: var(--primary); margin: 32px 0 16px 0; padding-bottom: 8px; border-bottom: 3px solid var(--accent); }
+        h2 { font-size: 15pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+        h3 { font-size: 12pt; font-weight: 600; color: var(--primary-light); margin: 20px 0 10px 0; }
+        p { margin: 8px 0; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+        th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 9.5pt; }
+        td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+        tr:nth-child(even) { background: var(--bg-light); }
+        ul, ol { margin: 8px 0 8px 24px; }
+        li { margin: 4px 0; }
+        .info-box { background: var(--bg-blue); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .info-box strong { color: var(--primary); }
+        .diagram-container { margin: 20px 0; padding: 16px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+        .diagram-container .caption { text-align: center; font-size: 9.5pt; font-weight: 600; color: var(--text-light); margin-top: 12px; font-style: italic; }
+        .mermaid { display: flex; justify-content: center; }
+        .section-number { display: inline-block; background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 10pt; font-weight: 700; margin-right: 8px; }
+        .raci-r { background: #c6f6d5; text-align: center; font-weight: 700; color: #276749; }
+        .raci-a { background: #bee3f8; text-align: center; font-weight: 700; color: #2a4365; }
+        .raci-c { background: #fefcbf; text-align: center; font-weight: 700; color: #975a16; }
+        .raci-i { background: #fed7e2; text-align: center; font-weight: 700; color: #97266d; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { font-size: 10pt; }
+            .page { padding: 15mm 20mm; max-width: none; }
+            .cover { min-height: auto; padding: 60mm 20mm; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-badge">Dokumen 3 dari 5</div>
+    <h1>Estimasi Sumber<br>Daya Manusia</h1>
+    <h2>Sistem Informasi Pengadaan Barang</h2>
+    <div style="width: 80px; height: 4px; background: var(--accent); margin: 0 auto 40px;"></div>
+    <div class="cover-meta">
+        <p><strong>Mata Kuliah:</strong> Analisis dan Perancangan Sistem Informasi</p>
+        <p><strong>Bobot Nilai:</strong> 10 Poin</p>
+        <p><strong>Cakupan:</strong> Identifikasi Jenis SDM, Jumlah, Kompetensi, dan Matriks RACI</p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page page-break">
+    <h1><span class="section-number">1</span> Kebutuhan Sumber Daya Manusia</h1>
+
+    <h2>1.1 Identifikasi Tim Proyek</h2>
+    <p>Berdasarkan kompleksitas Sistem Informasi Pengadaan Barang dengan durasi pengembangan 3 bulan dan metode Agile Scrum, dibutuhkan tim yang terdiri dari <strong>8 orang</strong> dengan peran sebagai berikut:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Peran</th>
+                <th>Jumlah</th>
+                <th>Tipe</th>
+                <th>Keterlibatan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><strong>Project Manager / Scrum Master</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Full-time</td>
+                <td>Minggu 1 – 14</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><strong>System Analyst / Product Owner</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Full-time</td>
+                <td>Minggu 1 – 14</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><strong>UI/UX Designer</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Full-time → Part-time</td>
+                <td>Minggu 1 – 8 (full), 9-14 (part-time)</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><strong>Backend Developer</strong></td>
+                <td style="text-align:center;">2</td>
+                <td>Full-time</td>
+                <td>Minggu 2 – 13</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><strong>Frontend Developer</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Full-time</td>
+                <td>Minggu 2 – 13</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><strong>QA Engineer / Tester</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Full-time</td>
+                <td>Minggu 3 – 14</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><strong>Database Administrator (DBA)</strong></td>
+                <td style="text-align:center;">1</td>
+                <td>Part-time (rangkap Backend Dev)</td>
+                <td>Minggu 1 – 14</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="text-align:right;font-weight:700;">Total Tim:</td>
+                <td style="text-align:center;font-weight:700;">8 orang</td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <h2>1.2 Struktur Organisasi Tim</h2>
+    <div class="diagram-container">
+        <div class="mermaid">
+graph TD
+    PM["🎯 Project Manager<br/>/ Scrum Master<br/><i>1 orang</i>"]
+    SA["📋 System Analyst<br/>/ Product Owner<br/><i>1 orang</i>"]
+    UI["🎨 UI/UX<br/>Designer<br/><i>1 orang</i>"]
+    BE1["💻 Backend<br/>Developer 1<br/><i>+ DBA</i>"]
+    BE2["💻 Backend<br/>Developer 2"]
+    FE["🖥️ Frontend<br/>Developer<br/><i>1 orang</i>"]
+    QA["🧪 QA Engineer<br/>/ Tester<br/><i>1 orang</i>"]
+
+    PM --> SA
+    PM --> UI
+    PM --> BE1
+    PM --> BE2
+    PM --> FE
+    PM --> QA
+    SA --> BE1
+    SA --> FE
+    UI --> FE
+
+    style PM fill:#ebf8ff,stroke:#3182ce,stroke-width:2px
+    style SA fill:#f0fff4,stroke:#38a169,stroke-width:2px
+    style UI fill:#fefcbf,stroke:#d69e2e,stroke-width:2px
+    style BE1 fill:#e9d8fd,stroke:#805ad5,stroke-width:2px
+    style BE2 fill:#e9d8fd,stroke:#805ad5,stroke-width:2px
+    style FE fill:#fed7e2,stroke:#d53f8c,stroke-width:2px
+    style QA fill:#fed7d7,stroke:#e53e3e,stroke-width:2px
+        </div>
+        <div class="caption">Gambar 1.1 — Struktur Organisasi Tim Proyek</div>
+    </div>
+
+    <h2>1.3 Deskripsi Peran dan Kompetensi</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Peran</th>
+                <th>Tanggung Jawab</th>
+                <th>Kompetensi yang Dibutuhkan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Project Manager / Scrum Master</strong></td>
+                <td>
+                    • Mengelola keseluruhan proyek<br>
+                    • Memfasilitasi ceremony Scrum (sprint planning, daily standup, review, retrospective)<br>
+                    • Menghilangkan hambatan (impediments)<br>
+                    • Komunikasi dengan stakeholder<br>
+                    • Monitoring progress dan risiko
+                </td>
+                <td>
+                    • Pengalaman PM minimal 2 tahun<br>
+                    • Sertifikasi Scrum (CSM/PSM) diutamakan<br>
+                    • Kemampuan komunikasi & leadership<br>
+                    • Familiar dengan tools manajemen proyek (Jira, Trello)
+                </td>
+            </tr>
+            <tr>
+                <td><strong>System Analyst / Product Owner</strong></td>
+                <td>
+                    • Analisis dan dokumentasi kebutuhan sistem<br>
+                    • Mengelola Product Backlog<br>
+                    • Memprioritaskan fitur berdasarkan value bisnis<br>
+                    • Menjembatani komunikasi antara tim dan stakeholder<br>
+                    • Acceptance criteria untuk setiap user story
+                </td>
+                <td>
+                    • Pengalaman SA minimal 2 tahun<br>
+                    • Pemahaman proses bisnis pengadaan barang<br>
+                    • Kemampuan membuat UML, ERD, flowchart<br>
+                    • Kemampuan analitis dan dokumentasi
+                </td>
+            </tr>
+            <tr>
+                <td><strong>UI/UX Designer</strong></td>
+                <td>
+                    • Desain wireframe dan prototype<br>
+                    • Membuat desain visual (mockup high-fidelity)<br>
+                    • User research dan usability testing<br>
+                    • Membuat design system / style guide
+                </td>
+                <td>
+                    • Pengalaman UI/UX minimal 1 tahun<br>
+                    • Mahir Figma / Adobe XD<br>
+                    • Pemahaman responsive design<br>
+                    • Pemahaman UX principles
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Backend Developer (2 orang)</strong></td>
+                <td>
+                    • Pengembangan server-side logic dan API<br>
+                    • Desain dan implementasi database<br>
+                    • Implementasi business logic (approval workflow, kalkulasi)<br>
+                    • Integrasi file upload<br>
+                    • Unit testing
+                </td>
+                <td>
+                    • Pengalaman backend minimal 2 tahun<br>
+                    • Mahir bahasa pemrograman server-side (PHP/Java/Node.js/Python)<br>
+                    • Mahir RDBMS (MySQL/PostgreSQL)<br>
+                    • Pemahaman RESTful API<br>
+                    • Pemahaman keamanan aplikasi
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Frontend Developer</strong></td>
+                <td>
+                    • Pengembangan antarmuka pengguna<br>
+                    • Implementasi desain dari UI/UX designer<br>
+                    • Integrasi dengan backend API<br>
+                    • Responsive design implementation
+                </td>
+                <td>
+                    • Pengalaman frontend minimal 1-2 tahun<br>
+                    • Mahir HTML, CSS, JavaScript<br>
+                    • Mahir framework frontend (React/Vue.js/Angular)<br>
+                    • Pemahaman state management
+                </td>
+            </tr>
+            <tr>
+                <td><strong>QA Engineer / Tester</strong></td>
+                <td>
+                    • Membuat test plan dan test cases<br>
+                    • Functional testing, integration testing<br>
+                    • Regression testing setiap sprint<br>
+                    • UAT coordination<br>
+                    • Bug tracking dan reporting
+                </td>
+                <td>
+                    • Pengalaman QA minimal 1 tahun<br>
+                    • Pemahaman testing methodology<br>
+                    • Familiar dengan bug tracking tools (Jira, Bugzilla)<br>
+                    • Kemampuan automation testing diutamakan
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Database Administrator (rangkap)</strong></td>
+                <td>
+                    • Desain schema database<br>
+                    • Optimasi query dan indexing<br>
+                    • Backup dan recovery plan<br>
+                    • Data migration (jika ada)
+                </td>
+                <td>
+                    • Pengalaman DBA minimal 1 tahun<br>
+                    • Mahir SQL dan database design<br>
+                    • Pemahaman normalisasi dan optimasi<br>
+                    • <i>Dirangkap oleh Backend Developer 1</i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="page page-break">
+    <h2>1.4 Matriks RACI (Responsible, Accountable, Consulted, Informed)</h2>
+    <p>Matriks RACI menunjukkan tanggung jawab setiap peran terhadap aktivitas proyek:</p>
+
+    <div class="info-box">
+        <strong>📌 Keterangan RACI:</strong><br>
+        <span style="background:#c6f6d5;padding:2px 8px;border-radius:3px;font-weight:700;color:#276749;">R</span> = <strong>Responsible</strong> (mengerjakan) &nbsp;
+        <span style="background:#bee3f8;padding:2px 8px;border-radius:3px;font-weight:700;color:#2a4365;">A</span> = <strong>Accountable</strong> (bertanggung jawab) &nbsp;
+        <span style="background:#fefcbf;padding:2px 8px;border-radius:3px;font-weight:700;color:#975a16;">C</span> = <strong>Consulted</strong> (dikonsultasi) &nbsp;
+        <span style="background:#fed7e2;padding:2px 8px;border-radius:3px;font-weight:700;color:#97266d;">I</span> = <strong>Informed</strong> (diinformasikan)
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Aktivitas</th>
+                <th>PM/SM</th>
+                <th>SA/PO</th>
+                <th>UI/UX</th>
+                <th>BE Dev</th>
+                <th>FE Dev</th>
+                <th>QA</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sprint Planning</td>
+                <td class="raci-r">R</td>
+                <td class="raci-a">A</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+            </tr>
+            <tr>
+                <td>Analisis Kebutuhan</td>
+                <td class="raci-i">I</td>
+                <td class="raci-r">R/A</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Desain Database (ERD)</td>
+                <td class="raci-i">I</td>
+                <td class="raci-a">A</td>
+                <td class="raci-i">I</td>
+                <td class="raci-r">R</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Desain UI/UX</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-r">R/A</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Backend Development</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-i">I</td>
+                <td class="raci-r">R/A</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Frontend Development</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-r">R/A</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Testing</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-r">R/A</td>
+            </tr>
+            <tr>
+                <td>Sprint Review</td>
+                <td class="raci-r">R</td>
+                <td class="raci-a">A</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+            </tr>
+            <tr>
+                <td>UAT Coordination</td>
+                <td class="raci-a">A</td>
+                <td class="raci-r">R</td>
+                <td class="raci-i">I</td>
+                <td class="raci-c">C</td>
+                <td class="raci-c">C</td>
+                <td class="raci-r">R</td>
+            </tr>
+            <tr>
+                <td>Deployment</td>
+                <td class="raci-a">A</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+                <td class="raci-c">C</td>
+            </tr>
+            <tr>
+                <td>Training User</td>
+                <td class="raci-a">A</td>
+                <td class="raci-r">R</td>
+                <td class="raci-c">C</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+                <td class="raci-i">I</td>
+            </tr>
+            <tr>
+                <td>Dokumentasi</td>
+                <td class="raci-a">A</td>
+                <td class="raci-r">R</td>
+                <td class="raci-c">C</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+                <td class="raci-r">R</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>1.5 Estimasi Biaya SDM</h2>
+    <p>Berikut adalah estimasi biaya SDM untuk proyek selama 3 bulan (14 minggu):</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Peran</th>
+                <th>Jumlah</th>
+                <th>Rate/Bulan (Est.)</th>
+                <th>Durasi</th>
+                <th>Total Estimasi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Project Manager / Scrum Master</td>
+                <td style="text-align:center;">1</td>
+                <td>Rp 20.000.000</td>
+                <td>3,5 bulan</td>
+                <td>Rp 70.000.000</td>
+            </tr>
+            <tr>
+                <td>System Analyst / Product Owner</td>
+                <td style="text-align:center;">1</td>
+                <td>Rp 18.000.000</td>
+                <td>3,5 bulan</td>
+                <td>Rp 63.000.000</td>
+            </tr>
+            <tr>
+                <td>UI/UX Designer</td>
+                <td style="text-align:center;">1</td>
+                <td>Rp 15.000.000</td>
+                <td>3 bulan</td>
+                <td>Rp 45.000.000</td>
+            </tr>
+            <tr>
+                <td>Backend Developer</td>
+                <td style="text-align:center;">2</td>
+                <td>Rp 18.000.000</td>
+                <td>3 bulan</td>
+                <td>Rp 108.000.000</td>
+            </tr>
+            <tr>
+                <td>Frontend Developer</td>
+                <td style="text-align:center;">1</td>
+                <td>Rp 16.000.000</td>
+                <td>3 bulan</td>
+                <td>Rp 48.000.000</td>
+            </tr>
+            <tr>
+                <td>QA Engineer / Tester</td>
+                <td style="text-align:center;">1</td>
+                <td>Rp 14.000.000</td>
+                <td>3 bulan</td>
+                <td>Rp 42.000.000</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="text-align:right;font-weight:700;">Total SDM:</td>
+                <td style="font-weight:700;">8 orang</td>
+                <td style="font-weight:700;"></td>
+                <td style="font-weight:700;">Rp 376.000.000</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="info-box">
+        <strong>📌 Catatan:</strong> Estimasi biaya di atas bersifat perkiraan dan dapat disesuaikan dengan standar gaji di wilayah masing-masing. Peran DBA dirangkap oleh Backend Developer 1 sehingga tidak ada penambahan biaya khusus. Untuk efisiensi biaya, beberapa peran juga dapat dirangkap oleh satu orang jika kompetensinya memadai (misalnya PM merangkap Scrum Master).
+    </div>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#ebf8ff', primaryTextColor: '#1a365d', primaryBorderColor: '#3182ce',
+            lineColor: '#4a5568', secondaryColor: '#f7fafc', tertiaryColor: '#ffffff', fontSize: '13px'
+        },
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+</script>
+</body>
+</html>

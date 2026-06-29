@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumen 4 — Penjadwalan Proyek</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d; --primary-light: #2b6cb0; --accent: #3182ce;
+            --bg: #ffffff; --text: #1a202c; --text-light: #4a5568;
+            --border: #e2e8f0; --bg-light: #f7fafc; --bg-blue: #ebf8ff;
+            --success: #38a169; --danger: #e53e3e; --warning: #d69e2e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); font-size: 11pt; }
+        .page { max-width: 210mm; margin: 0 auto; padding: 20mm 25mm; }
+        .cover { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding: 40mm 25mm; }
+        .cover-badge { display: inline-block; background: var(--primary); color: white; padding: 8px 24px; border-radius: 20px; font-size: 10pt; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; }
+        .cover h1 { font-size: 28pt; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 16px; }
+        .cover h2 { font-size: 14pt; font-weight: 400; color: var(--text-light); margin-bottom: 48px; }
+        .cover-meta { border-top: 2px solid var(--border); padding-top: 32px; font-size: 10pt; color: var(--text-light); }
+        .cover-meta p { margin: 6px 0; }
+        h1 { font-size: 20pt; font-weight: 800; color: var(--primary); margin: 32px 0 16px 0; padding-bottom: 8px; border-bottom: 3px solid var(--accent); }
+        h2 { font-size: 15pt; font-weight: 700; color: var(--primary); margin: 28px 0 12px 0; padding-bottom: 6px; border-bottom: 1.5px solid var(--border); }
+        h3 { font-size: 12pt; font-weight: 600; color: var(--primary-light); margin: 20px 0 10px 0; }
+        p { margin: 8px 0; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 10pt; }
+        th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 9.5pt; }
+        td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+        tr:nth-child(even) { background: var(--bg-light); }
+        ul, ol { margin: 8px 0 8px 24px; }
+        li { margin: 4px 0; }
+        .info-box { background: var(--bg-blue); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .info-box strong { color: var(--primary); }
+        .warning-box { background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #f0fff4; border-left: 4px solid var(--success); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+        .diagram-container { margin: 20px 0; padding: 16px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 8px; overflow-x: auto; }
+        .diagram-container .caption { text-align: center; font-size: 9.5pt; font-weight: 600; color: var(--text-light); margin-top: 12px; font-style: italic; }
+        .mermaid { display: flex; justify-content: center; }
+        .section-number { display: inline-block; background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 10pt; font-weight: 700; margin-right: 8px; }
+        .milestone { display: inline-block; background: #fefcbf; border: 1px solid #d69e2e; padding: 4px 12px; border-radius: 4px; font-size: 9pt; font-weight: 600; color: #975a16; margin: 4px 2px; }
+        .phase-header { background: var(--primary); color: white; padding: 10px 16px; font-weight: 700; font-size: 11pt; border-radius: 6px 6px 0 0; margin-top: 20px; }
+        .phase-body { border: 1px solid var(--border); border-top: none; padding: 16px; border-radius: 0 0 6px 6px; margin-bottom: 16px; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { font-size: 10pt; }
+            .page { padding: 15mm 20mm; max-width: none; }
+            .cover { min-height: auto; padding: 60mm 20mm; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-badge">Dokumen 4 dari 5</div>
+    <h1>Penjadwalan Proyek</h1>
+    <h2>Sistem Informasi Pengadaan Barang<br>Timeline 3 Bulan (14 Minggu)</h2>
+    <div style="width: 80px; height: 4px; background: var(--accent); margin: 0 auto 40px;"></div>
+    <div class="cover-meta">
+        <p><strong>Mata Kuliah:</strong> Analisis dan Perancangan Sistem Informasi</p>
+        <p><strong>Bobot Nilai:</strong> 10 Poin</p>
+        <p><strong>Cakupan:</strong> Gantt Chart, Milestone, Deliverables per Fase</p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page page-break">
+    <h1><span class="section-number">1</span> Gantt Chart Proyek</h1>
+
+    <p>Berikut adalah Gantt Chart yang menggambarkan penjadwalan pengembangan Sistem Informasi Pengadaan Barang dengan durasi <strong>14 minggu (3,5 bulan)</strong>, menggunakan pendekatan Agile Scrum.</p>
+
+    <div class="diagram-container">
+        <div class="mermaid">
+gantt
+    title Penjadwalan Proyek SI Pengadaan Barang (14 Minggu)
+    dateFormat  YYYY-MM-DD
+    axisFormat  Minggu %W
+
+    section Fase 0: Inception
+    Kick-off Meeting                    :milestone, m0, 2026-07-01, 0d
+    Pengumpulan Requirement             :a1, 2026-07-01, 5d
+    Analisis Proses Bisnis              :a2, 2026-07-03, 5d
+    Desain Arsitektur Sistem            :a3, 2026-07-07, 4d
+    Desain Database (ERD)               :a4, 2026-07-08, 3d
+    UI/UX Wireframing                   :a5, 2026-07-07, 7d
+    Setup Environment                   :a6, 2026-07-10, 4d
+    Sprint Backlog Preparation          :a7, 2026-07-11, 3d
+    Milestone: Inception Complete       :milestone, m1, 2026-07-14, 0d
+
+    section Sprint 1: Auth dan Permintaan
+    Sprint Planning 1                   :s1a, 2026-07-15, 1d
+    Modul Login dan RBAC                :s1b, 2026-07-15, 7d
+    Modul Permintaan Barang             :s1c, 2026-07-17, 8d
+    Dashboard Unit Pemohon              :s1d, 2026-07-21, 5d
+    Testing Sprint 1                    :s1e, 2026-07-24, 4d
+    Sprint Review 1                     :milestone, m2, 2026-07-28, 0d
+
+    section Sprint 2: Procurement dan Budgeting
+    Sprint Planning 2                   :s2a, 2026-07-29, 1d
+    Modul Validasi Procurement          :s2b, 2026-07-29, 7d
+    Modul Verifikasi Budgeting          :s2c, 2026-07-31, 6d
+    Modul Notifikasi                    :s2d, 2026-08-04, 5d
+    Testing Sprint 2                    :s2e, 2026-08-07, 4d
+    Sprint Review 2                     :milestone, m3, 2026-08-11, 0d
+
+    section Sprint 3: PKS dan File Upload
+    Sprint Planning 3                   :s3a, 2026-08-12, 1d
+    Modul PKS (Perjanjian Kerja Sama)   :s3b, 2026-08-12, 7d
+    Modul Termin Pembayaran             :s3c, 2026-08-14, 5d
+    Modul File Upload                   :s3d, 2026-08-18, 4d
+    Testing Sprint 3                    :s3e, 2026-08-21, 4d
+    Sprint Review 3                     :milestone, m4, 2026-08-25, 0d
+
+    section Sprint 4: Tagihan dan Kasir
+    Sprint Planning 4                   :s4a, 2026-08-26, 1d
+    Modul Tagihan (Keuangan)            :s4b, 2026-08-26, 7d
+    Modul Pencairan Dana (Kasir)        :s4c, 2026-08-28, 6d
+    Upload Berkas Tagihan               :s4d, 2026-09-01, 4d
+    Testing Sprint 4                    :s4e, 2026-09-04, 4d
+    Sprint Review 4                     :milestone, m5, 2026-09-08, 0d
+
+    section Sprint 5: Laporan dan Integrasi
+    Sprint Planning 5                   :s5a, 2026-09-09, 1d
+    Modul Laporan (Harian/Mingguan/dst) :s5b, 2026-09-09, 7d
+    Export PDF dan Excel                :s5c, 2026-09-11, 5d
+    Integration Testing                 :s5d, 2026-09-15, 5d
+    Bug Fixing                          :s5e, 2026-09-17, 5d
+    Sprint Review 5                     :milestone, m6, 2026-09-22, 0d
+
+    section Fase Akhir: Deployment
+    UAT (User Acceptance Testing)       :d1, 2026-09-23, 5d
+    Bug Fixing Final                    :d2, 2026-09-25, 4d
+    Dokumentasi User Manual             :d3, 2026-09-23, 5d
+    Training Pengguna                   :d4, 2026-09-29, 3d
+    Deployment Production               :d5, 2026-10-01, 2d
+    Monitoring dan Stabilisasi          :d6, 2026-10-02, 4d
+    Serah Terima Proyek                 :milestone, m7, 2026-10-06, 0d
+        </div>
+        <div class="caption">Gambar 1.1 — Gantt Chart Proyek SI Pengadaan Barang (14 Minggu)</div>
+    </div>
+</div>
+
+<div class="page page-break">
+    <h1><span class="section-number">2</span> Detail Fase dan Deliverables</h1>
+
+    <!-- Fase 0 -->
+    <div class="phase-header">📋 Fase 0: Inception (Minggu 1-2) — 1 Juli s.d. 14 Juli 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>Aktivitas</th><th>Durasi</th><th>PIC</th><th>Deliverables</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Kick-off Meeting</td><td>1 hari</td><td>PM, SA, seluruh tim</td><td>Minutes of meeting, project charter</td></tr>
+                <tr><td>Pengumpulan requirement</td><td>5 hari</td><td>SA / Product Owner</td><td>SRS (Software Requirements Specification)</td></tr>
+                <tr><td>Analisis proses bisnis</td><td>5 hari</td><td>SA</td><td>Use Case, Activity Diagram, Business Flow</td></tr>
+                <tr><td>Desain arsitektur sistem</td><td>4 hari</td><td>SA, Backend Dev</td><td>Architecture diagram, tech stack decision</td></tr>
+                <tr><td>Desain database</td><td>3 hari</td><td>DBA / Backend Dev</td><td>ERD, database schema</td></tr>
+                <tr><td>UI/UX wireframing</td><td>7 hari</td><td>UI/UX Designer</td><td>Wireframe, mockup high-fidelity</td></tr>
+                <tr><td>Setup development environment</td><td>4 hari</td><td>Backend Dev, Frontend Dev</td><td>Repository, CI/CD pipeline, staging server</td></tr>
+                <tr><td>Persiapan product backlog</td><td>3 hari</td><td>SA / Product Owner</td><td>Product backlog, sprint backlog Sprint 1</td></tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Milestone: Inception Complete — Seluruh dokumen perencanaan selesai</div>
+    </div>
+
+    <!-- Sprint 1 -->
+    <div class="phase-header">🔄 Sprint 1: Autentikasi & Permintaan Barang (Minggu 3-4) — 15 s.d. 28 Juli 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>User Story</th><th>Task</th><th>PIC</th><th>Story Points</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3">Sebagai user, saya dapat login sesuai role</td>
+                    <td>Implementasi autentikasi (login/logout)</td><td>BE Dev 1</td><td rowspan="3" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Implementasi RBAC (Role-Based Access Control)</td><td>BE Dev 1</td></tr>
+                <tr><td>Halaman login UI</td><td>FE Dev</td></tr>
+                <tr>
+                    <td rowspan="3">Sebagai Unit Pemohon, saya dapat input permintaan barang</td>
+                    <td>API CRUD permintaan barang</td><td>BE Dev 2</td><td rowspan="3" style="text-align:center;">13</td>
+                </tr>
+                <tr><td>Form permintaan multi-item</td><td>FE Dev</td></tr>
+                <tr><td>Validasi input</td><td>BE Dev 2, FE Dev</td></tr>
+                <tr>
+                    <td>Sebagai Unit Pemohon, saya dapat melihat status permintaan</td>
+                    <td>Dashboard & daftar permintaan</td><td>FE Dev, BE Dev 2</td><td style="text-align:center;">5</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Sprint Review 1 — Demo: Login + Form Permintaan Barang berfungsi</div>
+    </div>
+
+    <!-- Sprint 2 -->
+    <div class="phase-header">🔄 Sprint 2: Validasi & Verifikasi Anggaran (Minggu 5-6) — 29 Juli s.d. 11 Agustus 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>User Story</th><th>Task</th><th>PIC</th><th>Story Points</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">Sebagai Procurement, saya dapat memvalidasi permintaan</td>
+                    <td>API approval/rejection permintaan</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Dashboard validasi procurement</td><td>FE Dev</td></tr>
+                <tr>
+                    <td rowspan="2">Sebagai Budgeting, saya dapat verifikasi anggaran</td>
+                    <td>API verifikasi anggaran</td><td>BE Dev 2</td><td rowspan="2" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Dashboard budgeting</td><td>FE Dev</td></tr>
+                <tr>
+                    <td rowspan="2">Sebagai Unit Pemohon, saya menerima notifikasi penolakan</td>
+                    <td>Modul notifikasi (backend)</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">5</td>
+                </tr>
+                <tr><td>Komponen notifikasi (frontend)</td><td>FE Dev</td></tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Sprint Review 2 — Demo: Alur approval 2 level + notifikasi berfungsi</div>
+    </div>
+
+    <!-- Sprint 3 -->
+    <div class="phase-header">🔄 Sprint 3: PKS & File Upload (Minggu 7-8) — 12 s.d. 25 Agustus 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>User Story</th><th>Task</th><th>PIC</th><th>Story Points</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">Sebagai Procurement, saya dapat membuat PKS</td>
+                    <td>API CRUD PKS + detail barang</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">13</td>
+                </tr>
+                <tr><td>Form PKS multi-item</td><td>FE Dev</td></tr>
+                <tr>
+                    <td>Sebagai Procurement, saya dapat input termin</td>
+                    <td>API termin + form termin</td><td>BE Dev 2, FE Dev</td><td style="text-align:center;">5</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Sebagai Procurement, saya dapat upload bukti PO</td>
+                    <td>API file upload + storage</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Komponen drag & drop upload</td><td>FE Dev</td></tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Sprint Review 3 — Demo: Form PKS lengkap + upload file berfungsi</div>
+    </div>
+</div>
+
+<div class="page page-break">
+    <!-- Sprint 4 -->
+    <div class="phase-header">🔄 Sprint 4: Tagihan & Pencairan Dana (Minggu 9-10) — 26 Agustus s.d. 8 September 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>User Story</th><th>Task</th><th>PIC</th><th>Story Points</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">Sebagai Keuangan, saya dapat input tagihan</td>
+                    <td>API CRUD tagihan + detail</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Form tagihan + upload berkas</td><td>FE Dev</td></tr>
+                <tr>
+                    <td rowspan="2">Sebagai Kasir, saya dapat mencairkan dana</td>
+                    <td>API pencairan dana + kalkulasi</td><td>BE Dev 2</td><td rowspan="2" style="text-align:center;">8</td>
+                </tr>
+                <tr><td>Form pencairan dana</td><td>FE Dev</td></tr>
+                <tr>
+                    <td>Sistem meneruskan tagihan ke kasir secara otomatis</td>
+                    <td>Workflow engine tagihan → kasir</td><td>BE Dev 1</td><td style="text-align:center;">5</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Sprint Review 4 — Demo: Alur end-to-end (permintaan → pencairan) berfungsi</div>
+    </div>
+
+    <!-- Sprint 5 -->
+    <div class="phase-header">🔄 Sprint 5: Laporan & Integrasi (Minggu 11-12) — 9 s.d. 22 September 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>User Story</th><th>Task</th><th>PIC</th><th>Story Points</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">Sebagai user, saya dapat generate laporan</td>
+                    <td>API generate laporan (harian, mingguan, bulanan, tahunan)</td><td>BE Dev 1</td><td rowspan="2" style="text-align:center;">13</td>
+                </tr>
+                <tr><td>Halaman laporan + filter + chart</td><td>FE Dev</td></tr>
+                <tr>
+                    <td>Sebagai user, saya dapat download laporan</td>
+                    <td>Export PDF dan Excel</td><td>BE Dev 2</td><td style="text-align:center;">8</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Integration testing end-to-end</td><td>QA, seluruh Dev</td><td style="text-align:center;">-</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Bug fixing dari seluruh sprint</td><td>BE Dev, FE Dev</td><td style="text-align:center;">-</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Sprint Review 5 — Demo: Seluruh fitur lengkap + laporan berfungsi</div>
+    </div>
+
+    <!-- Fase Deployment -->
+    <div class="phase-header">🚀 Fase Akhir: Deployment (Minggu 13-14) — 23 September s.d. 6 Oktober 2026</div>
+    <div class="phase-body">
+        <table>
+            <thead>
+                <tr><th>Aktivitas</th><th>Durasi</th><th>PIC</th><th>Deliverables</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>UAT (User Acceptance Testing)</td><td>5 hari</td><td>QA, SA, stakeholder</td><td>UAT report, sign-off document</td></tr>
+                <tr><td>Bug fixing final</td><td>4 hari</td><td>BE Dev, FE Dev</td><td>Release candidate</td></tr>
+                <tr><td>Dokumentasi user manual</td><td>5 hari</td><td>SA, QA</td><td>User manual, SOP</td></tr>
+                <tr><td>Training pengguna</td><td>3 hari</td><td>SA, PM</td><td>Training materials, attendance list</td></tr>
+                <tr><td>Deployment ke production</td><td>2 hari</td><td>BE Dev, DevOps</td><td>Production release</td></tr>
+                <tr><td>Monitoring & stabilisasi</td><td>4 hari</td><td>Seluruh tim</td><td>Monitoring report, hotfix (jika perlu)</td></tr>
+                <tr><td>Serah terima proyek</td><td>1 hari</td><td>PM</td><td>BAST (Berita Acara Serah Terima)</td></tr>
+            </tbody>
+        </table>
+        <div class="milestone">🏁 Milestone Final: Proyek Selesai — Serah terima dan go-live</div>
+    </div>
+
+    <h1><span class="section-number">3</span> Ringkasan Milestone</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Milestone</th>
+                <th>Target Tanggal</th>
+                <th>Kriteria Selesai</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>M0</td>
+                <td>🚀 Project Kick-off</td>
+                <td>1 Juli 2026</td>
+                <td>Tim terbentuk, project charter disetujui</td>
+            </tr>
+            <tr>
+                <td>M1</td>
+                <td>📋 Inception Complete</td>
+                <td>14 Juli 2026</td>
+                <td>SRS, ERD, wireframe, backlog selesai</td>
+            </tr>
+            <tr>
+                <td>M2</td>
+                <td>🔄 Sprint 1 Review</td>
+                <td>28 Juli 2026</td>
+                <td>Login + form permintaan barang berfungsi</td>
+            </tr>
+            <tr>
+                <td>M3</td>
+                <td>🔄 Sprint 2 Review</td>
+                <td>11 Agustus 2026</td>
+                <td>Approval 2 level + notifikasi berfungsi</td>
+            </tr>
+            <tr>
+                <td>M4</td>
+                <td>🔄 Sprint 3 Review</td>
+                <td>25 Agustus 2026</td>
+                <td>PKS + termin + upload file berfungsi</td>
+            </tr>
+            <tr>
+                <td>M5</td>
+                <td>🔄 Sprint 4 Review</td>
+                <td>8 September 2026</td>
+                <td>Tagihan + pencairan dana berfungsi</td>
+            </tr>
+            <tr>
+                <td>M6</td>
+                <td>🔄 Sprint 5 Review</td>
+                <td>22 September 2026</td>
+                <td>Laporan + seluruh fitur lengkap</td>
+            </tr>
+            <tr>
+                <td>M7</td>
+                <td>🏆 Project Complete</td>
+                <td>6 Oktober 2026</td>
+                <td>Go-live, training selesai, BAST ditandatangani</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-box">
+        <strong>📌 Catatan Penjadwalan:</strong><br>
+        • Setiap sprint memiliki <strong>buffer 2 hari</strong> untuk bug fixing dan refinement<br>
+        • <strong>Daily standup</strong> dilakukan setiap hari kerja selama sprint (15 menit)<br>
+        • <strong>Sprint retrospective</strong> dilakukan setelah setiap sprint review<br>
+        • Jadwal bersifat tentatif dan dapat disesuaikan berdasarkan velocity tim pada sprint sebelumnya
+    </div>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#ebf8ff', primaryTextColor: '#1a365d', primaryBorderColor: '#3182ce',
+            lineColor: '#4a5568', secondaryColor: '#f7fafc', tertiaryColor: '#ffffff', fontSize: '11px'
+        },
+        gantt: {
+            useMaxWidth: true,
+            barHeight: 20,
+            barGap: 4,
+            topPadding: 30,
+            fontSize: 11,
+            numberSectionStyles: 7
+        }
+    });
+</script>
+</body>
+</html>
