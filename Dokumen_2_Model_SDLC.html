@@ -86,7 +86,7 @@
     <p>Untuk pengembangan Sistem Informasi Pengadaan Barang dengan <strong>durasi implementasi 3 bulan (12 minggu)</strong>, model proses pengembangan yang paling efektif adalah <strong>Agile Scrum</strong>.</p>
 
     <div class="success-box">
-        <strong>✅ Keputusan:</strong> Model pengembangan yang dipilih adalah <strong>Agile Scrum</strong> dengan sprint duration <strong>2 minggu per sprint</strong>, menghasilkan total <strong>5 sprint</strong> aktif ditambah <strong>2 minggu</strong> untuk fase awal (inception) dan fase akhir (deployment & training).
+        <strong> Keputusan:</strong> Model pengembangan yang dipilih adalah <strong>Agile Scrum</strong> dengan sprint duration <strong>2 minggu per sprint</strong>, menghasilkan total <strong>5 sprint</strong> aktif ditambah <strong>2 minggu</strong> untuk fase awal (inception) dan fase akhir (deployment & training).
     </div>
 
     <h2>1.2 Diagram Model Agile Scrum</h2>
@@ -95,16 +95,16 @@
     <div class="diagram-container">
         <div class="mermaid">
 graph LR
-    A["📋 Product<br/>Backlog"] --> B["📝 Sprint<br/>Planning"]
-    B --> C["🔄 Sprint<br/>2 Minggu"]
-    C --> D["📦 Sprint<br/>Review"]
-    D --> E["🔍 Sprint<br/>Retrospective"]
+    A[" Product<br/>Backlog"] --> B[" Sprint<br/>Planning"]
+    B --> C[" Sprint<br/>2 Minggu"]
+    C --> D[" Sprint<br/>Review"]
+    D --> E[" Sprint<br/>Retrospective"]
     E --> B
 
-    C --> F["⚡ Daily<br/>Standup"]
+    C --> F[" Daily<br/>Standup"]
     F --> C
 
-    D --> G["✅ Potentially<br/>Shippable<br/>Product"]
+    D --> G[" Potentially<br/>Shippable<br/>Product"]
 
     style A fill:#ebf8ff,stroke:#3182ce,stroke-width:2px
     style C fill:#f0fff4,stroke:#38a169,stroke-width:2px
@@ -204,58 +204,58 @@ gantt
                 <th>Aspek</th>
                 <th>Waterfall</th>
                 <th>V-Model</th>
-                <th style="background:#2b6cb0;">Agile Scrum ✅</th>
+                <th style="background:#2b6cb0;">Agile Scrum </th>
                 <th>RAD</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><strong>Timeline 3 Bulan</strong></td>
-                <td>❌ Berisiko — semua testing di akhir, tidak ada ruang untuk perbaikan</td>
-                <td>⚠️ Terlalu rigid untuk timeline pendek</td>
-                <td style="background:#f0fff4;"><strong>✅ Ideal</strong> — delivery bertahap setiap 2 minggu</td>
-                <td>⚠️ Mungkin, tapi kurang terstruktur</td>
+                <td> Berisiko — semua testing di akhir, tidak ada ruang untuk perbaikan</td>
+                <td>️ Terlalu rigid untuk timeline pendek</td>
+                <td style="background:#f0fff4;"><strong> Ideal</strong> — delivery bertahap setiap 2 minggu</td>
+                <td>️ Mungkin, tapi kurang terstruktur</td>
             </tr>
             <tr>
                 <td><strong>Perubahan Requirement</strong></td>
-                <td>❌ Sangat sulit mengakomodasi perubahan</td>
-                <td>❌ Sulit, harus kembali ke fase sebelumnya</td>
-                <td style="background:#f0fff4;"><strong>✅ Mudah</strong> — backlog dapat di-update setiap sprint</td>
-                <td>✅ Cukup fleksibel</td>
+                <td> Sangat sulit mengakomodasi perubahan</td>
+                <td> Sulit, harus kembali ke fase sebelumnya</td>
+                <td style="background:#f0fff4;"><strong> Mudah</strong> — backlog dapat di-update setiap sprint</td>
+                <td> Cukup fleksibel</td>
             </tr>
             <tr>
                 <td><strong>Feedback Stakeholder</strong></td>
-                <td>❌ Hanya di awal dan akhir</td>
-                <td>❌ Terbatas pada tahap tertentu</td>
-                <td style="background:#f0fff4;"><strong>✅ Setiap sprint</strong> (2 minggu sekali)</td>
-                <td>✅ Ada, tapi kurang terstruktur</td>
+                <td> Hanya di awal dan akhir</td>
+                <td> Terbatas pada tahap tertentu</td>
+                <td style="background:#f0fff4;"><strong> Setiap sprint</strong> (2 minggu sekali)</td>
+                <td> Ada, tapi kurang terstruktur</td>
             </tr>
             <tr>
                 <td><strong>Manajemen Risiko</strong></td>
-                <td>❌ Risiko terdeteksi terlambat</td>
-                <td>⚠️ Moderat</td>
-                <td style="background:#f0fff4;"><strong>✅ Baik</strong> — retrospective setiap sprint</td>
-                <td>⚠️ Moderat</td>
+                <td> Risiko terdeteksi terlambat</td>
+                <td>️ Moderat</td>
+                <td style="background:#f0fff4;"><strong> Baik</strong> — retrospective setiap sprint</td>
+                <td>️ Moderat</td>
             </tr>
             <tr>
                 <td><strong>Dokumentasi</strong></td>
-                <td>✅ Sangat lengkap</td>
-                <td>✅ Sangat lengkap</td>
-                <td style="background:#f0fff4;"><strong>⚠️ Cukup</strong> — working software over docs, tapi tetap ada</td>
-                <td>❌ Minimal</td>
+                <td> Sangat lengkap</td>
+                <td> Sangat lengkap</td>
+                <td style="background:#f0fff4;"><strong>️ Cukup</strong> — working software over docs, tapi tetap ada</td>
+                <td> Minimal</td>
             </tr>
             <tr>
                 <td><strong>Multi-stakeholder</strong></td>
-                <td>❌ Sulit mengelola ekspektasi</td>
-                <td>❌ Komunikasi terbatas</td>
-                <td style="background:#f0fff4;"><strong>✅ Optimal</strong> — daily standup, sprint review</td>
-                <td>⚠️ Moderat</td>
+                <td> Sulit mengelola ekspektasi</td>
+                <td> Komunikasi terbatas</td>
+                <td style="background:#f0fff4;"><strong> Optimal</strong> — daily standup, sprint review</td>
+                <td>️ Moderat</td>
             </tr>
         </tbody>
     </table>
 
     <div class="warning-box">
-        <strong>⚠️ Mengapa Waterfall Tidak Dipilih?</strong><br>
+        <strong>️ Mengapa Waterfall Tidak Dipilih?</strong><br>
         Model Waterfall tidak cocok untuk kasus ini karena:<br>
         1. Timeline 3 bulan terlalu ketat untuk pendekatan linear (analisis → desain → implementasi → testing → deployment berurutan)<br>
         2. Jika ditemukan kesalahan di tahap testing, tidak ada waktu cukup untuk kembali ke tahap sebelumnya<br>
@@ -354,23 +354,23 @@ gantt
     <div class="diagram-container">
         <div class="mermaid">
 graph TD
-    subgraph Artefak["📋 Artefak Scrum"]
-        PB["📋 Product Backlog<br/><i>Daftar seluruh fitur<br/>yang dibutuhkan</i>"]
-        SB["📝 Sprint Backlog<br/><i>Daftar item yang<br/>dikerjakan per sprint</i>"]
-        IN["📦 Increment<br/><i>Produk yang siap<br/>di-review setiap sprint</i>"]
+    subgraph Artefak[" Artefak Scrum"]
+        PB[" Product Backlog<br/><i>Daftar seluruh fitur<br/>yang dibutuhkan</i>"]
+        SB[" Sprint Backlog<br/><i>Daftar item yang<br/>dikerjakan per sprint</i>"]
+        IN[" Increment<br/><i>Produk yang siap<br/>di-review setiap sprint</i>"]
     end
 
-    subgraph Roles["👥 Peran Scrum"]
-        PO["🎯 Product Owner<br/><i>Mewakili stakeholder,<br/>prioritas backlog</i>"]
-        SM["🛡️ Scrum Master<br/><i>Fasilitator,<br/>penghilang hambatan</i>"]
-        DT["💻 Dev Team<br/><i>Tim pengembang<br/>cross-functional</i>"]
+    subgraph Roles[" Peran Scrum"]
+        PO[" Product Owner<br/><i>Mewakili stakeholder,<br/>prioritas backlog</i>"]
+        SM["️ Scrum Master<br/><i>Fasilitator,<br/>penghilang hambatan</i>"]
+        DT[" Dev Team<br/><i>Tim pengembang<br/>cross-functional</i>"]
     end
 
-    subgraph Events["📅 Event Scrum"]
-        SP["📝 Sprint Planning"]
-        DS["⚡ Daily Standup<br/><i>15 menit/hari</i>"]
-        SR["📦 Sprint Review"]
-        RT["🔍 Retrospective"]
+    subgraph Events[" Event Scrum"]
+        SP[" Sprint Planning"]
+        DS[" Daily Standup<br/><i>15 menit/hari</i>"]
+        SR[" Sprint Review"]
+        RT[" Retrospective"]
     end
 
     PO --> PB
@@ -404,7 +404,7 @@ graph TD
     </ol>
 
     <div class="info-box">
-        <strong>📌 Catatan:</strong> Meskipun menggunakan Agile Scrum, dokumentasi tetap akan dibuat secara memadai mengingat sistem ini akan digunakan oleh organisasi/instansi. Dokumentasi meliputi: SRS, technical documentation, user manual, dan SOP penggunaan sistem.
+        <strong> Catatan:</strong> Meskipun menggunakan Agile Scrum, dokumentasi tetap akan dibuat secara memadai mengingat sistem ini akan digunakan oleh organisasi/instansi. Dokumentasi meliputi: SRS, technical documentation, user manual, dan SOP penggunaan sistem.
     </div>
 </div>
 

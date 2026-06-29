@@ -1297,27 +1297,27 @@
                     <div style="background-color: #f8f9fa; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; overflow-x: auto;">
                         <pre class="mermaid" style="margin: 0; background: none; border: none;">
 flowchart TD
-    A([🟢 Mulai]) --> B["📝 Unit Pemohon&lt;br/&gt;Input Permintaan Barang&lt;br/&gt;&lt;i&gt;tanggal, nama barang,&lt;br/&gt;jumlah, satuan&lt;/i&gt;"]
-    B --> C{"🔍 Petugas Procurement&lt;br/&gt;Validasi Kebutuhan&lt;br/&gt;Barang"}
-    C -->|Ditolak| D["📩 Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan penolakan&lt;/i&gt;"]
-    D --> E([🔴 Selesai&lt;br/&gt;Permintaan Ditolak])
-    C -->|Diterima| F["📋 Diteruskan ke&lt;br/&gt;Petugas Budgeting"]
-    F --> G{"💰 Petugas Budgeting&lt;br/&gt;Verifikasi Ketersediaan&lt;br/&gt;Anggaran"}
-    G -->|Ditolak| H["📩 Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan dari Budgeting&lt;/i&gt;"]
-    H --> I([🔴 Selesai&lt;br/&gt;Anggaran Tidak Tersedia])
-    G -->|Diterima| J["✅ Informasi Anggaran&lt;br/&gt;Tersedia Diteruskan"]
-    J --> K["📤 Petugas Procurement&lt;br/&gt;Kirim Draft PO ke Vendor&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
-    K --> L["📥 Supplier Memberikan PO&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
-    L --> M["📄 Petugas Procurement&lt;br/&gt;Buat Perjanjian Kerja Sama&lt;br/&gt;&lt;i&gt;nomor kontrak, nomor PO,&lt;br/&gt;detail barang, harga&lt;/i&gt;"]
-    M --> N["💳 Input Metode&lt;br/&gt;Pembayaran Termin&lt;br/&gt;&lt;i&gt;tanggal, persentase,&lt;br/&gt;nominal&lt;/i&gt;"]
-    N --> O["📎 Upload Bukti PO&lt;br/&gt;dari Supplier"]
-    O --> P["📦 Penerimaan Barang&lt;br/&gt;oleh Procurement"]
-    P --> Q["📨 Vendor Kirim Tagihan&lt;br/&gt;ke Procurement"]
-    Q --> R["➡️ Procurement Meneruskan&lt;br/&gt;Tagihan ke Keuangan"]
-    R --> S["📝 Petugas Keuangan&lt;br/&gt;Input Tagihan&lt;br/&gt;&lt;i&gt;tanggal, nomor PO,&lt;br/&gt;nomor tagihan, detail barang&lt;/i&gt;"]
-    S --> T["📎 Upload Berkas&lt;br/&gt;Tagihan"]
-    T --> U["➡️ Sistem Meneruskan&lt;br/&gt;ke Kasir"]
-    U --> V["💵 Kasir&lt;br/&gt;Pencairan Dana&lt;br/&gt;&lt;i&gt;tanggal pembayaran,&lt;br/&gt;nominal, potongan harga&lt;/i&gt;"]
+    A([Mulai]) --> B["Unit Pemohon&lt;br/&gt;Input Permintaan Barang&lt;br/&gt;&lt;i&gt;tanggal, nama barang,&lt;br/&gt;jumlah, satuan&lt;/i&gt;"]
+    B --> C{"Petugas Procurement&lt;br/&gt;Validasi Kebutuhan&lt;br/&gt;Barang"}
+    C -->Ditolak D["Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan penolakan&lt;/i&gt;"]
+    D --> E([Selesai&lt;br/&gt;Permintaan Ditolak])
+    C -->Diterima F["Diteruskan ke&lt;br/&gt;Petugas Budgeting"]
+    F --> G{"Petugas Budgeting&lt;br/&gt;Verifikasi Ketersediaan&lt;br/&gt;Anggaran"}
+    G -->Ditolak H["Notifikasi Penolakan&lt;br/&gt;ke Unit Pemohon&lt;br/&gt;&lt;i&gt;+ alasan dari Budgeting&lt;/i&gt;"]
+    H --> I([Selesai&lt;br/&gt;Anggaran Tidak Tersedia])
+    G -->Diterima J["Informasi Anggaran&lt;br/&gt;Tersedia Diteruskan"]
+    J --> K["Petugas Procurement&lt;br/&gt;Kirim Draft PO ke Vendor&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
+    K --> L["Supplier Memberikan PO&lt;br/&gt;&lt;i&gt;(di luar aplikasi)&lt;/i&gt;"]
+    L --> M["Petugas Procurement&lt;br/&gt;Buat Perjanjian Kerja Sama&lt;br/&gt;&lt;i&gt;nomor kontrak, nomor PO,&lt;br/&gt;detail barang, harga&lt;/i&gt;"]
+    M --> N["Input Metode&lt;br/&gt;Pembayaran Termin&lt;br/&gt;&lt;i&gt;tanggal, persentase,&lt;br/&gt;nominal&lt;/i&gt;"]
+    N --> O["Upload Bukti PO&lt;br/&gt;dari Supplier"]
+    O --> P["Penerimaan Barang&lt;br/&gt;oleh Procurement"]
+    P --> Q["Vendor Kirim Tagihan&lt;br/&gt;ke Procurement"]
+    Q --> R["Procurement Meneruskan&lt;br/&gt;Tagihan ke Keuangan"]
+    R --> S["Petugas Keuangan&lt;br/&gt;Input Tagihan&lt;br/&gt;&lt;i&gt;tanggal, nomor PO,&lt;br/&gt;nomor tagihan, detail barang&lt;/i&gt;"]
+    S --> T["Upload Berkas&lt;br/&gt;Tagihan"]
+    T --> U["Sistem Meneruskan&lt;br/&gt;ke Kasir"]
+    U --> V["Kasir&lt;br/&gt;Pencairan Dana&lt;br/&gt;&lt;i&gt;tanggal pembayaran,&lt;br/&gt;nominal, potongan harga&lt;/i&gt;"]
     V --> W([🟢 Selesai&lt;br/&gt;Pembayaran Tercatat])
 
     style A fill:#c6f6d5,stroke:#38a169
@@ -1339,12 +1339,12 @@ flowchart TD
                         <pre class="mermaid" style="margin: 0; background: none; border: none;">
 graph LR
     subgraph Aktor_Kiri["&nbsp;"]
-        UP(("👤 Unit&lt;br/&gt;Pemohon"))
-        PP(("👤 Petugas&lt;br/&gt;Procurement"))
-        PB(("👤 Petugas&lt;br/&gt;Budgeting"))
+        UP(("Unit&lt;br/&gt;Pemohon"))
+        PP(("Petugas&lt;br/&gt;Procurement"))
+        PB(("Petugas&lt;br/&gt;Budgeting"))
     end
 
-    subgraph SI["🏢 Sistem Informasi Pengadaan Barang"]
+    subgraph SI["Sistem Informasi Pengadaan Barang"]
         UC01["UC-01&lt;br/&gt;Login"]
         UC02["UC-02&lt;br/&gt;Input Permintaan&lt;br/&gt;Barang"]
         UC03["UC-03&lt;br/&gt;Melihat Status&lt;br/&gt;Permintaan"]
@@ -1362,9 +1362,9 @@ graph LR
     end
 
     subgraph Aktor_Kanan["&nbsp;"]
-        PK(("👤 Petugas&lt;br/&gt;Keuangan"))
-        KS(("👤 Kasir"))
-        SY(("⚙️ Sistem"))
+        PK(("Petugas&lt;br/&gt;Keuangan"))
+        KS(("Kasir"))
+        SY(("Sistem"))
     end
 
     UP --- UC01
@@ -1545,19 +1545,19 @@ erDiagram
         datetime created_at
     }
 
-    UNIT ||--o{ USERS : "memiliki"
-    UNIT ||--o{ PERMINTAAN_BARANG : "mengajukan"
-    USERS ||--o{ PERMINTAAN_BARANG : "membuat"
-    PERMINTAAN_BARANG ||--|{ DETAIL_PERMINTAAN : "berisi"
-    PERMINTAAN_BARANG ||--o| PERJANJIAN_KERJA_SAMA : "menghasilkan"
-    SUPPLIER ||--o{ PERJANJIAN_KERJA_SAMA : "terlibat dalam"
-    PERJANJIAN_KERJA_SAMA ||--|{ DETAIL_PKS : "berisi"
-    PERJANJIAN_KERJA_SAMA ||--|{ TERMIN_PEMBAYARAN : "memiliki"
-    PERJANJIAN_KERJA_SAMA ||--o{ TAGIHAN : "menghasilkan"
-    TAGIHAN ||--|{ DETAIL_TAGIHAN : "berisi"
-    TAGIHAN ||--o| PEMBAYARAN : "dibayar melalui"
-    USERS ||--o{ NOTIFIKASI : "menerima"
-    USERS ||--o{ FILE_UPLOAD : "mengunggah"
+    UNIT --o{ USERS : "memiliki"
+    UNIT --o{ PERMINTAAN_BARANG : "mengajukan"
+    USERS --o{ PERMINTAAN_BARANG : "membuat"
+    PERMINTAAN_BARANG --{ DETAIL_PERMINTAAN : "berisi"
+    PERMINTAAN_BARANG --o PERJANJIAN_KERJA_SAMA : "menghasilkan"
+    SUPPLIER --o{ PERJANJIAN_KERJA_SAMA : "terlibat dalam"
+    PERJANJIAN_KERJA_SAMA --{ DETAIL_PKS : "berisi"
+    PERJANJIAN_KERJA_SAMA --{ TERMIN_PEMBAYARAN : "memiliki"
+    PERJANJIAN_KERJA_SAMA --o{ TAGIHAN : "menghasilkan"
+    TAGIHAN --{ DETAIL_TAGIHAN : "berisi"
+    TAGIHAN --o PEMBAYARAN : "dibayar melalui"
+    USERS --o{ NOTIFIKASI : "menerima"
+    USERS --o{ FILE_UPLOAD : "mengunggah"
                         </pre>
                     </div>
                 </div>
@@ -2366,7 +2366,7 @@ sequenceDiagram
             if (currentUser.role !== "unit_pemohon") return;
 
             const tx = db.transaksi.find(t => t.id === selectedTxId);
-            if (!tx || tx.status !== "Pending Procurement") return;
+            if (!tx  tx.status !== "Pending Procurement") return;
 
             const namaBaru = document.getElementById("editNama").value.trim();
             const jumlahBaru = parseInt(document.getElementById("editJumlah").value);
@@ -2619,7 +2619,7 @@ sequenceDiagram
                             <td>${t.barang}</td>
                             <td>${t.jumlah} ${t.satuan}</td>
                             <td><span class="badge ${statusClass}">${t.status}</span></td>
-                            <td>${t.catatan || "-"}</td>
+                            <td>${t.catatan  "-"}</td>
                             <td>${aksiCRUD}</td>
                         </tr>
                     `;
